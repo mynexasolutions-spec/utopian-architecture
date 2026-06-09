@@ -16,8 +16,7 @@ ENV/
 .idea/
 
 # Database files (local only)
-instance/contacts.db
-*.db
+
 
 # Vercel output
 .vercel/
