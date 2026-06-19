@@ -137,17 +137,22 @@
   }
 
   /* Gallery Thumbnails styling */
-  .product-gallery-thumbnails {
+  .product-gallery-slider-wrapper {
+    position: relative;
     display: flex;
-    gap: 15px;
+    align-items: center;
     margin-top: 20px;
-    justify-content: flex-start;
-    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .product-gallery-thumbnails {
+    overflow: hidden;
+    flex: 1;
+    padding: 10px 0;
   }
   .product-gallery-thumb {
-    width: calc(33.333% - 10px);
+    width: 100%;
     aspect-ratio: 4 / 3;
-    border-radius: 16px;
+    border-radius: 12px;
     overflow: hidden;
     cursor: pointer;
     border: 2px solid transparent;
@@ -164,7 +169,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 14px;
+    border-radius: 10px;
     transition: transform 0.3s ease;
   }
   .product-gallery-thumb:hover {
@@ -177,6 +182,26 @@
   .product-gallery-thumb.active {
     border-color: #252525;
     box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
+  }
+  .slider-arrow {
+    background: #ffffff;
+    border: 1px solid rgba(144, 110, 73, 0.2);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #252525;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    flex-shrink: 0;
+  }
+  .slider-arrow:hover {
+    background: #252525;
+    color: #ffffff;
+    border-color: #252525;
   }
 
   @media (max-width: 991px) {
@@ -239,12 +264,20 @@
           {% endif %}
           
           {% if gallery_list | length > 1 %}
-          <div class="product-gallery-thumbnails">
-            {% for img_path in gallery_list %}
-            <button class="product-gallery-thumb{% if loop.first %} active{% endif %}" data-target-src="{{ img_path }}" aria-label="View product image {{ loop.index }}">
-              <img src="{{ img_path }}" alt="{{ product.name }} view {{ loop.index }}" loading="lazy" />
-            </button>
-            {% endfor %}
+          <div class="product-gallery-slider-wrapper position-relative">
+            <button class="slider-arrow slider-arrow-prev thumb-swiper-prev" aria-label="Previous image"><i class="fa fa-chevron-left"></i></button>
+            <div class="swiper product-gallery-thumbnails">
+              <div class="swiper-wrapper">
+                {% for img_path in gallery_list %}
+                <div class="swiper-slide">
+                  <button class="product-gallery-thumb{% if loop.first %} active{% endif %}" data-target-src="{{ img_path }}" aria-label="View product image {{ loop.index }}">
+                    <img src="{{ img_path }}" alt="{{ product.name }} view {{ loop.index }}" loading="lazy" />
+                  </button>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            <button class="slider-arrow slider-arrow-next thumb-swiper-next" aria-label="Next image"><i class="fa fa-chevron-right"></i></button>
           </div>
           {% endif %}
         </div>
@@ -349,26 +382,72 @@
     const thumbnails = document.querySelectorAll(".product-gallery-thumb");
     const mainImage = document.getElementById("product-image-display");
     
+    // Helper function to update main image and active classes
+    function updateMainImage(newSrc) {
+      if (!newSrc) return;
+      const mainImage = document.getElementById("product-image-display");
+      if (!mainImage) return;
+
+      // Update active state for all instances of this thumbnail (including clones)
+      document.querySelectorAll('.product-gallery-thumb').forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(`.product-gallery-thumb[data-target-src="${newSrc}"]`).forEach(t => t.classList.add("active"));
+      
+      if (mainImage.src !== newSrc && mainImage.getAttribute('src') !== newSrc) {
+        mainImage.style.opacity = "0";
+        mainImage.style.transform = "scale(0.97)";
+        
+        setTimeout(() => {
+          mainImage.src = newSrc;
+          mainImage.onload = function() {
+            mainImage.style.opacity = "1";
+            mainImage.style.transform = "scale(1)";
+          };
+        }, 200);
+      }
+    }
+
     if (thumbnails.length > 0 && mainImage) {
-      thumbnails.forEach(thumb => {
-        thumb.addEventListener("click", function () {
-          thumbnails.forEach(t => t.classList.remove("active"));
-          this.classList.add("active");
+      // Event delegation to handle cloned slides in Swiper
+      const wrapper = document.querySelector('.product-gallery-slider-wrapper');
+      if (wrapper) {
+        wrapper.addEventListener("click", function (e) {
+          const thumb = e.target.closest('.product-gallery-thumb');
+          if (!thumb) return;
           
-          const newSrc = this.getAttribute("data-target-src");
-          if (newSrc && mainImage.src !== newSrc) {
-            mainImage.style.opacity = "0";
-            mainImage.style.transform = "scale(0.97)";
-            
-            setTimeout(() => {
-              mainImage.src = newSrc;
-              mainImage.onload = function() {
-                mainImage.style.opacity = "1";
-                mainImage.style.transform = "scale(1)";
-              };
-            }, 200);
-          }
+          const newSrc = thumb.getAttribute("data-target-src");
+          updateMainImage(newSrc);
         });
+      }
+    }
+
+    // Initialize Swiper for Infinite Loop Thumbnail Carousel
+    if (document.querySelector('.product-gallery-thumbnails')) {
+      new Swiper('.product-gallery-thumbnails', {
+        slidesPerView: 3,
+        spaceBetween: 10,
+        loop: true,
+        autoplay: false,
+        navigation: {
+          nextEl: '.thumb-swiper-next',
+          prevEl: '.thumb-swiper-prev',
+        },
+        breakpoints: {
+          320: { slidesPerView: 2 },
+          576: { slidesPerView: 3 },
+          992: { slidesPerView: 3 }
+        },
+        on: {
+          slideChangeTransitionStart: function () {
+            const activeSlide = this.slides[this.activeIndex];
+            if (activeSlide) {
+              const thumb = activeSlide.querySelector('.product-gallery-thumb');
+              if (thumb) {
+                const newSrc = thumb.getAttribute("data-target-src");
+                updateMainImage(newSrc);
+              }
+            }
+          }
+        }
       });
     }
 

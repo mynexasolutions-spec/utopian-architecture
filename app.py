@@ -8,39 +8,20 @@ from functools import wraps
 from urllib.parse import quote
 from werkzeug.utils import secure_filename
 
+# Import custom configuration and helpers
+from config import Config
+from helpers import upload_image_to_cloudinary, delete_image_from_cloudinary, allowed_file
+
 # Load environment variables from .env
 load_dotenv()
 
 app = Flask(__name__)
 
-# Basic configurations
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev_secret_key_utopia_interior_2026')
+# Load configurations
+app.config.from_object(Config)
 
-# SQLite Database setup inside the 'instance' folder
-# Make sure the instance folder exists dynamically
+# Make sure the instance folder exists dynamically (for fallback SQLite)
 os.makedirs(app.instance_path, exist_ok=True)
-
-# Vercel serverless has a read-only filesystem except for '/tmp'.
-# For local development, we default to the standard instance/contacts.db.
-# If running in a Vercel-like read-only serverless environment, the DB can be overridden via environment variables.
-db_default_path = os.path.join(app.instance_path, 'contacts.db')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', f'sqlite:///{db_default_path}')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-# Setup Upload Folders
-UPLOAD_FOLDER_SLIDER = os.path.join(app.root_path, 'static', 'uploads', 'slider')
-UPLOAD_FOLDER_CATALOG = os.path.join(app.root_path, 'static', 'uploads', 'catalog')
-UPLOAD_FOLDER_GALLERY = os.path.join(app.root_path, 'static', 'uploads', 'gallery')
-os.makedirs(UPLOAD_FOLDER_SLIDER, exist_ok=True)
-os.makedirs(UPLOAD_FOLDER_CATALOG, exist_ok=True)
-os.makedirs(UPLOAD_FOLDER_GALLERY, exist_ok=True)
-app.config['UPLOAD_FOLDER_SLIDER'] = UPLOAD_FOLDER_SLIDER
-app.config['UPLOAD_FOLDER_CATALOG'] = UPLOAD_FOLDER_CATALOG
-app.config['UPLOAD_FOLDER_GALLERY'] = UPLOAD_FOLDER_GALLERY
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
-
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # Initialize the SQLAlchemy instance
 db = SQLAlchemy(app)
@@ -477,13 +458,9 @@ def admin_add_slider():
         flash("Please upload an image.", "danger")
         return redirect(url_for('admin_slider'))
         
-    if image_file and allowed_file(image_file.filename):
-        filename = secure_filename(f"{datetime.now().strftime('%Y%m%d%H%M%S')}_{image_file.filename}")
-        image_path = os.path.join(app.config['UPLOAD_FOLDER_SLIDER'], filename)
-        image_file.save(image_path)
-        image_url = url_for('static', filename=f"uploads/slider/{filename}")
-    else:
-        flash("Invalid file format for image.", "danger")
+    image_url = upload_image_to_cloudinary(image_file, folder_name="slider")
+    if not image_url:
+        flash("Invalid file format or upload failed.", "danger")
         return redirect(url_for('admin_slider'))
         
     try:
@@ -512,13 +489,11 @@ def admin_edit_slider(id):
     
     image_file = request.files.get('image')
     if image_file and image_file.filename != '':
-        if allowed_file(image_file.filename):
-            filename = secure_filename(f"{datetime.now().strftime('%Y%m%d%H%M%S')}_{image_file.filename}")
-            image_path = os.path.join(app.config['UPLOAD_FOLDER_SLIDER'], filename)
-            image_file.save(image_path)
-            slide.image_url = url_for('static', filename=f"uploads/slider/{filename}")
+        new_image_url = upload_image_to_cloudinary(image_file, folder_name="slider")
+        if new_image_url:
+            slide.image_url = new_image_url
         else:
-            flash("Invalid file format for image.", "danger")
+            flash("Invalid file format or upload failed.", "danger")
             return redirect(url_for('admin_slider'))
             
     try:
@@ -582,25 +557,19 @@ def admin_add_catalog():
         flash("Please upload a product image.", "danger")
         return redirect(url_for('admin_catalog'))
         
-    if image_file and allowed_file(image_file.filename):
-        filename = secure_filename(f"{datetime.now().strftime('%Y%m%d%H%M%S')}_{image_file.filename}")
-        image_path = os.path.join(app.config['UPLOAD_FOLDER_CATALOG'], filename)
-        image_file.save(image_path)
-        image_url = url_for('static', filename=f"uploads/catalog/{filename}")
-    else:
-        flash("Invalid file format for image.", "danger")
+    image_url = upload_image_to_cloudinary(image_file, folder_name="catalog")
+    if not image_url:
+        flash("Invalid file format or upload failed.", "danger")
         return redirect(url_for('admin_catalog'))
 
     # Handle multiple gallery images upload
     gallery_files = request.files.getlist('gallery_images')
     gallery_urls = []
     for g_file in gallery_files:
-        if g_file and g_file.filename != '' and allowed_file(g_file.filename):
-            g_filename = secure_filename(f"gallery_{datetime.now().strftime('%Y%m%d%H%M%S%f')}_{g_file.filename}")
-            g_path = os.path.join(app.config['UPLOAD_FOLDER_CATALOG'], g_filename)
-            g_file.save(g_path)
-            g_url = url_for('static', filename=f"uploads/catalog/{g_filename}")
-            gallery_urls.append(g_url)
+        if g_file and g_file.filename != '':
+            g_url = upload_image_to_cloudinary(g_file, folder_name="catalog")
+            if g_url:
+                gallery_urls.append(g_url)
     
     gallery_images_str = ",".join(gallery_urls) if gallery_urls else None
         
@@ -647,13 +616,11 @@ def admin_edit_catalog(id):
     
     image_file = request.files.get('image')
     if image_file and image_file.filename != '':
-        if allowed_file(image_file.filename):
-            filename = secure_filename(f"{datetime.now().strftime('%Y%m%d%H%M%S')}_{image_file.filename}")
-            image_path = os.path.join(app.config['UPLOAD_FOLDER_CATALOG'], filename)
-            image_file.save(image_path)
-            prod.image_url = url_for('static', filename=f"uploads/catalog/{filename}")
+        new_image_url = upload_image_to_cloudinary(image_file, folder_name="catalog")
+        if new_image_url:
+            prod.image_url = new_image_url
         else:
-            flash("Invalid file format for image.", "danger")
+            flash("Invalid file format or upload failed.", "danger")
             return redirect(url_for('admin_catalog'))
 
     # Handle multiple gallery images upload
@@ -663,12 +630,10 @@ def admin_edit_catalog(id):
     for g_file in gallery_files:
         if g_file and g_file.filename != '':
             has_new_gallery = True
-            if allowed_file(g_file.filename):
-                g_filename = secure_filename(f"gallery_{datetime.now().strftime('%Y%m%d%H%M%S%f')}_{g_file.filename}")
-                g_path = os.path.join(app.config['UPLOAD_FOLDER_CATALOG'], g_filename)
-                g_file.save(g_path)
-                g_url = url_for('static', filename=f"uploads/catalog/{g_filename}")
+            g_url = upload_image_to_cloudinary(g_file, folder_name="catalog")
+            if g_url:
                 gallery_urls.append(g_url)
+                
     if has_new_gallery:
         prod.gallery_images = ",".join(gallery_urls) if gallery_urls else None
             
@@ -729,13 +694,9 @@ def admin_add_gallery():
         flash("Please upload an image.", "danger")
         return redirect(url_for('admin_gallery'))
         
-    if image_file and allowed_file(image_file.filename):
-        filename = secure_filename(f"{datetime.now().strftime('%Y%m%d%H%M%S')}_{image_file.filename}")
-        image_path = os.path.join(app.config['UPLOAD_FOLDER_GALLERY'], filename)
-        image_file.save(image_path)
-        image_url = url_for('static', filename=f"uploads/gallery/{filename}")
-    else:
-        flash("Invalid file format for image.", "danger")
+    image_url = upload_image_to_cloudinary(image_file, folder_name="gallery")
+    if not image_url:
+        flash("Invalid file format or upload failed.", "danger")
         return redirect(url_for('admin_gallery'))
         
     try:
@@ -772,13 +733,11 @@ def admin_edit_gallery(id):
     
     image_file = request.files.get('image')
     if image_file and image_file.filename != '':
-        if allowed_file(image_file.filename):
-            filename = secure_filename(f"{datetime.now().strftime('%Y%m%d%H%M%S')}_{image_file.filename}")
-            image_path = os.path.join(app.config['UPLOAD_FOLDER_GALLERY'], filename)
-            image_file.save(image_path)
-            img.image_url = url_for('static', filename=f"uploads/gallery/{filename}")
+        new_image_url = upload_image_to_cloudinary(image_file, folder_name="gallery")
+        if new_image_url:
+            img.image_url = new_image_url
         else:
-            flash("Invalid file format for image.", "danger")
+            flash("Invalid file format or upload failed.", "danger")
             return redirect(url_for('admin_gallery'))
             
     try:
