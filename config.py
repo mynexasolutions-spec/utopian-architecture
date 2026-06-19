@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+from sqlalchemy.pool import NullPool
 
 # Load environment variables from .env
 load_dotenv()
@@ -16,6 +17,9 @@ class Config:
     # The Supabase PostgreSQL URI (or SQLite for local fallback)
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', f'sqlite:///{db_default_path}')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        "poolclass": NullPool,
+    }
     
     # Cloudinary configuration
     CLOUDINARY_URL = os.getenv('CLOUDINARY_URL')
