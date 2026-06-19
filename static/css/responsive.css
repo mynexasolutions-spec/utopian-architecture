@@ -30,12 +30,13 @@
 
 /* ── 768px ── */
 @media (max-width: 768px) {
-  .banner .banner-slide, .banner .slide { height: 500px !important; }
+  .banner .banner-slide, .banner .slide { height: 400px !important; }
   .banner .banner-slide h2 { font-size: 32px; }
   .about-center img { height: 300px !important; object-fit: cover; }
   .project-card-image img { height: 250px !important; object-fit: cover; }
   .header-nav-inner { padding: 10px 15px !important; }
   .ad-banner-inner { padding: 2rem !important; }
+  .home-3 .ad-banner .ad-banner-right img { max-height: 250px; }
   .portfolio-box .row { flex-direction: column; }
   section { padding: 60px 0; }
   .section-title-left h2.mb-2 { font-size: 28px !important; }

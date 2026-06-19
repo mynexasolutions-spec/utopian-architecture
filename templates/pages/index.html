@@ -189,7 +189,7 @@
                   <div class="overlay rounded-4"></div>
                   <div class="services-image">
                     <img
-                      src="{{ url_for('static', filename='img/services/furniture.jpg') }}"
+                      src="{{ url_for('static', filename='img/services/Custom_Furniture.webp') }}"
                       alt="Custom Furniture"
                       class="rounded-4"
                       style="height: 280px; object-fit: cover; width: 100%"
@@ -223,7 +223,7 @@
                   <div class="overlay rounded-4"></div>
                   <div class="services-image">
                     <img
-                      src="{{ url_for('static', filename='img/services/commercial.jpg') }}"
+                      src="{{ url_for('static', filename='img/services/Pergola_works.webp') }}"
                       alt="Pergola &amp; Outdoor Works"
                       class="rounded-4"
                       style="height: 280px; object-fit: cover; width: 100%"
@@ -287,7 +287,7 @@
               <div class="project-grid-card">
                 <div class="project-card-image">
                   <img
-                    src="{{ url_for('static', filename='img/portfolio/project-1.jpg') }}"
+                    src="{{ url_for('static', filename='img/featured/Modern_Villa_Interior.webp') }}"
                     alt="Modern Villa Interior"
                   />
                 </div>
@@ -305,7 +305,7 @@
               <div class="project-grid-card">
                 <div class="project-card-image">
                   <img
-                    src="{{ url_for('static', filename='img/portfolio/project-3a.jpg') }}"
+                    src="{{ url_for('static', filename='img/featured/bed_6.webp') }}"
                     alt="Luxury Living Room"
                   />
                 </div>
@@ -323,7 +323,7 @@
               <div class="project-grid-card">
                 <div class="project-card-image">
                   <img
-                    src="{{ url_for('static', filename='img/portfolio/project-4.jpg') }}"
+                    src="{{ url_for('static', filename='img/featured/conference-room.jpeg') }}"
                     alt="Office Design"
                   />
                 </div>
@@ -378,18 +378,24 @@
               data-category="{{ prod.category }}"
             >
               <div class="decor-product-card">
-                <div class="product-img-container">
-                  <img
-                    src="{{ prod.image_url }}"
-                    alt="{{ prod.name }}"
-                  />
-                </div>
+                <a href="{{ url_for('product_detail', product_id=prod.id) }}">
+                  <div class="product-img-container">
+                    <img
+                      src="{{ prod.image_url }}"
+                      alt="{{ prod.name }}"
+                    />
+                  </div>
+                </a>
                 <div class="product-details">
                   <span class="product-badge">{{ prod.category | replace('-', ' ') | title }}</span>
                   <div
                     class="d-flex justify-content-between align-items-center mb-3"
                   >
-                    <h4 class="product-title mb-0">{{ prod.name }}</h4>
+                    <h4 class="product-title mb-0">
+                      <a href="{{ url_for('product_detail', product_id=prod.id) }}" style="color: inherit; text-decoration: none;">
+                        {{ prod.name }}
+                      </a>
+                    </h4>
                     <span class="product-price">₹{{ prod.mrp | replace('$', '') }}</span>
                   </div>
                   {% if prod.in_stock %}
@@ -585,7 +591,7 @@
             <div class="col-lg-7">
               <div class="ad-banner-right">
                 <img
-                  src="{{ url_for('static', filename='img/gallery/gallery-1.jpg') }}"
+                  src="{{ url_for('static', filename='img/images_sub/gallery-1.jpg') }}"
                   alt="bedroom"
                   class="rounded-4 border-5 border-white position-relative z-2"
                 />
@@ -1130,7 +1136,6 @@
 Product: ${productName}
 Category: ${productCategory}
 Price: ${productPrice}
-Link: ${window.location.href}
 
 Please share more details.`;
 

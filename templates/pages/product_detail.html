@@ -1,0 +1,403 @@
+{% extends 'base.html' %} {% block title %}{{ product.name }} – Utopia Furniture
+&amp; D&eacute;cor{% endblock %} {% block styles %}
+<style>
+  .product-detail-section {
+    padding: 80px 0;
+    background-color: #f6f2eb; /* bg-secondarylight matching home page */
+  }
+  .product-detail-card {
+    background: #ffffff;
+    border-radius: 24px;
+    box-shadow: 0px 15px 40px rgba(144, 110, 73, 0.08);
+    overflow: hidden;
+    padding: 40px;
+  }
+  .product-detail-img-container {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.05);
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fcfbf9;
+  }
+  .product-detail-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .product-detail-img-container:hover img {
+    transform: scale(1.03);
+  }
+  .product-info-badge {
+    display: inline-block;
+    background-color: rgba(144, 110, 73, 0.1);
+    color: #906e49;
+    font-family: "Poppins", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 30px;
+    margin-bottom: 15px;
+    text-transform: capitalize;
+  }
+  .product-detail-title {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-size: 36px;
+    color: #252525;
+    margin-bottom: 10px;
+    text-transform: capitalize;
+  }
+  .product-detail-price {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    color: #906e49;
+    margin-bottom: 20px;
+  }
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 30px;
+    margin-bottom: 25px;
+  }
+  .status-instock {
+    background-color: rgba(46, 213, 115, 0.1);
+    color: #2ed573;
+  }
+  .status-outofstock {
+    background-color: rgba(255, 71, 87, 0.1);
+    color: #ff4757;
+  }
+  .product-detail-short-desc {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555555;
+    border-left: 3px solid #906e49;
+    padding-left: 15px;
+    margin-bottom: 30px;
+  }
+  .product-detail-long-desc {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #666666;
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 1px solid rgba(144, 110, 73, 0.1);
+  }
+  .btn-get-quote {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    color: #ffffff;
+    background-color: #252525;
+    border: none;
+    border-radius: 30px;
+    padding: 14px 32px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .btn-get-quote:hover {
+    background-color: #906e49;
+    color: #ffffff !important;
+    box-shadow: 0px 8px 20px rgba(144, 110, 73, 0.25);
+    transform: translateY(-2px);
+  }
+  .btn-back-catalog {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: #252525;
+    background-color: transparent;
+    border: 1px solid #252525;
+    border-radius: 30px;
+    padding: 12px 28px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-back-catalog:hover {
+    background-color: #252525;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+  }
+
+  /* Gallery Thumbnails styling */
+  .product-gallery-thumbnails {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+  .product-gallery-thumb {
+    width: calc(33.333% - 10px);
+    aspect-ratio: 4 / 3;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.03);
+    background: #ffffff;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+  }
+  .product-gallery-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 14px;
+    transition: transform 0.3s ease;
+  }
+  .product-gallery-thumb:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 8px 20px rgba(144, 110, 73, 0.12);
+  }
+  .product-gallery-thumb:hover img {
+    transform: scale(1.04);
+  }
+  .product-gallery-thumb.active {
+    border-color: #252525;
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  @media (max-width: 991px) {
+    .product-detail-card {
+      padding: 25px;
+    }
+    .product-detail-title {
+      font-size: 28px;
+    }
+  }
+</style>
+{% endblock %} {% block content %}
+<!-- Breadcrumb Section Starts -->
+<section class="breadcrumb position-relative mb-0">
+  <div class="overlay"></div>
+  <div
+    class="container position-absolute top-50 start-50 translate-middle text-center"
+  >
+    <div class="breadcrumb-inner mt-8">
+      <h2 class="grey mb-0" id="product-name-heading">{{ product.name }}</h2>
+      <p class="mb-0 text-light">
+        <a href="{{ url_for('home') }}" class="text-decoration-none secondary">
+          Home
+        </a>
+        <span class="mx-2">&rarr;</span> {{ product.category | replace('-', ' ')
+        | title }} <span class="mx-2">&rarr;</span> {{ product.name }}
+      </p>
+    </div>
+  </div>
+</section>
+<!-- Breadcrumb Section Ends -->
+
+<!-- Product Details Section Starts -->
+<section class="product-detail-section">
+  <div class="container">
+    <div class="product-detail-card" id="product-details-container">
+      <div class="row gy-5 gx-lg-5">
+        <!-- Left Column: Image & Gallery -->
+        <div class="col-lg-6 col-12">
+          <div class="product-detail-img-container">
+            <img
+              src="{{ product.image_url }}"
+              alt="{{ product.name }}"
+              class="img-fluid"
+              id="product-image-display"
+              style="transition: opacity 0.2s ease, transform 0.2s ease;"
+            />
+          </div>
+          
+          {% set gallery_list = [] %}
+          {% if product.image_url %}
+            {% set _ = gallery_list.append(product.image_url) %}
+          {% endif %}
+          {% if product.gallery_images %}
+            {% for img in product.gallery_images.split(',') %}
+              {% if img.strip() %}
+                {% set _ = gallery_list.append(img.strip()) %}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+          
+          {% if gallery_list | length > 1 %}
+          <div class="product-gallery-thumbnails">
+            {% for img_path in gallery_list %}
+            <button class="product-gallery-thumb{% if loop.first %} active{% endif %}" data-target-src="{{ img_path }}" aria-label="View product image {{ loop.index }}">
+              <img src="{{ img_path }}" alt="{{ product.name }} view {{ loop.index }}" loading="lazy" />
+            </button>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- Right Column: Details -->
+        <div class="col-lg-6 col-12 d-flex flex-column justify-content-center">
+          <div>
+            <span class="product-info-badge" id="product-category-badge"
+              >{{ product.category | replace('-', ' ') | title }}</span
+            >
+            <h1 class="product-detail-title" id="product-title-display">
+              {{ product.name }}
+            </h1>
+            <div class="product-detail-price" id="product-price-display">
+              ₹{{ product.mrp | replace('$', '') }}
+            </div>
+
+            {% if product.in_stock %}
+            <span class="status-badge status-instock" id="product-stock-status">
+              <i class="fa fa-check-circle"></i> In Stock
+            </span>
+            {% else %}
+            <span
+              class="status-badge status-outofstock"
+              id="product-stock-status"
+            >
+              <i class="fa fa-times-circle"></i> Out of Stock
+            </span>
+            {% endif %} {% if product.short_description %}
+            <div
+              class="product-detail-short-desc"
+              id="product-short-desc-display"
+            >
+              {{ product.short_description }}
+            </div>
+            {% endif %}
+
+            <div class="d-flex flex-wrap gap-3 align-items-center">
+              {% if product.in_stock %}
+              <a
+                href="#"
+                class="btn-get-quote btn-quote-whatsapp"
+                id="btn-whatsapp-quote"
+              >
+                <i class="fa fa-whatsapp"></i> Get Quote via WhatsApp
+              </a>
+              {% else %}
+              <button
+                class="btn-get-quote"
+                id="btn-whatsapp-quote-disabled"
+                disabled
+                style="
+                  background-color: #cccccc !important;
+                  color: #666666 !important;
+                  cursor: not-allowed;
+                  transform: none;
+                  box-shadow: none;
+                "
+              >
+                Out of Stock
+              </button>
+              {% endif %}
+
+              <a
+                href="{{ url_for('home') }}#shop-decor"
+                class="btn-back-catalog"
+                id="btn-back-catalog-link"
+              >
+                <i class="fa fa-long-arrow-left"></i> Back to Catalog
+              </a>
+            </div>
+
+            {% if product.description %}
+            <div
+              class="product-detail-long-desc"
+              id="product-long-desc-display"
+            >
+              <h4
+                style="
+                  font-size: 18px;
+                  font-weight: 600;
+                  color: #252525;
+                  margin-bottom: 12px;
+                "
+              >
+                Detailed Specifications &amp; Overview
+              </h4>
+              <p style="margin-bottom: 0">{{ product.description }}</p>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Product Details Section Ends -->
+{% endblock %} {% block scripts %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Thumbnail gallery switcher logic
+    const thumbnails = document.querySelectorAll(".product-gallery-thumb");
+    const mainImage = document.getElementById("product-image-display");
+    
+    if (thumbnails.length > 0 && mainImage) {
+      thumbnails.forEach(thumb => {
+        thumb.addEventListener("click", function () {
+          thumbnails.forEach(t => t.classList.remove("active"));
+          this.classList.add("active");
+          
+          const newSrc = this.getAttribute("data-target-src");
+          if (newSrc && mainImage.src !== newSrc) {
+            mainImage.style.opacity = "0";
+            mainImage.style.transform = "scale(0.97)";
+            
+            setTimeout(() => {
+              mainImage.src = newSrc;
+              mainImage.onload = function() {
+                mainImage.style.opacity = "1";
+                mainImage.style.transform = "scale(1)";
+              };
+            }, 200);
+          }
+        });
+      });
+    }
+
+    const quoteBtn = document.querySelector(".btn-quote-whatsapp");
+    if (quoteBtn) {
+      quoteBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        const productName = "{{ product.name }}";
+        const productCategory =
+          "{{ product.category | replace('-', ' ') | title }}";
+        const productPrice = "₹{{ product.mrp | replace('$', '') }}";
+        const productUrl = window.location.href;
+
+        const phoneNumber = "917351949490"; // WhatsApp number
+
+        const message = `Hello, I am interested in:
+        
+Product: ${productName}
+Category: ${productCategory}
+Price: ${productPrice}
+Link: ${productUrl}
+
+Please share more details.`;
+
+        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+        window.open(whatsappUrl, "_blank");
+      });
+    }
+  });
+</script>
+{% endblock %}

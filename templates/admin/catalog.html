@@ -60,6 +60,9 @@
                                 data-name="{{ prod.name | e }}"
                                 data-mrp="{{ prod.mrp | replace('$', '') | e }}"
                                 data-instock="{{ 'true' if prod.in_stock else 'false' }}"
+                                data-short-description="{{ prod.short_description | e if prod.short_description else '' }}"
+                                data-description="{{ prod.description | e if prod.description else '' }}"
+                                data-gallery-images="{{ prod.gallery_images | e if prod.gallery_images else '' }}"
                                 style="box-sizing: border-box; height: 38px; color: #2ed573; border-color: rgba(46, 213, 115, 0.2); background: rgba(46, 213, 115, 0.05); padding: 0 15px; font-weight: 500; transition: all 0.2s; border-radius: 6px; display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; cursor: pointer;" 
                                 onmouseover="this.style.background='#2ed573'; this.style.color='#fff';" 
                                 onmouseout="this.style.background='rgba(46, 213, 115, 0.05)'; this.style.color='#2ed573';">
@@ -101,6 +104,21 @@
                     <small id="prod-image-help" style="display: none; color: #666; font-size: 12px; margin-top: 6px;"><i class="fa-solid fa-circle-info text-muted"></i> Leave empty to keep the current image.</small>
                 </div>
 
+                <div class="admin-form-group" style="margin-bottom: 20px; width: 100%;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #252525; text-align: left; font-size: 13px;">Upload Gallery Images (Optional)</label>
+                    <div style="position: relative; width: 100%; border: 2px dashed var(--admin-border); border-radius: 8px; padding: 15px; background: #fafafa; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center;" onmouseover="this.style.borderColor='var(--admin-accent)'; this.style.background='rgba(144, 110, 73, 0.02)';" onmouseout="this.style.borderColor='var(--admin-border)'; this.style.background='#fafafa';">
+                        <input type="file" id="prod-gallery" name="gallery_images" accept="image/*" multiple style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; z-index: 10;" onchange="document.getElementById('gallery-name-display').innerText = this.files.length ? this.files.length + ' file(s) selected' : 'Choose gallery images (select multiple)'; document.getElementById('gallery-name-display').style.color = this.files.length ? 'var(--admin-accent)' : '#888';">
+                        <div style="pointer-events: none; display: flex; align-items: center; gap: 15px;">
+                            <i class="fa-solid fa-images" style="font-size: 28px; color: var(--admin-accent);"></i>
+                            <div style="text-align: left;">
+                                <div id="gallery-name-display" style="font-size: 13px; color: #888; font-weight: 500;">Choose gallery images (select multiple)</div>
+                                <div style="font-size: 11px; color: #aaa; margin-top: 2px;">Supported formats: JPEG, PNG, WEBP</div>
+                            </div>
+                        </div>
+                    </div>
+                    <small id="prod-gallery-help" style="display: none; color: #666; font-size: 12px; margin-top: 6px;"><i class="fa-solid fa-circle-info text-muted"></i> Uploading new gallery images will replace existing ones.</small>
+                </div>
+
                 <div class="admin-form-group" style="margin-bottom: 12px; width: 100%;">
                     <label for="prod-category" style="display: block; margin-bottom: 5px; font-weight: 500; color: #252525; text-align: left; font-size: 13px;">Category</label>
                     <div style="display: flex; gap: 10px;">
@@ -125,6 +143,16 @@
                 <div class="admin-form-group" style="margin-bottom: 12px; width: 100%;">
                     <label for="prod-mrp" style="display: block; margin-bottom: 5px; font-weight: 500; color: #252525; text-align: left; font-size: 13px;">MRP (Price)</label>
                     <input type="text" id="prod-mrp" name="mrp" class="admin-form-control" placeholder='e.g. 1,250' style="width: 100%; box-sizing: border-box; padding: 10px 12px; font-size: 14px; border-radius: 6px; border: 1px solid var(--admin-border);" required>
+                </div>
+
+                <div class="admin-form-group" style="margin-bottom: 12px; width: 100%;">
+                    <label for="prod-short-desc" style="display: block; margin-bottom: 5px; font-weight: 500; color: #252525; text-align: left; font-size: 13px;">Short Description</label>
+                    <input type="text" id="prod-short-desc" name="short_description" class="admin-form-control" placeholder='Brief summary of product' style="width: 100%; box-sizing: border-box; padding: 10px 12px; font-size: 14px; border-radius: 6px; border: 1px solid var(--admin-border);">
+                </div>
+
+                <div class="admin-form-group" style="margin-bottom: 12px; width: 100%;">
+                    <label for="prod-desc" style="display: block; margin-bottom: 5px; font-weight: 500; color: #252525; text-align: left; font-size: 13px;">Long Description</label>
+                    <textarea id="prod-desc" name="description" class="admin-form-control" placeholder='Detailed specifications, materials, sizing, styling tips' style="width: 100%; height: 100px; box-sizing: border-box; padding: 10px 12px; font-size: 14px; border-radius: 6px; border: 1px solid var(--admin-border); font-family: inherit; resize: vertical;"></textarea>
                 </div>
 
                 <div class="admin-form-group" style="margin-bottom: 12px; width: 100%; display: flex; align-items: center; gap: 8px;">
@@ -172,6 +200,19 @@
                     document.getElementById('file-name-display').style.color = '#888';
                     document.getElementById('prod-image-help').style.display = 'block';
                     document.getElementById('prod-image').removeAttribute('required');
+
+                    document.getElementById('prod-gallery').value = '';
+                    const existingGallery = btn.getAttribute('data-gallery-images');
+                    if (existingGallery) {
+                        const count = existingGallery.split(',').length;
+                        document.getElementById('gallery-name-display').innerText = count + ' existing gallery image(s)';
+                        document.getElementById('gallery-name-display').style.color = 'var(--admin-accent)';
+                        document.getElementById('prod-gallery-help').style.display = 'block';
+                    } else {
+                        document.getElementById('gallery-name-display').innerText = 'Choose gallery images (select multiple)';
+                        document.getElementById('gallery-name-display').style.color = '#888';
+                        document.getElementById('prod-gallery-help').style.display = 'none';
+                    }
                     
                     let predefinedCategories = ['furniture', 'home-decor', 'outdoor', 'accessories'];
                     let cat = btn.getAttribute('data-category');
@@ -190,6 +231,8 @@
                     document.getElementById('prod-name').value = btn.getAttribute('data-name');
                     document.getElementById('prod-mrp').value = btn.getAttribute('data-mrp');
                     document.getElementById('prod-instock').checked = btn.getAttribute('data-instock') === 'true';
+                    document.getElementById('prod-short-desc').value = btn.getAttribute('data-short-description') || '';
+                    document.getElementById('prod-desc').value = btn.getAttribute('data-description') || '';
                     
                     form.action = `/admin/catalog/edit/${btn.getAttribute('data-id')}`;
                     modalTitle.innerText = "Edit Product";
@@ -247,6 +290,11 @@
             document.getElementById('file-name-display').style.color = '#888';
             document.getElementById('prod-image-help').style.display = 'none';
             document.getElementById('prod-image').setAttribute('required', 'required');
+
+            document.getElementById('prod-gallery').value = '';
+            document.getElementById('gallery-name-display').innerText = 'Choose gallery images (select multiple)';
+            document.getElementById('gallery-name-display').style.color = '#888';
+            document.getElementById('prod-gallery-help').style.display = 'none';
             
             document.getElementById('prod-category').value = 'furniture';
             document.getElementById('custom-category-container').style.display = 'none';
@@ -256,6 +304,8 @@
             document.getElementById('prod-name').value = '';
             document.getElementById('prod-mrp').value = '';
             document.getElementById('prod-instock').checked = true;
+            document.getElementById('prod-short-desc').value = '';
+            document.getElementById('prod-desc').value = '';
             
             form.action = `{{ url_for('admin_add_catalog') }}`;
             modalTitle.innerText = "Add Product";

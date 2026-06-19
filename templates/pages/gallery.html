@@ -43,111 +43,24 @@
               <button class="gallery-filter-btn" data-filter="bedroom">Bedroom</button>
               <button class="gallery-filter-btn" data-filter="kitchen">Kitchen</button>
               <button class="gallery-filter-btn" data-filter="office">Office</button>
+              <button class="gallery-filter-btn" data-filter="sofaset">Sofa Set</button>
+              <button class="gallery-filter-btn" data-filter="other">Other</button>
             </div>
           </div>
         </div>
 
         <!-- Gallery Grid -->
         <div class="gallery-grid">
-          <!-- Item 1: Living Room -->
-          <div class="gallery-item" data-category="living-room">
-            <img src="https://placehold.co/1200x900/252525/906e49?text=Elegant+Living+Room" alt="Elegant Living Room" />
+          {% for item in gallery_items %}
+          <div class="gallery-item" data-category="{{ item.filter_class }}">
+            <img src="{{ item.image_url }}" alt="{{ item.alt }}" loading="lazy" />
             <div class="gallery-overlay">
               <div class="overlay-text text-center text-white p-3">
                 <i class="fa fa-search-plus mb-2"></i>
               </div>
             </div>
           </div>
-
-          <!-- Item 2: Kitchen -->
-          <div class="gallery-item" data-category="kitchen">
-            <img src="https://placehold.co/1200x900/252525/906e49?text=Modern+Kitchen+Cabinets" alt="Modern Kitchen Cabinets" />
-            <div class="gallery-overlay">
-              <div class="overlay-text text-center text-white p-3">
-                <i class="fa fa-search-plus mb-2"></i>
-              </div>
-            </div>
-          </div>
-
-          <!-- Item 3: Bedroom -->
-          <div class="gallery-item" data-category="bedroom">
-            <img src="https://placehold.co/1200x900/252525/906e49?text=Luxury+Master+Bedroom" alt="Luxury Master Bedroom" />
-            <div class="gallery-overlay">
-              <div class="overlay-text text-center text-white p-3">
-                <i class="fa fa-search-plus mb-2"></i>
-              </div>
-            </div>
-          </div>
-
-          <!-- Item 4: Office -->
-          <div class="gallery-item" data-category="office">
-            <img src="https://placehold.co/1200x900/252525/906e49?text=Executive+Office+Suite" alt="Executive Office Suite" />
-            <div class="gallery-overlay">
-              <div class="overlay-text text-center text-white p-3">
-                <i class="fa fa-search-plus mb-2"></i>
-              </div>
-            </div>
-          </div>
-
-          <!-- Item 6: Living Room -->
-          <div class="gallery-item" data-category="living-room">
-            <img src="https://placehold.co/1200x900/252525/906e49?text=Minimalist+Living+Room" alt="Minimalist Living Room" />
-            <div class="gallery-overlay">
-              <div class="overlay-text text-center text-white p-3">
-                <i class="fa fa-search-plus mb-2"></i>
-              </div>
-            </div>
-          </div>
-
-          <!-- Item 7: Kitchen -->
-          <div class="gallery-item" data-category="kitchen">
-            <img src="https://placehold.co/1200x900/252525/906e49?text=Industrial+Kitchen+Design" alt="Industrial Kitchen Design" />
-            <div class="gallery-overlay">
-              <div class="overlay-text text-center text-white p-3">
-                <i class="fa fa-search-plus mb-2"></i>
-              </div>
-            </div>
-          </div>
-
-          <!-- Item 8: Bedroom -->
-          <div class="gallery-item" data-category="bedroom">
-            <img src="https://placehold.co/1200x900/252525/906e49?text=Cozy+Guest+Bedroom" alt="Cozy Guest Bedroom" />
-            <div class="gallery-overlay">
-              <div class="overlay-text text-center text-white p-3">
-                <i class="fa fa-search-plus mb-2"></i>
-              </div>
-            </div>
-          </div>
-
-          <!-- Item 9: Office -->
-          <div class="gallery-item" data-category="office">
-            <img src="https://placehold.co/1200x900/252525/906e49?text=Corporate+Conference+Room" alt="Corporate Conference Room" />
-            <div class="gallery-overlay">
-              <div class="overlay-text text-center text-white p-3">
-                <i class="fa fa-search-plus mb-2"></i>
-              </div>
-            </div>
-          </div>
-
-          <!-- Item 11: Living Room -->
-          <div class="gallery-item" data-category="living-room">
-            <img src="https://placehold.co/1200x900/252525/906e49?text=Luxury+Penthouse+Lounge" alt="Luxury Penthouse Lounge" />
-            <div class="gallery-overlay">
-              <div class="overlay-text text-center text-white p-3">
-                <i class="fa fa-search-plus mb-2"></i>
-              </div>
-            </div>
-          </div>
-
-          <!-- Item 12: Kitchen -->
-          <div class="gallery-item" data-category="kitchen">
-            <img src="https://placehold.co/1200x900/252525/906e49?text=Contemporary+Kitchen+Island" alt="Contemporary Kitchen Island" />
-            <div class="gallery-overlay">
-              <div class="overlay-text text-center text-white p-3">
-                <i class="fa fa-search-plus mb-2"></i>
-              </div>
-            </div>
-          </div>
+          {% endfor %}
         </div>
       </div>
     </section>
