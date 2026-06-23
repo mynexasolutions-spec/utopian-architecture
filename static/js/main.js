@@ -211,7 +211,7 @@
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 6000,
+    autoplaySpeed: 1000,
     arrows: true,
     prevArrow: '<button type="button" class="slick-prev slick-arrow-beautiful"><i class="fa fa-angle-left"></i></button>',
     nextArrow: '<button type="button" class="slick-next slick-arrow-beautiful"><i class="fa fa-angle-right"></i></button>',

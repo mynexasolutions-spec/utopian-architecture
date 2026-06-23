@@ -1,15 +1,371 @@
 {% extends 'base.html' %}
+{% from 'components/_pagination.html' import render_pagination %}
 
-{% block title %}Shop – Utopia Furniture &amp; D&eacute;cor{% endblock %}
+{% block title %}
+  {% if selected_subcategory %}
+    {{ selected_subcategory.name }} – Utopia Shop
+  {% elif selected_category %}
+    {{ selected_category.name }} – Utopia Shop
+  {% else %}
+    Shop Premium Furniture &amp; Decor – Utopia
+  {% endif %}
+{% endblock %}
 
-{% block body_class %}bg-secondarylight{% endblock %}
+{% block styles %}
+<style>
+  .shop-section {
+    padding: 80px 0;
+    background-color: #f6f2eb; /* bg-secondarylight matching home page */
+  }
+  
+  /* Sidebar styles */
+  .shop-sidebar {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0px 10px 30px rgba(144, 110, 73, 0.04);
+    border: 1px solid rgba(144, 110, 73, 0.08);
+  }
+  
+  .sidebar-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: #252525;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #906e49;
+    letter-spacing: -0.3px;
+  }
+  
+  .category-nav-list {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+  }
+  
+  .category-nav-item {
+    margin-bottom: 12px;
+  }
+  
+  .category-nav-link {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    color: #252525;
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    border-radius: 10px;
+    background-color: #faf8f5;
+    transition: all 0.3s ease;
+  }
+  
+  .category-nav-link:hover,
+  .category-nav-link.active {
+    background-color: #906e49;
+    color: #ffffff !important;
+  }
+  
+  .category-nav-link i {
+    transition: transform 0.3s ease;
+  }
+  
+  .category-nav-item:hover .category-nav-link i,
+  .category-nav-item.is-active .category-nav-link i {
+    transform: rotate(90deg);
+  }
+
+  .subcategory-nav-list {
+    list-style: none;
+    padding-left: 20px;
+    border-left: 1px dashed rgba(144, 110, 73, 0.3);
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    margin-top: 0;
+    margin-bottom: 0;
+    /* transition out */
+    transition: max-height 0.4s cubic-bezier(0, 1, 0, 1), opacity 0.3s ease, margin 0.3s ease;
+  }
+
+  .category-nav-item:hover .subcategory-nav-list,
+  .category-nav-item.is-active .subcategory-nav-list {
+    max-height: 400px;
+    opacity: 1;
+    margin-top: 8px;
+    margin-bottom: 10px;
+    /* transition in */
+    transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out, margin 0.3s ease;
+  }
+  
+  .subcategory-nav-item {
+    margin-bottom: 8px;
+  }
+  
+  .subcategory-nav-link {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14.5px;
+    color: #666666;
+    text-decoration: none;
+    display: block;
+    padding: 4px 12px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+  }
+  
+  .subcategory-nav-link:hover,
+  .subcategory-nav-link.active {
+    color: #906e49 !important;
+    background-color: rgba(144, 110, 73, 0.05);
+    font-weight: 500;
+  }
+
+  /* Grid styles */
+  .shop-grid-header {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px 25px;
+    box-shadow: 0px 8px 24px rgba(144, 110, 73, 0.03);
+    margin-bottom: 30px;
+    border: 1px solid rgba(144, 110, 73, 0.06);
+  }
+
+  .shop-page-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    color: #252525;
+    margin-bottom: 5px;
+  }
+
+  /* Mobile sidebar toggle button */
+  .mobile-sidebar-toggle {
+    display: none;
+    width: 100%;
+    background-color: #252525;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  @media (max-width: 991px) {
+    .mobile-sidebar-toggle {
+      display: inline-flex;
+    }
+    .shop-sidebar-wrapper {
+      display: none;
+    }
+    .shop-sidebar-wrapper.show {
+      display: block;
+    }
+  }
+</style>
+{% endblock %}
 
 {% block content %}
-  <section class="py-6 text-center" style="min-height:60vh;display:flex;align-items:center;justify-content:center;">
-    <div>
-      <h2>Shop Coming Soon</h2>
-      <p>Our furniture &amp; decor shop is being curated. Check back soon.</p>
-      <a href="{{ url_for('home') }}" class="btn1">Back to Home <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+<!-- Breadcrumb Section Starts -->
+<section class="breadcrumb position-relative mb-0">
+  <div class="overlay"></div>
+  <div class="container position-absolute top-50 start-50 translate-middle text-center">
+    <div class="breadcrumb-inner mt-8">
+      <h2 class="grey mb-0">Shop Catalog</h2>
+      <p class="mb-0 text-light">
+        <a href="{{ url_for('home') }}" class="text-decoration-none secondary">Home</a>
+        <span class="mx-2">&rarr;</span> <a href="{{ url_for('shop') }}" class="text-decoration-none secondary">Shop</a>
+        {% if selected_category %}
+          <span class="mx-2">&rarr;</span> {{ selected_category.name }}
+        {% endif %}
+        {% if selected_subcategory %}
+          <span class="mx-2">&rarr;</span> {{ selected_subcategory.name }}
+        {% endif %}
+      </p>
     </div>
-  </section>
+  </div>
+</section>
+<!-- Breadcrumb Section Ends -->
+
+<!-- Shop Section Starts -->
+<section class="shop-section">
+  <div class="container">
+    
+    <!-- Mobile Filter Toggle Button -->
+    <button class="mobile-sidebar-toggle" onclick="toggleMobileSidebar()">
+      <i class="fa fa-filter"></i> Browse Categories
+    </button>
+    
+    <div class="row g-4">
+      
+      <!-- Left Column: Categories Sidebar -->
+      <div class="col-lg-3 col-12">
+        <div class="shop-sidebar-wrapper" id="shopSidebar">
+          <div class="shop-sidebar">
+            <h3 class="sidebar-title">Categories</h3>
+            <ul class="category-nav-list">
+              <li class="category-nav-item">
+                <a href="{{ url_for('shop') }}" class="category-nav-link {% if not selected_category %}active{% endif %}">
+                  <span>All Products</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+              </li>
+              
+              {% for cat in categories %}
+              {% set is_active_cat = (selected_category and selected_category.id == cat.id) or (selected_subcategory and selected_subcategory.category_id == cat.id) %}
+              <li class="category-nav-item {% if is_active_cat %}is-active{% endif %}">
+                <a href="{{ url_for('shop_category', category_id=cat.id) }}" class="category-nav-link {% if selected_category and selected_category.id == cat.id and not selected_subcategory %}active{% endif %}">
+                  <span>{{ cat.name }}</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+                
+                <!-- Subcategories nested lists -->
+                {% if cat.subcategories %}
+                <ul class="subcategory-nav-list">
+                  {% for sub in cat.subcategories %}
+                  <li class="subcategory-nav-item">
+                    <a href="{{ url_for('shop_subcategory', subcategory_id=sub.id) }}" class="subcategory-nav-link {% if selected_subcategory and selected_subcategory.id == sub.id %}active{% endif %}">
+                      {{ sub.name }}
+                    </a>
+                  </li>
+                  {% endfor %}
+                </ul>
+                {% endif %}
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Right Column: Products Display Grid -->
+      <div class="col-lg-9 col-12">
+        <div class="shop-grid-header d-flex flex-wrap justify-content-between align-items-center gap-3">
+          <div>
+            <h1 class="shop-page-title">
+              {% if selected_subcategory %}
+                {{ selected_subcategory.name }}
+              {% elif selected_category %}
+                {{ selected_category.name }}
+              {% else %}
+                All Collections
+              {% endif %}
+            </h1>
+            <p class="text-muted mb-0" style="font-size: 14.5px;">
+              Showing {{ products | length }} luxury items
+            </p>
+          </div>
+          
+          {% if selected_category or selected_subcategory %}
+          <a href="{{ url_for('shop') }}" class="btn-explore-projects py-2 px-4" style="font-size: 13px; border-radius: 20px;">
+            Clear Filters <i class="fa fa-times ms-1"></i>
+          </a>
+          {% endif %}
+        </div>
+        
+        {% if products %}
+        <div class="row g-4">
+          {% for prod in products %}
+          <div class="col-lg-4 col-md-6 col-sm-6 col-12 decor-product-item">
+            <div class="decor-product-card">
+              <a href="{{ url_for('product_detail', product_id=prod.id) }}">
+                <div class="product-img-container">
+                  <img src="{{ prod.image_url }}" alt="{{ prod.name }}" loading="lazy" />
+                </div>
+              </a>
+              <div class="product-details">
+                <span class="product-badge">
+                  {% if prod.subcategory_rel %}
+                    {{ prod.subcategory_rel.name }}
+                  {% else %}
+                    {{ prod.category | replace('-', ' ') | title }}
+                  {% endif %}
+                </span>
+                
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h4 class="product-title mb-0" style="font-size: 16px;">
+                    <a href="{{ url_for('product_detail', product_id=prod.id) }}" style="color: inherit; text-decoration: none;">
+                      {{ prod.name }}
+                    </a>
+                  </h4>
+                  <span class="product-price" style="font-size: 18px;">₹{{ prod.mrp | replace('$', '') }}</span>
+                </div>
+                
+                {% if prod.in_stock %}
+                <button class="btn-add-cart w-100">Get Quote</button>
+                {% else %}
+                <button class="btn-add-cart w-100" disabled style="background-color: #cccccc !important; color: #666666 !important; border: none !important; cursor: not-allowed; pointer-events: none;">Out of Stock</button>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        
+        <!-- Pagination -->
+        {% if selected_subcategory %}
+          {{ render_pagination(products_pagination, 'shop_subcategory', {'subcategory_id': selected_subcategory.id}) }}
+        {% elif selected_category %}
+          {{ render_pagination(products_pagination, 'shop_category', {'category_id': selected_category.id}) }}
+        {% else %}
+          {{ render_pagination(products_pagination, 'shop', {}) }}
+        {% endif %}
+
+        {% else %}
+        <div class="text-center py-5 bg-white rounded-4 border" style="border-color: rgba(144, 110, 73, 0.1) !important;">
+          <i class="fa fa-couch text-muted mb-3" style="font-size: 48px; color: #b0a483 !important;"></i>
+          <h3>No Products Found</h3>
+          <p class="text-muted px-3">We don't have any items registered in this category yet. Check back soon!</p>
+          <a href="{{ url_for('shop') }}" class="btn1 btn-sm mt-2">Browse All Products</a>
+        </div>
+        {% endif %}
+      </div>
+      
+    </div>
+  </div>
+</section>
+<!-- Shop Section Ends -->
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  function toggleMobileSidebar() {
+    const sidebar = document.getElementById('shopSidebar');
+    sidebar.classList.toggle('show');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // WhatsApp Quote Button Action
+    document.querySelectorAll(".btn-add-cart").forEach((button) => {
+      button.addEventListener("click", function () {
+        const card = this.closest(".decor-product-card");
+        const productName = card.querySelector(".product-title").textContent.trim();
+        const productPrice = card.querySelector(".product-price").textContent.trim();
+        const productCategory = card.querySelector(".product-badge").textContent.trim();
+        const productUrl = card.querySelector("a").href;
+
+        const phoneNumber = "917351949490"; // WhatsApp number
+        const message = `Hello, I am interested in:
+
+Product: ${productName}
+Category: ${productCategory}
+Price: ${productPrice}
+Link: ${productUrl}
+
+Please share more details.`;
+
+        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+        window.open(whatsappUrl, "_blank");
+      });
+    });
+  });
+</script>
 {% endblock %}

@@ -951,6 +951,7 @@ header .header-icons ul li i {
   .slicknav_btn {
     position: absolute;
     right: 70px;
+    top: -5px;
   }
   .slicknav_btn.slicknav_open:before,
   .slicknav_btn.slicknav_collapsed:before {
@@ -1167,7 +1168,9 @@ header .header-icons ul li i {
   left: 50%;
   z-index: 1;
 }
-
+.border-right-left-top {
+    border-radius: 30px 30px 0 0;
+}
 .progress-bar {
   animation: progressBar 3s ease-in-out;
   animation-fill-mode: both;
@@ -1763,6 +1766,7 @@ footer .footer-top-left {
 .home-3 .banner {
   margin-top: -50px;
   cursor: grab;
+  margin-bottom: 30px;
 }
 .home-3 .banner .banner-slide {
   height: 650px;
@@ -1798,7 +1802,7 @@ footer .footer-top-left {
 }
 @media (max-width: 976px) {
   .home-3 .banner .banner-slide {
-    height: 450px;
+    height: 550px;
   }
   .home-3 .banner .banner-slide h2 {
     font-size: 60px !important;
@@ -1818,7 +1822,11 @@ footer .footer-top-left {
 }
 @media (max-width: 976px) {
   .home-3 .banner .slick-dots {
-    display: none !important;
+    display: block !important;
+    right: 0 !important;
+    left: 0 !important;
+    text-align: center !important;
+    bottom: 15px !important;
   }
 }
 .home-3 .banner .slick-dots li.slick-active button:before {

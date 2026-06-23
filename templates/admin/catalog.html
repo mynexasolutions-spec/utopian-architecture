@@ -1,6 +1,6 @@
 {% extends 'admin/layout.html' %}
 
-{% block title %}Catalog – UtopiaAdmin{% endblock %}
+{% block title %}Products – UtopiaAdmin{% endblock %}
 
 {% block content %}
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -15,7 +15,7 @@
 
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 5px;">
         <div>
-            <h1 class="admin-page-title" style="margin-bottom: 2px;">Product Catalog</h1>
+            <h1 class="admin-page-title" style="margin-bottom: 2px;">Products</h1>
             <p class="admin-page-subtitle" style="margin-bottom: 0;">Manage furniture and decor items.</p>
         </div>
         <div>
@@ -32,7 +32,7 @@
                     
                     <div style="width: 100%; margin-bottom: 15px; border-radius: 8px; overflow: hidden; height: 200px; background-image: url('{{ prod.image_url }}'); background-size: cover; background-position: center;">
                         <span style="position: absolute; top: 35px; left: 35px; background: rgba(0,0,0,0.7); color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500;">
-                            {{ prod.category | replace('-', ' ') | title }}
+                            {% if prod.category_rel %}{{ prod.category_rel.name }}{% if prod.subcategory_rel %} &rarr; {{ prod.subcategory_rel.name }}{% endif %}{% else %}{{ prod.category | replace('-', ' ') | title }}{% endif %}
                         </span>
                         {% if not prod.in_stock %}
                         <span style="position: absolute; top: 35px; right: 35px; background: rgba(255, 71, 87, 0.9); color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500;">
@@ -54,9 +54,18 @@
                     </div>
                     
                     <div style="display: flex; gap: 10px; width: 100%; margin-top: auto; justify-content: flex-end;">
+                        <form method="POST" action="{{ url_for('admin_duplicate_catalog', id=prod.id) }}" style="margin: 0; padding: 0;">
+                            <button type="submit" class="admin-btn duplicate-btn" 
+                                    style="box-sizing: border-box; height: 38px; color: #ffa502; border-color: rgba(255, 165, 2, 0.2); background: rgba(255, 165, 2, 0.05); padding: 0 15px; font-weight: 500; transition: all 0.2s; border-radius: 6px; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; border: 1px solid rgba(255, 165, 2, 0.2);" 
+                                    onmouseover="this.style.background='#ffa502'; this.style.color='#fff';" 
+                                    onmouseout="this.style.background='rgba(255, 165, 2, 0.05)'; this.style.color='#ffa502';">
+                                <i class="ri-file-copy-line"></i> Duplicate
+                            </button>
+                        </form>
                         <button type="button" class="admin-btn edit-btn" 
                                 data-id="{{ prod.id }}"
-                                data-category="{{ prod.category | e }}"
+                                data-category-id="{{ prod.category_id if prod.category_id else '' }}"
+                                data-subcategory-id="{{ prod.subcategory_id if prod.subcategory_id else '' }}"
                                 data-name="{{ prod.name | e }}"
                                 data-mrp="{{ prod.mrp | replace('$', '') | e }}"
                                 data-instock="{{ 'true' if prod.in_stock else 'false' }}"
@@ -121,18 +130,19 @@
 
                 <div class="admin-form-group" style="margin-bottom: 12px; width: 100%;">
                     <label for="prod-category" style="display: block; margin-bottom: 5px; font-weight: 500; color: #252525; text-align: left; font-size: 13px;">Category</label>
-                    <div style="display: flex; gap: 10px;">
-                        <select id="prod-category" name="category" class="admin-form-control" style="flex: 1; box-sizing: border-box; padding: 10px 35px 10px 12px; font-size: 14px; border-radius: 6px; border: 1px solid var(--admin-border); background-color: #fff; cursor: pointer;" required>
-                            <option value="furniture">Furniture</option>
-                            <option value="home-decor">Home Decor</option>
-                            <option value="outdoor">Outdoor</option>
-                            <option value="accessories">Accessories</option>
-                            <option value="other">Other (Add New)</option>
-                        </select>
-                        <div id="custom-category-container" style="display: none; flex: 1;">
-                            <input type="text" id="custom-category" name="custom_category" class="admin-form-control" placeholder="Enter new category" style="width: 100%; box-sizing: border-box; padding: 10px 12px; font-size: 14px; border-radius: 6px; border: 1px solid var(--admin-border);">
-                        </div>
-                    </div>
+                    <select id="prod-category" name="category_id" class="admin-form-control" style="width: 100%; box-sizing: border-box; padding: 10px 12px; font-size: 14px; border-radius: 6px; border: 1px solid var(--admin-border); background-color: #fff; cursor: pointer;" required>
+                        <option value="">Select Category</option>
+                        {% for cat in categories %}
+                        <option value="{{ cat.id }}">{{ cat.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="admin-form-group" style="margin-bottom: 12px; width: 100%;">
+                    <label for="prod-subcategory" style="display: block; margin-bottom: 5px; font-weight: 500; color: #252525; text-align: left; font-size: 13px;">Subcategory</label>
+                    <select id="prod-subcategory" name="subcategory_id" class="admin-form-control" style="width: 100%; box-sizing: border-box; padding: 10px 12px; font-size: 14px; border-radius: 6px; border: 1px solid var(--admin-border); background-color: #fff; cursor: pointer;">
+                        <option value="">Select Subcategory</option>
+                    </select>
                 </div>
 
                 <div class="admin-form-group" style="margin-bottom: 12px; width: 100%;">
@@ -187,12 +197,44 @@
     </div>
 
     <script>
+        const categoriesData = {
+            {% for cat in categories %}
+            "{{ cat.id }}": [
+                {% for sub in cat.subcategories %}
+                { "id": "{{ sub.id }}", "name": "{{ sub.name | escape }}" },
+                {% endfor %}
+            ],
+            {% endfor %}
+        };
+
+        function updateSubcategories(categoryId, selectedSubId = '') {
+            const subSelect = document.getElementById('prod-subcategory');
+            subSelect.innerHTML = '<option value="">Select Subcategory</option>';
+            
+            if (categoryId && categoriesData[categoryId]) {
+                categoriesData[categoryId].forEach(sub => {
+                    const opt = document.createElement('option');
+                    opt.value = sub.id;
+                    opt.innerText = sub.name;
+                    if (selectedSubId && String(sub.id) === String(selectedSubId)) {
+                        opt.selected = true;
+                    }
+                    subSelect.appendChild(opt);
+                });
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const editBtns = document.querySelectorAll('.edit-btn');
             const modal = document.getElementById('catalogModal');
             const form = document.getElementById('catalogForm');
             const modalTitle = document.getElementById('modalTitle');
             
+            // Listen for category selection changes to update subcategory options
+            document.getElementById('prod-category').addEventListener('change', function() {
+                updateSubcategories(this.value);
+            });
+
             editBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     document.getElementById('prod-image').value = '';
@@ -214,19 +256,10 @@
                         document.getElementById('prod-gallery-help').style.display = 'none';
                     }
                     
-                    let predefinedCategories = ['furniture', 'home-decor', 'outdoor', 'accessories'];
-                    let cat = btn.getAttribute('data-category');
-                    if (predefinedCategories.includes(cat)) {
-                        document.getElementById('prod-category').value = cat;
-                        document.getElementById('custom-category-container').style.display = 'none';
-                        document.getElementById('custom-category').removeAttribute('required');
-                    } else {
-                        document.getElementById('prod-category').value = 'other';
-                        document.getElementById('custom-category-container').style.display = 'block';
-                        // Convert hyphenated back to Title Case for editing
-                        document.getElementById('custom-category').value = cat.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-                        document.getElementById('custom-category').setAttribute('required', 'required');
-                    }
+                    const catId = btn.getAttribute('data-category-id');
+                    const subId = btn.getAttribute('data-subcategory-id');
+                    document.getElementById('prod-category').value = catId || '';
+                    updateSubcategories(catId || '', subId || '');
                     
                     document.getElementById('prod-name').value = btn.getAttribute('data-name');
                     document.getElementById('prod-mrp').value = btn.getAttribute('data-mrp');
@@ -269,15 +302,6 @@
                 }
             });
 
-            document.getElementById('prod-category').addEventListener('change', function() {
-                if (this.value === 'other') {
-                    document.getElementById('custom-category-container').style.display = 'block';
-                    document.getElementById('custom-category').setAttribute('required', 'required');
-                } else {
-                    document.getElementById('custom-category-container').style.display = 'none';
-                    document.getElementById('custom-category').removeAttribute('required');
-                }
-            });
         });
 
         function openAddModal() {
@@ -296,10 +320,8 @@
             document.getElementById('gallery-name-display').style.color = '#888';
             document.getElementById('prod-gallery-help').style.display = 'none';
             
-            document.getElementById('prod-category').value = 'furniture';
-            document.getElementById('custom-category-container').style.display = 'none';
-            document.getElementById('custom-category').value = '';
-            document.getElementById('custom-category').removeAttribute('required');
+            document.getElementById('prod-category').value = '';
+            document.getElementById('prod-subcategory').innerHTML = '<option value="">Select Subcategory</option>';
             
             document.getElementById('prod-name').value = '';
             document.getElementById('prod-mrp').value = '';

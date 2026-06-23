@@ -10,7 +10,7 @@
     if ($('.banner-slider1').length && !$('.banner-slider1').hasClass('slick-initialized')) {
       $('.banner-slider1').slick({
         autoplay: true,
-        autoplaySpeed: 5000,
+        autoplaySpeed: 1000,
         speed: 800,
         infinite: true,
         dots: true,

@@ -1,22 +1,22 @@
 /*------------------------------------------------------------------
 * Project: INTERIOR-PROJECT
 * File:    responsive.css — All media query overrides
--------------------------------------------------------------------*/
+* -------------------------------------------------------------------*/
 
 /* ── 1400px ── */
 @media (max-width: 1400px) {
-  .banner .banner-slide h2 { font-size: 70px; }
+  .banner .banner-slide h2 { font-size: 70px !important; }
 }
 
 /* ── 1200px ── */
 @media (max-width: 1200px) {
-  .banner .banner-slide h2 { font-size: 58px; }
+  .banner .banner-slide h2 { font-size: 58px !important; }
   .ad-banner-inner h2.h1 { font-size: 50px; }
 }
 
 /* ── 992px ── */
 @media (max-width: 992px) {
-  .banner .banner-slide h2 { font-size: 44px; }
+  .banner .banner-slide h2 { font-size: 44px !important; }
   .process-body .process-image { order: -1; }
   .why-us-left { margin-bottom: 2rem; }
   .footer-top h1 { font-size: 40px; }
@@ -30,8 +30,8 @@
 
 /* ── 768px ── */
 @media (max-width: 768px) {
-  .banner .banner-slide, .banner .slide { height: 400px !important; }
-  .banner .banner-slide h2 { font-size: 32px; }
+  .banner .banner-slide, .banner .slide, .home-3 .banner .banner-slide { height: 480px !important; }
+  .banner .banner-slide h2 { font-size: 32px !important; }
   .about-center img { height: 300px !important; object-fit: cover; }
   .project-card-image img { height: 250px !important; object-fit: cover; }
   .header-nav-inner { padding: 10px 15px !important; }
@@ -42,22 +42,21 @@
   .section-title-left h2.mb-2 { font-size: 28px !important; }
   .shop-decor h2 {
     font-size: 28px !important;
-}
-.decor-filters .decor-filter-btn {
-    
+  }
+  .decor-filters .decor-filter-btn {
     padding: 8px 16px !important;
     transition: 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
+  }
 
-.about-center img, .process-image img {
+  .about-center img, .process-image img {
     height: 260px !important;
     object-fit: cover;
-}
+  }
 }
 
 /* ── 576px ── */
 @media (max-width: 576px) {
-  .banner .banner-slide h2 { font-size: 26px; }
+  .banner .banner-slide h2 { font-size: 26px !important; }
   .about-right ul li span.h2 { font-size: 36px; }
   .process-box { padding: 1.25rem !important; }
   .footer-top h1 { font-size: 30px; }

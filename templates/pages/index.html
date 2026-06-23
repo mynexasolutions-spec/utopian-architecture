@@ -1,1137 +1,1556 @@
-{% extends 'base.html' %}
-
-{% block title %}Home – Utopia Furniture &amp; D&eacute;cor{% endblock %}
-
-{% block body_class %}home-3 bg-secondarylight{% endblock %}
-
-{% block content %}
-    <!-- Banner Section Starts -->
-    <section class="banner position-relative overflow-hidden p-0">
-      <div class="banner-slider1">
-        {% for slide in sliders %}
+{% extends 'base.html' %} {% from 'components/_pagination.html' import
+render_pagination %} {% block title %}Home – Utopia Furniture &amp;
+D&eacute;cor{% endblock %} {% block body_class %}home-3 bg-secondarylight{%
+endblock %} {% block content %}
+<!-- Banner Section Starts -->
+<section class="banner position-relative overflow-hidden p-0">
+  <div class="banner-slider1">
+    {% for slide in sliders %}
+    <div
+      class="banner-slide position-relative"
+      style="background-image: url('{{ slide.image_url }}');"
+    >
+      <div class="overlay"></div>
+      <div class="container h-100">
         <div
-          class="banner-slide position-relative"
-          style="background-image: url('{{ slide.image_url }}');"
+          class="banner-slide-inner h-100 py-5 d-flex align-items-center position-relative text-center text-lg-start"
         >
-          <div class="overlay"></div>
-          <div class="container h-100">
-            <div
-              class="banner-slide-inner h-100 py-5 d-flex align-items-center position-relative text-center text-lg-start"
-            >
-              <div class="row align-items-center gy-4 w-100">
-                <div class="col-lg-7">
-                  <h2
-                    class="text-uppercase position-relative mb-0 white"
-                    style="font-size: 80px; font-weight: 800; line-height: 1"
-                  >
-                    {{ slide.heading | safe }}
-                  </h2>
-                </div>
-                <div class="col-lg-5">
-                  <div class="banner-info ps-lg-4">
-                    <p
-                      class="white mb-4"
-                      style="line-height: 1.6; font-size: 16px"
-                    >
-                      {{ slide.sub_text }}
-                    </p>
-                    <a href="{{ url_for('contact') }}" class="btn1 text-uppercase"
-                      >Book a consultation
-                      <i
-                        class="fa fa-long-arrow-right ms-2"
-                        aria-hidden="true"
-                      ></i
-                    ></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-    </section>
-    <!-- Banner Section Ends -->
-
-    <!-- About Us Section Starts -->
-    <section class="about-us">
-      <div class="container">
-        <div class="about-us-inner text-center text-lg-start">
-          <div class="row align-items-center gx-md-5 gy-5">
-            <div class="col-xl-3 col-md-6">
-              <div class="about-left">
-                <h6 class="secondary mb-0">About Us</h6>
-                <h2 class="mb-3">About Utopia Furniture &amp; D&eacute;cor</h2>
-                <p class="mb-0">
-                  Creating Elegant Interiors With Timeless Design
-                </p>
-              </div>
-            </div>
-            <div class="col-xl-4 col-md-6">
-              <div class="about-center position-relative">
-                <img
-                  src="{{ url_for('static', filename='img/about/about-living-room.jpg') }}"
-                  alt="about image"
-                  class="rounded-3"
-                />
-              </div>
-            </div>
-            <div class="col-xl-5">
-              <div class="about-right">
-                <p class="mb-4">
-                  Utopia Furniture &amp; D&eacute;cor is a premier interior design and
-                  custom furniture company based in Muzaffarnagar, Uttar
-                  Pradesh. Founded in 2021 under the leadership of Abdul Qadir
-                  (Architect), we bring international design standards and Gulf
-                  region experience to every project we undertake.
-                </p>
-                <ul
-                  class="d-flex rounded-4 justify-content-between flex-wrap gap-1 mb-4"
-                >
-                  <li class="">
-                    <span class="h2 primary teko mb-0 lh-sm">120+</span>
-                    <span class="teko h6 d-block mb-0 secondary"
-                      >Projects Completed</span
-                    >
-                  </li>
-                  <li class="">
-                    <span class="h2 primary teko mb-0 lh-sm">8+</span>
-                    <span class="teko h6 d-block mb-0 secondary"
-                      >Years Experience</span
-                    >
-                  </li>
-                </ul>
-                <a href="{{ url_for('about') }}" class="btn1"
-                  >Discover More<i
-                    class="fa fa-long-arrow-right"
-                    aria-hidden="true"
-                  ></i
-                ></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- About Us Section Ends -->
-
-    <!-- Services Section Starts -->
-    <section class="services bg-white rounded-5">
-      <div class="container-fluid">
-        <div class="services-inner">
-          <div class="services-title mb-5 text-center text-lg-start">
-            <div class="container">
-              <div class="row align-items-center justify-content-between gy-3">
-                <div class="col-lg-4">
-                  <div class="services-title-left">
-                    <h6 class="secondary mb-0">Our Services</h6>
-                    <h2 class="mb-0">Transforming Spaces with Style</h2>
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="services-title-right text-lg-start">
-                    <p class="mb-3">
-                      We offer end-to-end interior and furniture solutions
-                      tailored to your lifestyle and budget.
-                    </p>
-                    <a href="{{ url_for('services') }}" class="btn1"
-                      >View All Services<i
-                        class="fa fa-long-arrow-right"
-                        aria-hidden="true"
-                      ></i
-                    ></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="services-body">
-            <div
-              class="row row-cols-lg-3 row-cols-md-2 row-cols-1 gy-4 justify-content-center mx-auto"
-              style="max-width: 1400px"
-            >
-              <div class="col">
-                <div class="service-box position-relative">
-                  <div class="overlay rounded-4"></div>
-                  <div class="services-image">
-                    <img
-                      src="{{ url_for('static', filename='img/services/residential.jpg') }}"
-                      alt="Interior Design"
-                      class="rounded-4"
-                      style="height: 280px; object-fit: cover; width: 100%"
-                    />
-                  </div>
-                  <div
-                    class="services-info position-relative p-3 position-absolute bottom-0 w-100 rounded-top-0 white"
-                  >
-                    <h4 class="mb-1">
-                      <a href="{{ url_for('services') }}">Interior Design</a>
-                    </h4>
-                    <p class="mb-0">
-                      Premium quality workmanship with modern aesthetics and
-                      durable materials.
-                    </p>
-                  </div>
-                  <a
-                    href="{{ url_for('services') }}"
-                    class="bg-secondary arrow rounded-circle position-absolute p-0"
-                    style="top: 15px; right: 15px"
-                  >
-                    <i
-                      class="fa fa-long-arrow-right m-0 text-center"
-                      aria-hidden="true"
-                    ></i>
-                  </a>
-                </div>
-              </div>
-              <div class="col">
-                <div class="service-box position-relative">
-                  <div class="overlay rounded-4"></div>
-                  <div class="services-image">
-                    <img
-                      src="{{ url_for('static', filename='img/services/Custom_Furniture.webp') }}"
-                      alt="Custom Furniture"
-                      class="rounded-4"
-                      style="height: 280px; object-fit: cover; width: 100%"
-                    />
-                  </div>
-                  <div
-                    class="services-info position-relative p-3 position-absolute bottom-0 w-100 rounded-top-0 white"
-                  >
-                    <h4 class="mb-1">
-                      <a href="{{ url_for('services') }}">Custom Furniture</a>
-                    </h4>
-                    <p class="mb-0">
-                      Premium quality workmanship with modern aesthetics and
-                      durable materials.
-                    </p>
-                  </div>
-                  <a
-                    href="{{ url_for('services') }}"
-                    class="bg-secondary arrow rounded-circle position-absolute p-0"
-                    style="top: 15px; right: 15px"
-                  >
-                    <i
-                      class="fa fa-long-arrow-right m-0 text-center"
-                      aria-hidden="true"
-                    ></i>
-                  </a>
-                </div>
-              </div>
-              <div class="col">
-                <div class="service-box position-relative">
-                  <div class="overlay rounded-4"></div>
-                  <div class="services-image">
-                    <img
-                      src="{{ url_for('static', filename='img/services/Pergola_works.webp') }}"
-                      alt="Pergola &amp; Outdoor Works"
-                      class="rounded-4"
-                      style="height: 280px; object-fit: cover; width: 100%"
-                    />
-                  </div>
-                  <div
-                    class="services-info position-relative p-3 position-absolute bottom-0 w-100 rounded-top-0 white"
-                  >
-                    <h4 class="mb-1">
-                      <a href="{{ url_for('services') }}">Pergola &amp; Outdoor Works</a>
-                    </h4>
-                    <p class="mb-0">
-                      Premium quality workmanship with modern aesthetics and
-                      durable materials.
-                    </p>
-                  </div>
-                  <a
-                    href="{{ url_for('services') }}"
-                    class="bg-secondary arrow rounded-circle position-absolute p-0"
-                    style="top: 15px; right: 15px"
-                  >
-                    <i
-                      class="fa fa-long-arrow-right m-0 text-center"
-                      aria-hidden="true"
-                    ></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Services Section Ends -->
-
-    <!-- Portfolio Section Starts -->
-    <section class="featured-projects py-5">
-      <div class="container">
-        <div class="featured-projects-inner">
-          <!-- Section Header -->
-          <div class="row align-items-center justify-content-between mb-5 gy-3">
-            <div class="col-md-8 text-center text-md-start">
-              <div class="section-title-left">
-                <h2 class="mb-2">Featured Projects</h2>
-                <p class="mb-0">
-                  Elegant and modern interior projects crafted with precision.
-                </p>
-              </div>
-            </div>
-            <div class="col-md-4 text-center text-md-end">
-              <a href="{{ url_for('gallery') }}" class="btn-explore-projects"
-                >Explore All Projects</a
-              >
-            </div>
-          </div>
-
-          <!-- Cards Grid -->
-          <div class="row g-4">
-            <!-- Card 1 -->
-            <div class="col-lg-4 col-md-6 col-12">
-              <div class="project-grid-card">
-                <div class="project-card-image">
-                  <img
-                    src="{{ url_for('static', filename='img/featured/Modern_Villa_Interior.webp') }}"
-                    alt="Modern Villa Interior"
-                  />
-                </div>
-                <div class="project-card-info">
-                  <h4 class="project-card-title">
-                    <a href="{{ url_for('gallery') }}">Modern Villa Interior</a>
-                  </h4>
-                  <p class="project-card-location">Riyadh</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="col-lg-4 col-md-6 col-12">
-              <div class="project-grid-card">
-                <div class="project-card-image">
-                  <img
-                    src="{{ url_for('static', filename='img/featured/bed_6.webp') }}"
-                    alt="Luxury Living Room"
-                  />
-                </div>
-                <div class="project-card-info">
-                  <h4 class="project-card-title">
-                    <a href="{{ url_for('gallery') }}">Luxury Living Room</a>
-                  </h4>
-                  <p class="project-card-location">Jeddah</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="col-lg-4 col-md-6 col-12">
-              <div class="project-grid-card">
-                <div class="project-card-image">
-                  <img
-                    src="{{ url_for('static', filename='img/featured/conference-room.jpeg') }}"
-                    alt="Office Design"
-                  />
-                </div>
-                <div class="project-card-info">
-                  <h4 class="project-card-title">
-                    <a href="{{ url_for('gallery') }}">Office Design</a>
-                  </h4>
-                  <p class="project-card-location">KAFD</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Portfolio Section Ends -->
-
-    <!-- Shop Section Starts -->
-    <section class="shop-decor bg-secondarylight py-6">
-      <div class="container">
-        <div class="shop-decor-inner">
-          <!-- Section Header -->
-          <div class="row justify-content-center text-center mb-5">
-            <div class="col-lg-auto col-md-auto col-12">
-              <h2 class="mb-2">Furniture &amp; Home Decor</h2>
-              <p class="text-muted mb-0">
-                Explore premium furniture, luxury home decor, lighting, and
-                accessories.
-              </p>
-
-              <!-- Category Filters -->
-              <div
-                class="decor-filters d-flex flex-wrap justify-content-center gap-2 mt-4"
-              >
-                <button class="decor-filter-btn active" data-filter="all">
-                  All
-                </button>
-                {% for cat in unique_categories %}
-                <button class="decor-filter-btn" data-filter="{{ cat }}">
-                  {{ cat | replace('-', ' ') | title }}
-                </button>
-                {% endfor %}
-              </div>
-            </div>
-          </div>
-
-          <!-- Products Grid -->
-          <div class="row g-4 decor-products-grid">
-            {% for prod in catalog_products %}
-            <div
-              class="col-lg-3 col-md-4 col-sm-6 col-12 decor-product-item"
-              data-category="{{ prod.category }}"
-            >
-              <div class="decor-product-card">
-                <a href="{{ url_for('product_detail', product_id=prod.id) }}">
-                  <div class="product-img-container">
-                    <img
-                      src="{{ prod.image_url }}"
-                      alt="{{ prod.name }}"
-                    />
-                  </div>
-                </a>
-                <div class="product-details">
-                  <span class="product-badge">{{ prod.category | replace('-', ' ') | title }}</span>
-                  <div
-                    class="d-flex justify-content-between align-items-center mb-3"
-                  >
-                    <h4 class="product-title mb-0">
-                      <a href="{{ url_for('product_detail', product_id=prod.id) }}" style="color: inherit; text-decoration: none;">
-                        {{ prod.name }}
-                      </a>
-                    </h4>
-                    <span class="product-price">₹{{ prod.mrp | replace('$', '') }}</span>
-                  </div>
-                  {% if prod.in_stock %}
-                  <button class="btn-add-cart w-100">Get Quote</button>
-                  {% else %}
-                  <button class="btn-add-cart w-100" disabled style="background-color: #cccccc !important; color: #666666 !important; border: none !important; cursor: not-allowed; pointer-events: none;">Out of Stock</button>
-                  {% endif %}
-                </div>
-              </div>
-            </div>
-            {% endfor %}
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Shop Section Ends -->
-
-    <!-- Process Section Starts -->
-    <section class="process pt-0">
-      <div class="container">
-        <div class="process-inner">
-          <div class="process-title mb-5 text-center text-lg-start">
-            <div class="row align-items-center">
-              <div class="col-lg-6">
-                <div class="process-title-left">
-                  <h6 class="secondary mb-0">How it works</h6>
-                  <h2 class="mb-0">A Simple &amp; Transparent Process</h2>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="process-title-right">
-                  <p class="mb-0">
-                    From your first call to final handover — we make the entire
-                    journey smooth, clear, and stress-free.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="process-body">
-            <div
-              class="row align-items-center gx-md-5 gy-5 justify-content-center"
-            >
-              <div class="col-lg-4 col-md-6 order-1">
-                <div class="process-left">
-                  <div
-                    class="process-box p-4 bg-white rounded-4 position-relative mb-4"
-                  >
-                    <div
-                      class="process-icon position-absolute"
-                      style="top: 20px; right: 20px"
-                    >
-                      <img
-                        src="{{ url_for('static', filename='img/icons/search.png') }}"
-                        alt="search icon"
-                        style="height: 40px; width: 40px"
-                      />
-                    </div>
-                    <span class="teko h2 mb-0">01.</span>
-                    <h4 class="secondary mb-3">Consultation</h4>
-                    <p class="mb-0">
-                      We begin with a detailed discussion to understand your
-                      requirements, budget, style preferences, and project
-                      goals.
-                    </p>
-                  </div>
-                  <div
-                    class="process-box p-4 bg-white rounded-4 position-relative"
-                  >
-                    <div
-                      class="process-icon position-absolute"
-                      style="top: 20px; right: 20px"
-                    >
-                      <img
-                        src="{{ url_for('static', filename='img/icons/vision.png') }}"
-                        alt="search icon"
-                        style="height: 40px; width: 40px"
-                      />
-                    </div>
-                    <span class="teko h2 mb-0">02.</span>
-                    <h4 class="secondary mb-3">Design &amp; Planning</h4>
-                    <p class="mb-0">
-                      Our team creates customized 2D/3D design concepts,
-                      material selections, and a complete project plan for your
-                      approval.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4 col-md-6 order-3 order-lg-2">
-                <div class="process-image">
-                  <img
-                    src="{{ url_for('static', filename='img/about/about-scandinavian.jpg') }}"
-                    alt="interior"
-                    class="rounded-4"
-                  />
-                </div>
-              </div>
-              <div class="col-lg-4 col-md-6 order-2 order-lg-3">
-                <div class="process-left">
-                  <div
-                    class="process-box p-4 bg-white rounded-4 position-relative mb-4"
-                  >
-                    <div
-                      class="process-icon position-absolute"
-                      style="top: 20px; right: 20px"
-                    >
-                      <img
-                        src="{{ url_for('static', filename='img/icons/interior.png') }}"
-                        alt="search icon"
-                        style="height: 40px; width: 40px"
-                      />
-                    </div>
-                    <span class="teko h2 mb-0">03.</span>
-                    <h4 class="secondary mb-3">Manufacturing &amp; Execution</h4>
-                    <p class="mb-0">
-                      Once approved, our skilled craftsmen begin furniture
-                      manufacturing and site work — with regular updates and
-                      quality checks.
-                    </p>
-                  </div>
-                  <div
-                    class="process-box p-4 bg-white rounded-4 position-relative"
-                  >
-                    <div
-                      class="process-icon position-absolute"
-                      style="top: 20px; right: 20px"
-                    >
-                      <img
-                        src="{{ url_for('static', filename='img/icons/hand-over.png') }}"
-                        alt="search icon"
-                        style="height: 40px; width: 40px"
-                      />
-                    </div>
-                    <span class="teko h2 mb-0">04.</span>
-                    <h4 class="secondary mb-3">Handover</h4>
-                    <p class="mb-0">
-                      We complete finishing touches, final inspections, and hand
-                      over your beautifully transformed space — on time, every
-                      time.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Process Section Ends -->
-
-    <!-- Ad Banner Section Starts -->
-    <section class="ad-banner p-0">
-      <div class="container">
-        <div
-          class="ad-banner-inner p-md-5 p-4 rounded-5 bg-white position-relative overflow-hidden"
-        >
-          <div class="row align-items-center gy-5">
-            <div class="col-lg-5">
-              <div class="ad-banner-left text-center text-lg-start">
-                <span class="teko h6 mb-0 secondary">Limited Time Offer</span>
-                <h2 class="text-uppercase h1 primary mb-3">
-                  Redefine the Luxury of Living
-                </h2>
-                <p class="teko h6 fw-normal">
-                  Get a FREE design consultation and 3D visualization for your
-                  home or office project. Transform your space with premium
-                  quality interiors at competitive prices.
-                </p>
-                <ul
-                  class="d-flex align-items-center justify-content-center justify-content-lg-start my-4"
-                >
-                  <li class="me-3 pe-3 border-end border-2 border-grey">
-                    <img
-                      src="{{ url_for('static', filename='img/icons/sale-tag.png') }}"
-                      alt="chat"
-                      style="height: 44px; width: 44px"
-                    />
-                  </li>
-                  <li class="teko">
-                    <span class="h5 primary mb-0">Sale</span>
-                    <span class="d-block h3 secondary mb-0">10% Off Now</span>
-                  </li>
-                </ul>
-                <a href="{{ url_for('contact') }}" class="btn1"
-                  >Book Free Consultation<i
-                    class="fa fa-long-arrow-right"
-                    aria-hidden="true"
-                  ></i
-                ></a>
-              </div>
-            </div>
+          <div class="row align-items-center gy-4 w-100">
             <div class="col-lg-7">
-              <div class="ad-banner-right">
-                <img
-                  src="{{ url_for('static', filename='img/images_sub/gallery-1.jpg') }}"
-                  alt="bedroom"
-                  class="rounded-4 border-5 border-white position-relative z-2"
-                />
-              </div>
+              <h2
+                class="text-uppercase position-relative mb-0 white"
+                style="font-size: 80px; font-weight: 800; line-height: 1"
+              >
+                {{ slide.heading | safe }}
+              </h2>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Ad Banner Section Ends -->
-
-    <!-- Why Us section Starts -->
-    <section class="why-us">
-      <div class="container">
-        <div class="why-us-inner">
-          <div class="row gx-lg-5 gy-5 align-items-center">
             <div class="col-lg-5">
-              <div class="why-us-left text-center text-lg-start">
-                <h6 class="secondary mb-0">Why Choose Us</h6>
-                <h2 class="mb-3">Why Homeowners Love Working With Us</h2>
-                <p class="mb-4">
-                  We don't just design spaces — we build relationships. Here's
-                  what sets Utopia apart from the rest.
+              <div class="banner-info ps-lg-4">
+                <p class="white mb-4" style="line-height: 1.6; font-size: 16px">
+                  {{ slide.sub_text }}
                 </p>
-                <div class="why-us-image position-relative">
-                  <img
-                    src="{{ url_for('static', filename='img/about/about-kitchen.jpg') }}"
-                    alt="kitchen"
-                    class="rounded-4"
-                  />
-                  <div
-                    class="exp-box p-3 text-center rounded-3 bg-secondary position-absolute"
-                    style="bottom: 20px; right: 20px"
-                  >
-                    <span class="h1 mb-0 white teko lh-1">8+</span>
-                    <span
-                      class="d-block primary fw-bold teko h6 text-capitalize mb-0"
-                      >Years of experience</span
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-7">
-              <div class="why-us-right">
-                <div class="row gy-4">
-                  <div class="col-md-6">
-                    <div
-                      class="why-us-box p-4 border-2 border border-white rounded-3"
-                    >
-                      <div class="why-us-icon mb-4">
-                        <img
-                          src="{{ url_for('static', filename='img/icons/interior.png') }}"
-                          alt="interior icon"
-                          style="height: 45px; width: 45px"
-                        />
-                      </div>
-                      <div class="why-us-info">
-                        <h5>Tailored Design Approach</h5>
-                        <p class="mb-0">
-                          Every project starts with listening. We customize
-                          every design to match your unique personality,
-                          lifestyle, and vision.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div
-                      class="why-us-box p-4 border-2 border border-white rounded-3"
-                    >
-                      <div class="why-us-icon mb-4">
-                        <img
-                          src="{{ url_for('static', filename='img/icons/art.png') }}"
-                          alt="interior icon"
-                          style="height: 45px; width: 45px"
-                        />
-                      </div>
-                      <div class="why-us-info">
-                        <h5>Experienced Team of Designers</h5>
-                        <p class="mb-0">
-                          Led by Abdul Qadir (Architect) with international and
-                          Gulf region project experience, our team brings global
-                          expertise to local spaces.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div
-                      class="why-us-box p-4 border-2 border border-white rounded-3"
-                    >
-                      <div class="why-us-icon mb-4">
-                        <img
-                          src="{{ url_for('static', filename='img/icons/badge.png') }}"
-                          alt="interior icon"
-                          style="height: 45px; width: 45px"
-                        />
-                      </div>
-                      <div class="why-us-info">
-                        <h5>Quality Craftsmanship</h5>
-                        <p class="mb-0">
-                          We use only premium-grade materials and skilled
-                          artisans to ensure furniture and interiors that are
-                          built to last a lifetime.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="why-us-box p-4 bg-white rounded-3">
-                      <div class="why-us-icon mb-4">
-                        <img
-                          src="{{ url_for('static', filename='img/icons/customer-service.png') }}"
-                          alt="interior icon"
-                          style="height: 45px; width: 45px"
-                        />
-                      </div>
-                      <div class="why-us-info">
-                        <h5>Transparent Pricing</h5>
-                        <p class="mb-0">
-                          No hidden costs. We provide clear, itemized quotations
-                          so you always know exactly what you're paying for — no
-                          surprises.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div
-                      class="why-us-box p-4 border-2 border border-white rounded-3"
-                    >
-                      <div class="why-us-icon mb-4">
-                        <img
-                          src="{{ url_for('static', filename='img/icons/price-tag.png') }}"
-                          alt="interior icon"
-                          style="height: 45px; width: 45px"
-                        />
-                      </div>
-                      <div class="why-us-info">
-                        <h5>Call For Full Details</h5>
-                        <p class="mb-0">
-                          Our team is available 6 days a week for consultations,
-                          site visits, and project discussions. We're just a
-                          call away.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div
-                      class="why-us-box p-4 border-2 border border-white rounded-3"
-                    >
-                      <div class="why-us-icon mb-4">
-                        <img
-                          src="{{ url_for('static', filename='img/icons/delivery-truck.png') }}"
-                          alt="interior icon"
-                          style="height: 45px; width: 45px"
-                        />
-                      </div>
-                      <div class="why-us-info">
-                        <h5>On-Time Delivery</h5>
-                        <p class="mb-0">
-                          We respect your time. Every project is executed with a
-                          clear timeline and delivered on or before the promised
-                          date.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Why Us section Ends -->
-
-    <!-- Testimonial Section Starts -->
-    <section class="testimonial bg-white rounded-5 mt-5 py-5">
-      <div class="container">
-        <div class="testimonial-inner">
-          <div class="testimonial-title mb-5 text-center text-lg-start">
-            <div class="row align-items-center justify-content-between gy-4">
-              <div class="col-lg-5">
-                <div class="testimonial-title-left">
-                  <h6 class="secondary mb-0">Testimonials</h6>
-                  <h2 class="mb-0">Designed With Love, Trusted By Many</h2>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="testimonial-title-right text-lg-start">
-                  <p class="mb-4">
-                    Families and businesses across Muzaffarnagar, Delhi NCR, and
-                    Dehradun trust Utopia to create beautiful, functional, and
-                    dream-worthy spaces.
-                  </p>
-                  <a href="{{ url_for('about') }}" class="btn1 d-inline-block"
-                    >View All Reviews<i
-                      class="fa fa-long-arrow-right"
-                      aria-hidden="true"
-                    ></i
-                  ></a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12">
-              <div class="testimonial-body w-100 mt-4 position-relative">
-                <div
-                  class="swiper testimonial-slider pb-2 position-relative overflow-hidden w-100"
-                >
-                  <div class="swiper-wrapper">
-                    <!-- Slide 1 -->
-                    <div class="swiper-slide h-auto">
-                      <div
-                        class="testimonial-box p-4 p-md-5 bg-secondarylight rounded-4 position-relative h-100 d-flex flex-column"
-                      >
-                        <div
-                          class="quote-icon position-absolute"
-                          style="top: 30px; right: 30px; opacity: 0.1"
-                        >
-                          <i
-                            class="fa fa-quote-right"
-                            style="font-size: 60px; color: #906e49"
-                          ></i>
-                        </div>
-                        <ul class="rating d-flex mb-3 gap-1 secondary">
-                          <li><i class="fa fa-star"></i></li>
-                          <li><i class="fa fa-star"></i></li>
-                          <li><i class="fa fa-star"></i></li>
-                          <li><i class="fa fa-star"></i></li>
-                          <li><i class="fa fa-star"></i></li>
-                        </ul>
-                        <p
-                          class="mb-4 h5 fw-normal text flex-grow-1"
-                          style="font-style: italic; line-height: 1.6"
-                        >
-                          "Amazing experience! Utopia understood our vision
-                          perfectly and transformed our living room beautifully
-                          beyond expectations."
-                        </p>
-                        <div
-                          class="client-info d-flex align-items-center gap-3"
-                        >
-                          <div class="client-img">
-                            <div
-                              class="bg-primary rounded-circle d-flex align-items-center justify-content-center white h3 mb-0"
-                              style="width: 60px; height: 60px"
-                            >
-                              R
-                            </div>
-                          </div>
-                          <div class="client-details">
-                            <h5 class="mb-0">Ritu Sharma</h5>
-                            <span class="secondary teko h6 mb-0"
-                              >Muzaffarnagar</span
-                            >
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- Slide 2 -->
-                    <div class="swiper-slide h-auto">
-                      <div
-                        class="testimonial-box p-4 p-md-5 bg-secondarylight rounded-4 position-relative h-100 d-flex flex-column"
-                      >
-                        <div
-                          class="quote-icon position-absolute"
-                          style="top: 30px; right: 30px; opacity: 0.1"
-                        >
-                          <i
-                            class="fa fa-quote-right"
-                            style="font-size: 60px; color: #906e49"
-                          ></i>
-                        </div>
-                        <ul class="rating d-flex mb-3 gap-1 secondary">
-                          <li><i class="fa fa-star"></i></li>
-                          <li><i class="fa fa-star"></i></li>
-                          <li><i class="fa fa-star"></i></li>
-                          <li><i class="fa fa-star"></i></li>
-                          <li><i class="fa fa-star"></i></li>
-                        </ul>
-                        <p
-                          class="mb-4 h5 fw-normal text flex-grow-1"
-                          style="font-style: italic; line-height: 1.6"
-                        >
-                          "Professional, punctual, and talented team. Our office
-                          redesign completely changed the workspace atmosphere."
-                        </p>
-                        <div
-                          class="client-info d-flex align-items-center gap-3"
-                        >
-                          <div class="client-img">
-                            <div
-                              class="bg-primary rounded-circle d-flex align-items-center justify-content-center white h3 mb-0"
-                              style="width: 60px; height: 60px"
-                            >
-                              A
-                            </div>
-                          </div>
-                          <div class="client-details">
-                            <h5 class="mb-0">Arjun Mehta</h5>
-                            <span class="secondary teko h6 mb-0">Noida</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- Slide 3 -->
-                    <div class="swiper-slide h-auto">
-                      <div
-                        class="testimonial-box p-4 p-md-5 bg-secondarylight rounded-4 position-relative h-100 d-flex flex-column"
-                      >
-                        <div
-                          class="quote-icon position-absolute"
-                          style="top: 30px; right: 30px; opacity: 0.1"
-                        >
-                          <i
-                            class="fa fa-quote-right"
-                            style="font-size: 60px; color: #906e49"
-                          ></i>
-                        </div>
-                        <ul class="rating d-flex mb-3 gap-1 secondary">
-                          <li><i class="fa fa-star"></i></li>
-                          <li><i class="fa fa-star"></i></li>
-                          <li><i class="fa fa-star"></i></li>
-                          <li><i class="fa fa-star"></i></li>
-                          <li><i class="fa fa-star"></i></li>
-                        </ul>
-                        <p
-                          class="mb-4 h5 fw-normal text flex-grow-1"
-                          style="font-style: italic; line-height: 1.6"
-                        >
-                          "Beautiful home transformation within budget and on
-                          time. Abdul sir’s design sense is truly exceptional!"
-                        </p>
-                        <div
-                          class="client-info d-flex align-items-center gap-3"
-                        >
-                          <div class="client-img">
-                            <div
-                              class="bg-primary rounded-circle d-flex align-items-center justify-content-center white h3 mb-0"
-                              style="width: 60px; height: 60px"
-                            >
-                              F
-                            </div>
-                          </div>
-                          <div class="client-details">
-                            <h5 class="mb-0">Faizan Khan</h5>
-                            <span class="secondary teko h6 mb-0">Dehradun</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- Slide 4 -->
-                    <div class="swiper-slide h-auto">
-                      <div
-                        class="testimonial-box p-4 p-md-5 bg-secondarylight rounded-4 position-relative h-100 d-flex flex-column"
-                      >
-                        <div
-                          class="quote-icon position-absolute"
-                          style="top: 30px; right: 30px; opacity: 0.1"
-                        >
-                          <i
-                            class="fa fa-quote-right"
-                            style="font-size: 60px; color: #906e49"
-                          ></i>
-                        </div>
-                        <ul class="rating d-flex mb-3 gap-1 secondary">
-                          <li><i class="fa fa-star"></i></li>
-                          <li><i class="fa fa-star"></i></li>
-                          <li><i class="fa fa-star"></i></li>
-                          <li><i class="fa fa-star"></i></li>
-                          <li><i class="fa fa-star"></i></li>
-                        </ul>
-                        <p
-                          class="mb-4 h5 fw-normal text flex-grow-1"
-                          style="font-style: italic; line-height: 1.6"
-                        >
-                          "Utopia delivered exactly what we imagined for our
-                          home. Stylish design, smooth execution, and great
-                          attention to every detail."
-                        </p>
-                        <div
-                          class="client-info d-flex align-items-center gap-3"
-                        >
-                          <div class="client-img">
-                            <div
-                              class="bg-primary rounded-circle d-flex align-items-center justify-content-center white h3 mb-0"
-                              style="width: 60px; height: 60px"
-                            >
-                              S
-                            </div>
-                          </div>
-                          <div class="client-details">
-                            <h5 class="mb-0">Sneha Verma</h5>
-                            <span class="secondary teko h6 mb-0"
-                              >Delhi NCR</span
-                            >
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Pagination -->
-                <div class="swiper-pagination position-static mt-4"></div>
-
-                <!-- Navigation -->
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Testimonial Section Ends -->
-
-    <!-- Appointment Section Starts -->
-    <div class="appointment py-5 bg-secondarylight">
-      <div class="container">
-        <div class="appointment-inner">
-          <div class="row align-items-center gy-4">
-            <div class="col-lg-3 col-md-4">
-              <div class="appointment-left">
-                <ul
-                  class="d-flex align-items-center justify-content-center justify-content-lg-start"
-                >
-                  <li class="me-3 pe-3 border-end border-2 border-white">
-                    <img
-                      src="{{ url_for('static', filename='img/icons/chat.png') }}"
-                      alt="chat"
-                      style="height: 44px; width: 44px"
-                    />
-                  </li>
-                  <li class="teko">
-                    <span class="h6 primary mb-0">Consult Our Studio</span>
-                    <span class="d-block h3 mb-0 text-dark">
-                      <a
-                        href="tel:+917351949490"
-                        class="text-decoration-none text-dark"
-                      >
-                        +91 7351949490
-                      </a>
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-lg-6 col-md-8">
-              <div class="appointment-center">
-                <p class="mb-0">
-                  Ready to transform your space? Meet with our principal
-                  designers to share your vision and start crafting a home that
-                  is uniquely yours.
-                </p>
-              </div>
-            </div>
-            <div class="col-lg-3">
-              <div class="appointment-right text-center text-lg-end">
-                <a
-                  href="https://wa.me/917351949490?text=Hello%20Utopia%20Team!%20I%20would%20like%20to%20schedule%20a%20consultation%20for%20interior%20design%20services."
-                  target="_blank"
-                  class="btn-primary"
-                >
-                  Book Consultation
-                </a>
+                <a href="{{ url_for('contact') }}" class="btn1 text-uppercase"
+                  >Book a consultation
+                  <i class="fa fa-long-arrow-right ms-2" aria-hidden="true"></i
+                ></a>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- Appointment Section Ends -->
+    {% endfor %}
+  </div>
+</section>
+<!-- Banner Section Ends -->
+
+<!-- Best-selling Categories Section Starts -->
+<style>
+  .best-selling-categories h2 {
+    font-size: 54px;
+  }
+  @media (max-width: 768px) {
+    .best-selling-categories h2 {
+      font-size: 32px;
+    }
+  }
+  .category-card {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    transition:
+      transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+      box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+  }
+  .category-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 22px 40px rgba(144, 110, 73, 0.12), 0 8px 16px rgba(0, 0, 0, 0.04);
+  }
+  .category-img-container {
+    height: 280px;
+    position: relative;
+  }
+  .category-img-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(0,0,0,0.3) 100%);
+    opacity: 0.8;
+    transition: opacity 0.4s ease, background 0.4s ease;
+    pointer-events: none;
+  }
+  .category-card:hover .category-img-container::after {
+    opacity: 1;
+    background: linear-gradient(180deg, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.45) 100%);
+  }
+  @media (max-width: 768px) {
+    .category-img-container {
+      height: 200px;
+    }
+  }
+  @media (max-width: 576px) {
+    .category-img-container {
+      height: 160px;
+    }
+  }
+  .category-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+  .category-card:hover .category-img {
+    transform: scale(1.1);
+  }
+  .category-title-block {
+    transition: filter 0.4s ease;
+  }
+  .category-card:hover .category-title-block {
+    filter: saturate(1.1) brightness(0.92);
+  }
+  .arrow-circle {
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .category-card:hover .arrow-circle {
+    transform: translateX(6px) scale(1.1);
+  }
+  .subcategory-item {
+    transition: border-color 0.3s ease;
+  }
+  .subcategory-item:hover {
+    border-color: #e5dfd3 !important;
+  }
+  .subcategory-link {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    width: 100% !important;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    color: #6c757d !important;
+  }
+  .subcategory-link span {
+    position: relative;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+  .subcategory-link span::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    background-color: #906e49;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .subcategory-link:hover {
+    color: #906e49 !important;
+    padding-left: 6px;
+  }
+  .subcategory-link:hover span {
+    color: #906e49 !important;
+  }
+  .subcategory-link:hover span::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  .subcategory-link::after {
+    content: '\f105';
+    font-family: 'FontAwesome';
+    font-size: 14px;
+    color: #906e49;
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .subcategory-link:hover::after {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+/* Slick Slider Equal Heights */
+.best-selling-slider .slick-track {
+  display: flex !important;
+}
+.best-selling-slider .slick-slide {
+  height: auto;
+  display: flex;
+}
+.best-selling-slider .slick-slide > div {
+  width: 100%;
+}
+
+/* Slick Slider Custom Styles & Overlays */
+.best-selling-categories {
+  overflow-x: hidden; /* Prevent page horizontal scroll when slick-list overflows */
+}
+
+/* Custom Arrows for Best-selling Categories Slider */
+.best-selling-slider {
+  position: relative;
+}
+
+.best-selling-slider .slick-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) scale(1);
+  z-index: 99;
+  width: 45px;
+  height: 45px;
+  background-color: #ffffff !important;
+  border: 1px solid #eaeaea !important;
+  border-radius: 50% !important;
+  color: #252525 !important;
+  font-size: 18px !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+}
+
+.best-selling-slider .slick-arrow:hover {
+  background-color: #906e49 !important;
+  color: #ffffff !important;
+  border-color: #906e49 !important;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 18px rgba(144, 110, 73, 0.3) !important;
+}
+
+.best-selling-slider .slick-prev {
+  left: -22px;
+}
+
+.best-selling-slider .slick-next {
+  right: -22px;
+}
+
+/* Disabled state */
+.best-selling-slider .slick-arrow.slick-disabled {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@media (max-width: 576px) {
+  /* Break out of container layout on mobile */
+  .best-selling-categories .container {
+    max-width: 100% !important;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+  }
+  
+  /* Give the section title standard container padding */
+  .best-selling-categories .section-title {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  /* Make the slider list have padding-left so 1st slide aligns with title, but overflows on the right */
+  .best-selling-slider .slick-list {
+    padding-left: 15px !important;
+    padding-right: 0 !important;
+    overflow: visible !important;
+  }
+  
+  /* Adjust arrows position on mobile so they are inside the screen and overlap slides nicely */
+  .best-selling-slider .slick-prev {
+    left: 10px;
+  }
+  
+  .best-selling-slider .slick-next {
+    right: 10px;
+  }
+}
+</style>
+
+<section class="best-selling-categories py-5 bg-white">
+  <div class="container">
+    <div class="section-title text-center text-md-start mb-5">
+      <h2 class="mb-2">Best-selling Categories</h2>
+      <p class="text-muted mb-0">
+        Explore our premium range of luxury furniture and interior collections.
+      </p>
+    </div>
+    <div class="best-selling-slider mt-4">
+      {% for cat in home_categories %}
+      <div class="px-2 pt-3 pb-3 h-100">
+        <div class="category-card h-100 d-flex flex-column">
+          <!-- Featured Image Container -->
+          <div class="category-img-container position-relative overflow-hidden">
+            <a href="{{ url_for('shop_category', category_id=cat.id) }}">
+              <img
+                src="{{ cat.image_url }}"
+                alt="{{ cat.name }}"
+                class="img-fluid category-img"
+              />
+            </a>
+          </div>
+
+          <!-- Title Block -->
+          <div
+            class="category-title-block d-flex justify-content-between align-items-center p-3"
+            style="background-color: {{ cat.bg_color or '#b0a483' }};"
+          >
+            <h4
+              class="category-name text-white teko mb-0 h5 fs-4"
+              style="letter-spacing: 0.5px; text-transform: uppercase"
+            >
+              <a
+                href="{{ url_for('shop_category', category_id=cat.id) }}"
+                class="text-white text-decoration-none"
+                >{{ cat.name }}</a
+              >
+            </h4>
+            <a
+              href="{{ url_for('shop_category', category_id=cat.id) }}"
+              class="category-view-all text-white d-flex align-items-center gap-2"
+              style="
+                font-size: 13px;
+                font-weight: 500;
+                font-family: &quot;Poppins&quot;, sans-serif;
+              "
+            >
+              <span>View All</span>
+              <div
+                class="arrow-circle d-flex align-items-center justify-content-center bg-white rounded-circle"
+                style="width: 24px; height: 24px; color: #8e1c2e"
+              >
+                <i
+                  class="fa fa-long-arrow-right"
+                  style="font-size: 12px; color: {{ cat.bg_color or '#b0a483' }};"
+                  aria-hidden="true"
+                ></i>
+              </div>
+            </a>
+          </div>
+
+          <!-- Subcategories List -->
+          <div
+            class="category-subcategories p-3 border border-top-0 flex-grow-1 bg-white"
+            style="
+              border-color: #eee !important;
+              border-bottom-left-radius: 12px;
+              border-bottom-right-radius: 12px;
+            "
+          >
+            <ul class="list-unstyled mb-0 d-flex flex-column gap-2">
+              {% for sub in cat.subcategories %}
+              <li
+                class="subcategory-item border-bottom pb-2"
+                style="border-color: #f1f1f1 !important; font-size: 14px"
+              >
+                <a
+                  href="{{ url_for('shop_subcategory', subcategory_id=sub.id) }}"
+                  class="text-muted subcategory-link d-flex justify-content-between align-items-center"
+                >
+                  <span>{{ sub.name }}</span>
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    <!-- {{ render_pagination(home_categories_pagination, 'home', {}) }} -->
+  </div>
+</section>
+
+<!-- Best-selling Categories Section Ends -->
+
+<!-- About Us Section Starts -->
+<section class="about-us">
+  <div class="container">
+    <div class="about-us-inner text-center text-lg-start">
+      <div class="row align-items-center gx-md-5 gy-5">
+        <div class="col-xl-3 col-md-6">
+          <div class="about-left">
+            <h6 class="secondary mb-0">About Us</h6>
+            <h2 class="mb-3">About Utopia Furniture &amp; D&eacute;cor</h2>
+            <p class="mb-0">Creating Elegant Interiors With Timeless Design</p>
+          </div>
+        </div>
+        <div class="col-xl-4 col-md-6">
+          <div class="about-center position-relative">
+            <img
+              src="{{ url_for('static', filename='img/about/about-living-room.jpg') }}"
+              alt="about image"
+              class="rounded-3"
+            />
+          </div>
+        </div>
+        <div class="col-xl-5">
+          <div class="about-right">
+            <p class="mb-4">
+              Utopia Furniture &amp; D&eacute;cor is a premier interior design
+              and custom furniture company based in Muzaffarnagar, Uttar
+              Pradesh. Founded in 2021 under the leadership of Abdul Qadir
+              (Architect), we bring international design standards and Gulf
+              region experience to every project we undertake.
+            </p>
+            <ul
+              class="d-flex rounded-4 justify-content-between flex-wrap gap-1 mb-4"
+            >
+              <li class="">
+                <span class="h2 primary teko mb-0 lh-sm">120+</span>
+                <span class="teko h6 d-block mb-0 secondary"
+                  >Projects Completed</span
+                >
+              </li>
+              <li class="">
+                <span class="h2 primary teko mb-0 lh-sm">8+</span>
+                <span class="teko h6 d-block mb-0 secondary"
+                  >Years Experience</span
+                >
+              </li>
+            </ul>
+            <a href="{{ url_for('about') }}" class="btn1"
+              >Discover More<i
+                class="fa fa-long-arrow-right"
+                aria-hidden="true"
+              ></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- About Us Section Ends -->
+
+<!-- Services Section Starts -->
+<section class="services bg-white border-right-left-top">
+  <div class="container-fluid">
+    <div class="services-inner">
+      <div class="services-title mb-5 text-center text-lg-start">
+        <div class="container">
+          <div class="row align-items-center justify-content-between gy-3">
+            <div class="col-lg-4">
+              <div class="services-title-left">
+                <h6 class="secondary mb-0">Our Services</h6>
+                <h2 class="mb-0">Transforming Spaces with Style</h2>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="services-title-right text-lg-start">
+                <p class="mb-3">
+                  We offer end-to-end interior and furniture solutions tailored
+                  to your lifestyle and budget.
+                </p>
+                <a href="{{ url_for('services') }}" class="btn1"
+                  >View All Services<i
+                    class="fa fa-long-arrow-right"
+                    aria-hidden="true"
+                  ></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="services-body">
+        <div
+          class="row row-cols-lg-3 row-cols-md-2 row-cols-1 gy-4 justify-content-center mx-auto"
+          style="max-width: 1400px"
+        >
+          <div class="col">
+            <div class="service-box position-relative">
+              <div class="overlay rounded-4"></div>
+              <div class="services-image">
+                <img
+                  src="{{ url_for('static', filename='img/services/residential.jpg') }}"
+                  alt="Interior Design"
+                  class="rounded-4"
+                  style="height: 280px; object-fit: cover; width: 100%"
+                />
+              </div>
+              <div
+                class="services-info position-relative p-3 position-absolute bottom-0 w-100 rounded-top-0 white"
+              >
+                <h4 class="mb-1">
+                  <a href="{{ url_for('services') }}">Interior Design</a>
+                </h4>
+                <p class="mb-0">
+                  Premium quality workmanship with modern aesthetics and durable
+                  materials.
+                </p>
+              </div>
+              <a
+                href="{{ url_for('services') }}"
+                class="bg-secondary arrow rounded-circle position-absolute p-0"
+                style="top: 15px; right: 15px"
+              >
+                <i
+                  class="fa fa-long-arrow-right m-0 text-center"
+                  aria-hidden="true"
+                ></i>
+              </a>
+            </div>
+          </div>
+          <div class="col">
+            <div class="service-box position-relative">
+              <div class="overlay rounded-4"></div>
+              <div class="services-image">
+                <img
+                  src="{{ url_for('static', filename='img/services/Custom_Furniture.webp') }}"
+                  alt="Custom Furniture"
+                  class="rounded-4"
+                  style="height: 280px; object-fit: cover; width: 100%"
+                />
+              </div>
+              <div
+                class="services-info position-relative p-3 position-absolute bottom-0 w-100 rounded-top-0 white"
+              >
+                <h4 class="mb-1">
+                  <a href="{{ url_for('services') }}">Custom Furniture</a>
+                </h4>
+                <p class="mb-0">
+                  Premium quality workmanship with modern aesthetics and durable
+                  materials.
+                </p>
+              </div>
+              <a
+                href="{{ url_for('services') }}"
+                class="bg-secondary arrow rounded-circle position-absolute p-0"
+                style="top: 15px; right: 15px"
+              >
+                <i
+                  class="fa fa-long-arrow-right m-0 text-center"
+                  aria-hidden="true"
+                ></i>
+              </a>
+            </div>
+          </div>
+          <div class="col">
+            <div class="service-box position-relative">
+              <div class="overlay rounded-4"></div>
+              <div class="services-image">
+                <img
+                  src="{{ url_for('static', filename='img/services/Pergola_works.webp') }}"
+                  alt="Pergola &amp; Outdoor Works"
+                  class="rounded-4"
+                  style="height: 280px; object-fit: cover; width: 100%"
+                />
+              </div>
+              <div
+                class="services-info position-relative p-3 position-absolute bottom-0 w-100 rounded-top-0 white"
+              >
+                <h4 class="mb-1">
+                  <a href="{{ url_for('services') }}"
+                    >Pergola &amp; Outdoor Works</a
+                  >
+                </h4>
+                <p class="mb-0">
+                  Premium quality workmanship with modern aesthetics and durable
+                  materials.
+                </p>
+              </div>
+              <a
+                href="{{ url_for('services') }}"
+                class="bg-secondary arrow rounded-circle position-absolute p-0"
+                style="top: 15px; right: 15px"
+              >
+                <i
+                  class="fa fa-long-arrow-right m-0 text-center"
+                  aria-hidden="true"
+                ></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Services Section Ends -->
+
+<!-- Portfolio Section Starts -->
+<section class="featured-projects py-5">
+  <div class="container">
+    <div class="featured-projects-inner">
+      <!-- Section Header -->
+      <div class="row align-items-center justify-content-between mb-5 gy-3">
+        <div class="col-md-8 text-center text-md-start">
+          <div class="section-title-left">
+            <h2 class="mb-2">Featured Projects</h2>
+            <p class="mb-0">
+              Elegant and modern interior projects crafted with precision.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4 text-center text-md-end">
+          <a href="{{ url_for('gallery') }}" class="btn-explore-projects"
+            >Explore All Projects</a
+          >
+        </div>
+      </div>
+
+      <!-- Cards Grid -->
+      <div class="row g-4">
+        <!-- Card 1 -->
+        <div class="col-lg-4 col-md-6 col-12">
+          <div class="project-grid-card">
+            <div class="project-card-image">
+              <img
+                src="{{ url_for('static', filename='img/featured/Modern_Villa_Interior.webp') }}"
+                alt="Modern Villa Interior"
+              />
+            </div>
+            <div class="project-card-info">
+              <h4 class="project-card-title">
+                <a href="{{ url_for('gallery') }}">Modern Villa Interior</a>
+              </h4>
+              <p class="project-card-location">Riyadh</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="col-lg-4 col-md-6 col-12">
+          <div class="project-grid-card">
+            <div class="project-card-image">
+              <img
+                src="{{ url_for('static', filename='img/featured/bed_6.webp') }}"
+                alt="Luxury Living Room"
+              />
+            </div>
+            <div class="project-card-info">
+              <h4 class="project-card-title">
+                <a href="{{ url_for('gallery') }}">Luxury Living Room</a>
+              </h4>
+              <p class="project-card-location">Jeddah</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="col-lg-4 col-md-6 col-12">
+          <div class="project-grid-card">
+            <div class="project-card-image">
+              <img
+                src="{{ url_for('static', filename='img/featured/conference-room.jpeg') }}"
+                alt="Office Design"
+              />
+            </div>
+            <div class="project-card-info">
+              <h4 class="project-card-title">
+                <a href="{{ url_for('gallery') }}">Office Design</a>
+              </h4>
+              <p class="project-card-location">KAFD</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Portfolio Section Ends -->
+
+<!-- Shop Section Starts -->
+<section class="shop-decor bg-secondarylight py-6">
+  <div class="container">
+    <div class="shop-decor-inner">
+      <!-- Section Header -->
+      <div class="row justify-content-center text-center mb-5">
+        <div class="col-lg-auto col-md-auto col-12">
+          <h2 class="mb-2">Furniture &amp; Home Decor</h2>
+          <p class="text-muted mb-0">
+            Explore premium furniture, luxury home decor, lighting, and
+            accessories.
+          </p>
+
+          <!-- Category Filters -->
+          <div
+            class="decor-filters d-flex flex-wrap justify-content-center gap-2 mt-4"
+          >
+            <button class="decor-filter-btn active" data-filter="all">
+              All
+            </button>
+            <button class="decor-filter-btn" data-filter="living-room">
+              Living Room
+            </button>
+            <button class="decor-filter-btn" data-filter="bedroom">
+              Bedroom
+            </button>
+            <button class="decor-filter-btn" data-filter="dining-room">
+              Dining Room
+            </button>
+            <button class="decor-filter-btn" data-filter="decor-lighting">
+              Decor Lighting
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="row g-4 decor-products-grid">
+        {% for prod in catalog_products %}
+        <div
+          class="col-lg-3 col-md-4 col-sm-6 col-12 decor-product-item"
+          data-category="{{ prod.category }}"
+        >
+          <div class="decor-product-card">
+            <a href="{{ url_for('product_detail', product_id=prod.id) }}">
+              <div class="product-img-container">
+                <img src="{{ prod.image_url }}" alt="{{ prod.name }}" />
+              </div>
+            </a>
+            <div class="product-details">
+              <span class="product-badge"
+                >{{ prod.category | replace('-', ' ') | title }}</span
+              >
+              <div
+                class="d-flex justify-content-between align-items-center mb-3"
+              >
+                <h4 class="product-title mb-0">
+                  <a
+                    href="{{ url_for('product_detail', product_id=prod.id) }}"
+                    style="color: inherit; text-decoration: none"
+                  >
+                    {{ prod.name }}
+                  </a>
+                </h4>
+                <span class="product-price"
+                  >₹{{ prod.mrp | replace('$', '') }}</span
+                >
+              </div>
+              {% if prod.in_stock %}
+              <button class="btn-add-cart w-100">Get Quote</button>
+              {% else %}
+              <button
+                class="btn-add-cart w-100"
+                disabled
+                style="
+                  background-color: #cccccc !important;
+                  color: #666666 !important;
+                  border: none !important;
+                  cursor: not-allowed;
+                  pointer-events: none;
+                "
+              >
+                Out of Stock
+              </button>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Load More Button -->
+      <div class="text-center mt-5" id="load-more-container" style="display: none;">
+        <button id="load-more-btn" class="btn1">Load More</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .decor-product-item {
+    display: none; /* Hidden by default, JS will show them */
+    opacity: 0;
+  }
+  .decor-product-item.fade-in {
+    animation: fadeInProduct 0.5s ease-in-out forwards;
+  }
+  @keyframes fadeInProduct {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const filterBtns = document.querySelectorAll('.decor-filter-btn');
+  const allProducts = Array.from(document.querySelectorAll('.decor-product-item'));
+  const loadMoreBtn = document.getElementById('load-more-btn');
+  const loadMoreContainer = document.getElementById('load-more-container');
+  
+  let currentCategory = 'all';
+  let visibleCount = 4;
+  const increment = 4;
+
+  function updateProducts(isLoadMore = false) {
+    let filteredProducts = allProducts;
+    if (currentCategory !== 'all') {
+      filteredProducts = allProducts.filter(p => {
+        let cat = p.getAttribute('data-category');
+        if (!cat) return false;
+        return cat.toLowerCase().replace(/\s+/g, '-') === currentCategory || cat.toLowerCase() === currentCategory;
+      });
+    }
+
+    if (!isLoadMore) {
+      // If switching tabs, hide everything first
+      allProducts.forEach(p => {
+        p.style.display = 'none';
+        p.classList.remove('fade-in');
+      });
+    }
+
+    let newlyShown = 0;
+    // Show products up to visibleCount
+    let currentVisible = filteredProducts.slice(0, visibleCount);
+    currentVisible.forEach((p, index) => {
+      // Only animate if it's currently hidden
+      if (p.style.display !== 'block') {
+        p.style.display = 'block';
+        setTimeout(() => {
+          p.classList.add('fade-in');
+        }, newlyShown * 100);
+        newlyShown++;
+      }
+    });
+
+    // Toggle Load More button visibility
+    if (filteredProducts.length > visibleCount) {
+      loadMoreContainer.style.display = 'block';
+    } else {
+      loadMoreContainer.style.display = 'none';
+    }
+  }
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      // Update active state of buttons
+      filterBtns.forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+
+      currentCategory = this.getAttribute('data-filter');
+      visibleCount = 4; // Reset visible count on category change
+      
+      updateProducts(false);
+    });
+  });
+
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener('click', function() {
+      visibleCount += increment;
+      updateProducts(true);
+    });
+  }
+
+  // Initial setup call
+  updateProducts(false);
+});
+</script>
+<!-- Shop Section Ends -->
+
+<!-- Process Section Starts -->
+<section class="process pt-0">
+  <div class="container">
+    <div class="process-inner">
+      <div class="process-title mb-5 text-center text-lg-start">
+        <div class="row align-items-center">
+          <div class="col-lg-6">
+            <div class="process-title-left">
+              <h6 class="secondary mb-0">How it works</h6>
+              <h2 class="mb-0">A Simple &amp; Transparent Process</h2>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="process-title-right">
+              <p class="mb-0">
+                From your first call to final handover — we make the entire
+                journey smooth, clear, and stress-free.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="process-body">
+        <div class="row align-items-center gx-md-5 gy-5 justify-content-center">
+          <div class="col-lg-4 col-md-6 order-1">
+            <div class="process-left">
+              <div
+                class="process-box p-4 bg-white rounded-4 position-relative mb-4"
+              >
+                <div
+                  class="process-icon position-absolute"
+                  style="top: 20px; right: 20px"
+                >
+                  <img
+                    src="{{ url_for('static', filename='img/icons/search.png') }}"
+                    alt="search icon"
+                    style="height: 40px; width: 40px"
+                  />
+                </div>
+                <span class="teko h2 mb-0">01.</span>
+                <h4 class="secondary mb-3">Consultation</h4>
+                <p class="mb-0">
+                  We begin with a detailed discussion to understand your
+                  requirements, budget, style preferences, and project goals.
+                </p>
+              </div>
+              <div class="process-box p-4 bg-white rounded-4 position-relative">
+                <div
+                  class="process-icon position-absolute"
+                  style="top: 20px; right: 20px"
+                >
+                  <img
+                    src="{{ url_for('static', filename='img/icons/vision.png') }}"
+                    alt="search icon"
+                    style="height: 40px; width: 40px"
+                  />
+                </div>
+                <span class="teko h2 mb-0">02.</span>
+                <h4 class="secondary mb-3">Design &amp; Planning</h4>
+                <p class="mb-0">
+                  Our team creates customized 2D/3D design concepts, material
+                  selections, and a complete project plan for your approval.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 order-3 order-lg-2">
+            <div class="process-image">
+              <img
+                src="{{ url_for('static', filename='img/about/about-scandinavian.jpg') }}"
+                alt="interior"
+                class="rounded-4"
+              />
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 order-2 order-lg-3">
+            <div class="process-left">
+              <div
+                class="process-box p-4 bg-white rounded-4 position-relative mb-4"
+              >
+                <div
+                  class="process-icon position-absolute"
+                  style="top: 20px; right: 20px"
+                >
+                  <img
+                    src="{{ url_for('static', filename='img/icons/interior.png') }}"
+                    alt="search icon"
+                    style="height: 40px; width: 40px"
+                  />
+                </div>
+                <span class="teko h2 mb-0">03.</span>
+                <h4 class="secondary mb-3">Manufacturing &amp; Execution</h4>
+                <p class="mb-0">
+                  Once approved, our skilled craftsmen begin furniture
+                  manufacturing and site work — with regular updates and quality
+                  checks.
+                </p>
+              </div>
+              <div class="process-box p-4 bg-white rounded-4 position-relative">
+                <div
+                  class="process-icon position-absolute"
+                  style="top: 20px; right: 20px"
+                >
+                  <img
+                    src="{{ url_for('static', filename='img/icons/hand-over.png') }}"
+                    alt="search icon"
+                    style="height: 40px; width: 40px"
+                  />
+                </div>
+                <span class="teko h2 mb-0">04.</span>
+                <h4 class="secondary mb-3">Handover</h4>
+                <p class="mb-0">
+                  We complete finishing touches, final inspections, and hand
+                  over your beautifully transformed space — on time, every time.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Process Section Ends -->
+
+<!-- Ad Banner Section Starts -->
+<section class="ad-banner p-0">
+  <div class="container">
+    <div
+      class="ad-banner-inner p-md-5 p-4 rounded-5 bg-white position-relative overflow-hidden"
+    >
+      <div class="row align-items-center gy-5">
+        <div class="col-lg-5">
+          <div class="ad-banner-left text-center text-lg-start">
+            <span class="teko h6 mb-0 secondary">Limited Time Offer</span>
+            <h2 class="text-uppercase h1 primary mb-3">
+              Redefine the Luxury of Living
+            </h2>
+            <p class="teko h6 fw-normal">
+              Get a FREE design consultation and 3D visualization for your home
+              or office project. Transform your space with premium quality
+              interiors at competitive prices.
+            </p>
+            <ul
+              class="d-flex align-items-center justify-content-center justify-content-lg-start my-4"
+            >
+              <li class="me-3 pe-3 border-end border-2 border-grey">
+                <img
+                  src="{{ url_for('static', filename='img/icons/sale-tag.png') }}"
+                  alt="chat"
+                  style="height: 44px; width: 44px"
+                />
+              </li>
+              <li class="teko">
+                <span class="h5 primary mb-0">Sale</span>
+                <span class="d-block h3 secondary mb-0">10% Off Now</span>
+              </li>
+            </ul>
+            <a href="{{ url_for('contact') }}" class="btn1"
+              >Book Free Consultation<i
+                class="fa fa-long-arrow-right"
+                aria-hidden="true"
+              ></i
+            ></a>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="ad-banner-right">
+            <img
+              src="{{ url_for('static', filename='img/images_sub/gallery-1.jpg') }}"
+              alt="bedroom"
+              class="rounded-4 border-5 border-white position-relative z-2"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Ad Banner Section Ends -->
+
+<!-- Why Us section Starts -->
+<section class="why-us">
+  <div class="container">
+    <div class="why-us-inner">
+      <div class="row gx-lg-5 gy-5 align-items-center">
+        <div class="col-lg-5">
+          <div class="why-us-left text-center text-lg-start">
+            <h6 class="secondary mb-0">Why Choose Us</h6>
+            <h2 class="mb-3">Why Homeowners Love Working With Us</h2>
+            <p class="mb-4">
+              We don't just design spaces — we build relationships. Here's what
+              sets Utopia apart from the rest.
+            </p>
+            <div class="why-us-image position-relative">
+              <img
+                src="{{ url_for('static', filename='img/about/about-kitchen.jpg') }}"
+                alt="kitchen"
+                class="rounded-4"
+              />
+              <div
+                class="exp-box p-3 text-center rounded-3 bg-secondary position-absolute"
+                style="bottom: 20px; right: 20px"
+              >
+                <span class="h1 mb-0 white teko lh-1">8+</span>
+                <span
+                  class="d-block primary fw-bold teko h6 text-capitalize mb-0"
+                  >Years of experience</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="why-us-right">
+            <div class="row gy-4">
+              <div class="col-md-6">
+                <div
+                  class="why-us-box p-4 border-2 border border-white rounded-3"
+                >
+                  <div class="why-us-icon mb-4">
+                    <img
+                      src="{{ url_for('static', filename='img/icons/interior.png') }}"
+                      alt="interior icon"
+                      style="height: 45px; width: 45px"
+                    />
+                  </div>
+                  <div class="why-us-info">
+                    <h5>Tailored Design Approach</h5>
+                    <p class="mb-0">
+                      Every project starts with listening. We customize every
+                      design to match your unique personality, lifestyle, and
+                      vision.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div
+                  class="why-us-box p-4 border-2 border border-white rounded-3"
+                >
+                  <div class="why-us-icon mb-4">
+                    <img
+                      src="{{ url_for('static', filename='img/icons/art.png') }}"
+                      alt="interior icon"
+                      style="height: 45px; width: 45px"
+                    />
+                  </div>
+                  <div class="why-us-info">
+                    <h5>Experienced Team of Designers</h5>
+                    <p class="mb-0">
+                      Led by Abdul Qadir (Architect) with international and Gulf
+                      region project experience, our team brings global
+                      expertise to local spaces.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div
+                  class="why-us-box p-4 border-2 border border-white rounded-3"
+                >
+                  <div class="why-us-icon mb-4">
+                    <img
+                      src="{{ url_for('static', filename='img/icons/badge.png') }}"
+                      alt="interior icon"
+                      style="height: 45px; width: 45px"
+                    />
+                  </div>
+                  <div class="why-us-info">
+                    <h5>Quality Craftsmanship</h5>
+                    <p class="mb-0">
+                      We use only premium-grade materials and skilled artisans
+                      to ensure furniture and interiors that are built to last a
+                      lifetime.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="why-us-box p-4 bg-white rounded-3">
+                  <div class="why-us-icon mb-4">
+                    <img
+                      src="{{ url_for('static', filename='img/icons/customer-service.png') }}"
+                      alt="interior icon"
+                      style="height: 45px; width: 45px"
+                    />
+                  </div>
+                  <div class="why-us-info">
+                    <h5>Transparent Pricing</h5>
+                    <p class="mb-0">
+                      No hidden costs. We provide clear, itemized quotations so
+                      you always know exactly what you're paying for — no
+                      surprises.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div
+                  class="why-us-box p-4 border-2 border border-white rounded-3"
+                >
+                  <div class="why-us-icon mb-4">
+                    <img
+                      src="{{ url_for('static', filename='img/icons/price-tag.png') }}"
+                      alt="interior icon"
+                      style="height: 45px; width: 45px"
+                    />
+                  </div>
+                  <div class="why-us-info">
+                    <h5>Call For Full Details</h5>
+                    <p class="mb-0">
+                      Our team is available 6 days a week for consultations,
+                      site visits, and project discussions. We're just a call
+                      away.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div
+                  class="why-us-box p-4 border-2 border border-white rounded-3"
+                >
+                  <div class="why-us-icon mb-4">
+                    <img
+                      src="{{ url_for('static', filename='img/icons/delivery-truck.png') }}"
+                      alt="interior icon"
+                      style="height: 45px; width: 45px"
+                    />
+                  </div>
+                  <div class="why-us-info">
+                    <h5>On-Time Delivery</h5>
+                    <p class="mb-0">
+                      We respect your time. Every project is executed with a
+                      clear timeline and delivered on or before the promised
+                      date.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Why Us section Ends -->
+
+<!-- Testimonial Section Starts -->
+<section class="testimonial bg-white rounded-5 mt-5 py-5">
+  <div class="container">
+    <div class="testimonial-inner">
+      <div class="testimonial-title mb-5 text-center text-lg-start">
+        <div class="row align-items-center justify-content-between gy-4">
+          <div class="col-lg-5">
+            <div class="testimonial-title-left">
+              <h6 class="secondary mb-0">Testimonials</h6>
+              <h2 class="mb-0">Designed With Love, Trusted By Many</h2>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="testimonial-title-right text-lg-start">
+              <p class="mb-4">
+                Families and businesses across Muzaffarnagar, Delhi NCR, and
+                Dehradun trust Utopia to create beautiful, functional, and
+                dream-worthy spaces.
+              </p>
+              <a href="{{ url_for('about') }}" class="btn1 d-inline-block"
+                >View All Reviews<i
+                  class="fa fa-long-arrow-right"
+                  aria-hidden="true"
+                ></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="testimonial-body w-100 mt-4 position-relative">
+            <div
+              class="swiper testimonial-slider pb-2 position-relative overflow-hidden w-100"
+            >
+              <div class="swiper-wrapper">
+                <!-- Slide 1 -->
+                <div class="swiper-slide h-auto">
+                  <div
+                    class="testimonial-box p-4 p-md-5 bg-secondarylight rounded-4 position-relative h-100 d-flex flex-column"
+                  >
+                    <div
+                      class="quote-icon position-absolute"
+                      style="top: 30px; right: 30px; opacity: 0.1"
+                    >
+                      <i
+                        class="fa fa-quote-right"
+                        style="font-size: 60px; color: #906e49"
+                      ></i>
+                    </div>
+                    <ul class="rating d-flex mb-3 gap-1 secondary">
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                    </ul>
+                    <p
+                      class="mb-4 h5 fw-normal text flex-grow-1"
+                      style="font-style: italic; line-height: 1.6"
+                    >
+                      "Amazing experience! Utopia understood our vision
+                      perfectly and transformed our living room beautifully
+                      beyond expectations."
+                    </p>
+                    <div class="client-info d-flex align-items-center gap-3">
+                      <div class="client-img">
+                        <div
+                          class="bg-primary rounded-circle d-flex align-items-center justify-content-center white h3 mb-0"
+                          style="width: 60px; height: 60px"
+                        >
+                          R
+                        </div>
+                      </div>
+                      <div class="client-details">
+                        <h5 class="mb-0">Ritu Sharma</h5>
+                        <span class="secondary teko h6 mb-0"
+                          >Muzaffarnagar</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Slide 2 -->
+                <div class="swiper-slide h-auto">
+                  <div
+                    class="testimonial-box p-4 p-md-5 bg-secondarylight rounded-4 position-relative h-100 d-flex flex-column"
+                  >
+                    <div
+                      class="quote-icon position-absolute"
+                      style="top: 30px; right: 30px; opacity: 0.1"
+                    >
+                      <i
+                        class="fa fa-quote-right"
+                        style="font-size: 60px; color: #906e49"
+                      ></i>
+                    </div>
+                    <ul class="rating d-flex mb-3 gap-1 secondary">
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                    </ul>
+                    <p
+                      class="mb-4 h5 fw-normal text flex-grow-1"
+                      style="font-style: italic; line-height: 1.6"
+                    >
+                      "Professional, punctual, and talented team. Our office
+                      redesign completely changed the workspace atmosphere."
+                    </p>
+                    <div class="client-info d-flex align-items-center gap-3">
+                      <div class="client-img">
+                        <div
+                          class="bg-primary rounded-circle d-flex align-items-center justify-content-center white h3 mb-0"
+                          style="width: 60px; height: 60px"
+                        >
+                          A
+                        </div>
+                      </div>
+                      <div class="client-details">
+                        <h5 class="mb-0">Arjun Mehta</h5>
+                        <span class="secondary teko h6 mb-0">Noida</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Slide 3 -->
+                <div class="swiper-slide h-auto">
+                  <div
+                    class="testimonial-box p-4 p-md-5 bg-secondarylight rounded-4 position-relative h-100 d-flex flex-column"
+                  >
+                    <div
+                      class="quote-icon position-absolute"
+                      style="top: 30px; right: 30px; opacity: 0.1"
+                    >
+                      <i
+                        class="fa fa-quote-right"
+                        style="font-size: 60px; color: #906e49"
+                      ></i>
+                    </div>
+                    <ul class="rating d-flex mb-3 gap-1 secondary">
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                    </ul>
+                    <p
+                      class="mb-4 h5 fw-normal text flex-grow-1"
+                      style="font-style: italic; line-height: 1.6"
+                    >
+                      "Beautiful home transformation within budget and on time.
+                      Abdul sir’s design sense is truly exceptional!"
+                    </p>
+                    <div class="client-info d-flex align-items-center gap-3">
+                      <div class="client-img">
+                        <div
+                          class="bg-primary rounded-circle d-flex align-items-center justify-content-center white h3 mb-0"
+                          style="width: 60px; height: 60px"
+                        >
+                          F
+                        </div>
+                      </div>
+                      <div class="client-details">
+                        <h5 class="mb-0">Faizan Khan</h5>
+                        <span class="secondary teko h6 mb-0">Dehradun</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Slide 4 -->
+                <div class="swiper-slide h-auto">
+                  <div
+                    class="testimonial-box p-4 p-md-5 bg-secondarylight rounded-4 position-relative h-100 d-flex flex-column"
+                  >
+                    <div
+                      class="quote-icon position-absolute"
+                      style="top: 30px; right: 30px; opacity: 0.1"
+                    >
+                      <i
+                        class="fa fa-quote-right"
+                        style="font-size: 60px; color: #906e49"
+                      ></i>
+                    </div>
+                    <ul class="rating d-flex mb-3 gap-1 secondary">
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                    </ul>
+                    <p
+                      class="mb-4 h5 fw-normal text flex-grow-1"
+                      style="font-style: italic; line-height: 1.6"
+                    >
+                      "Utopia delivered exactly what we imagined for our home.
+                      Stylish design, smooth execution, and great attention to
+                      every detail."
+                    </p>
+                    <div class="client-info d-flex align-items-center gap-3">
+                      <div class="client-img">
+                        <div
+                          class="bg-primary rounded-circle d-flex align-items-center justify-content-center white h3 mb-0"
+                          style="width: 60px; height: 60px"
+                        >
+                          S
+                        </div>
+                      </div>
+                      <div class="client-details">
+                        <h5 class="mb-0">Sneha Verma</h5>
+                        <span class="secondary teko h6 mb-0">Delhi NCR</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="swiper-pagination position-static mt-4"></div>
+
+            <!-- Navigation -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Testimonial Section Ends -->
+
+<!-- Appointment Section Starts -->
+<div class="appointment py-5 bg-secondarylight">
+  <div class="container">
+    <div class="appointment-inner">
+      <div class="row align-items-center gy-4">
+        <div class="col-lg-3 col-md-4">
+          <div class="appointment-left">
+            <ul
+              class="d-flex align-items-center justify-content-center justify-content-lg-start"
+            >
+              <li class="me-3 pe-3 border-end border-2 border-white">
+                <img
+                  src="{{ url_for('static', filename='img/icons/chat.png') }}"
+                  alt="chat"
+                  style="height: 44px; width: 44px"
+                />
+              </li>
+              <li class="teko">
+                <span class="h6 primary mb-0">Consult Our Studio</span>
+                <span class="d-block h3 mb-0 text-dark">
+                  <a
+                    href="tel:+917351949490"
+                    class="text-decoration-none text-dark"
+                  >
+                    +91 7351949490
+                  </a>
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-8">
+          <div class="appointment-center">
+            <p class="mb-0">
+              Ready to transform your space? Meet with our principal designers
+              to share your vision and start crafting a home that is uniquely
+              yours.
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="appointment-right text-center text-lg-end">
+            <a
+              href="https://wa.me/917351949490?text=Hello%20Utopia%20Team!%20I%20would%20like%20to%20schedule%20a%20consultation%20for%20interior%20design%20services."
+              target="_blank"
+              class="btn-primary"
+            >
+              Book Consultation
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Appointment Section Ends -->
 {% endblock %}
 
 {% block scripts %}
-    <!-- Shop Filter and WhatsApp redirection script -->
-    <script>
-      $(document).ready(function () {
-        $(".decor-filter-btn").on("click", function () {
-          // Toggle active button style
-          $(".decor-filter-btn").removeClass("active");
-          $(this).addClass("active");
-
-          var filterVal = $(this).data("filter");
-
-          if (filterVal === "all") {
-            // Fade out all first, then fade in all
-            $(".decor-product-item").css({
-              opacity: 0,
-              transform: "scale(0.95)",
-            });
-            setTimeout(function () {
-              $(".decor-product-item")
-                .show()
-                .css({ opacity: 1, transform: "scale(1)" });
-            }, 300);
-          } else {
-            // Fade out all items
-            $(".decor-product-item").css({
-              opacity: 0,
-              transform: "scale(0.95)",
-            });
-            setTimeout(function () {
-              $(".decor-product-item").hide();
-              // Show only matched items with fade
-              $('.decor-product-item[data-category="' + filterVal + '"]')
-                .show()
-                .css({ opacity: 1, transform: "scale(1)" });
-            }, 300);
+<script>
+  $(document).ready(function(){
+    $('.best-selling-slider').slick({
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 4000,
+      arrows: true,
+      prevArrow: '<button type="button" class="slick-prev slick-arrow-beautiful slick-arrow"><i class="fa fa-angle-left"></i></button>',
+      nextArrow: '<button type="button" class="slick-next slick-arrow-beautiful slick-arrow"><i class="fa fa-angle-right"></i></button>',
+      dots: false,
+      infinite: false,
+      responsive: [
+        {
+          breakpoint: 1200,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 1
           }
-        });
-      });
+        },
+        {
+          breakpoint: 992,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1
+          }
+        },
+        {
+          breakpoint: 576,
+          settings: {
+            slidesToShow: 1.5,
+            slidesToScroll: 1,
+            arrows: true
+          }
+        }
+      ]
+    });
+  });
+</script>
 
-      document.querySelectorAll(".btn-add-cart").forEach((button) => {
-        button.addEventListener("click", function () {
-          // Parent card
-          const card = this.closest(".decor-product-card");
+<!-- WhatsApp redirection script -->
+<script>
+  document.querySelectorAll(".btn-add-cart").forEach((button) => {
+    button.addEventListener("click", function () {
+      // Parent card
+      const card = this.closest(".decor-product-card");
 
-          // Product details
-          const productName = card
-            .querySelector(".product-title")
-            .textContent.trim();
-          const productPrice = card
-            .querySelector(".product-price")
-            .textContent.trim();
-          const productCategory = card
-            .querySelector(".product-badge")
-            .textContent.trim();
+      // Product details
+      const productName = card
+        .querySelector(".product-title")
+        .textContent.trim();
+      const productPrice = card
+        .querySelector(".product-price")
+        .textContent.trim();
+      const productCategory = card
+        .querySelector(".product-badge")
+        .textContent.trim();
 
-          // WhatsApp Number
-          const phoneNumber = "917351949490"; // WhatsApp number
+      // WhatsApp Number
+      const phoneNumber = "917351949490"; // WhatsApp number
 
-          // Message
-          const message = `Hello, I am interested in:
+      // Message
+      const message = `Hello, I am interested in:
 
 Product: ${productName}
 Category: ${productCategory}
@@ -1139,12 +1558,12 @@ Price: ${productPrice}
 
 Please share more details.`;
 
-          // WhatsApp URL
-          const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+      // WhatsApp URL
+      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
-          // Open WhatsApp
-          window.open(whatsappUrl, "_blank");
-        });
-      });
-    </script>
+      // Open WhatsApp
+      window.open(whatsappUrl, "_blank");
+    });
+  });
+</script>
 {% endblock %}

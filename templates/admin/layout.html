@@ -51,7 +51,12 @@
                 </li>
                  <li class="admin-menu-item">
                     <a href="{{ url_for('admin_catalog') }}" class="admin-menu-link {% if request.endpoint == 'admin_catalog' %}active{% endif %}">
-                        <i class="fa-solid fa-couch"></i> Catalog
+                        <i class="fa-solid fa-couch"></i> Products
+                    </a>
+                </li>
+                <li class="admin-menu-item">
+                    <a href="{{ url_for('admin_categories') }}" class="admin-menu-link {% if request.endpoint == 'admin_categories' %}active{% endif %}">
+                        <i class="fa-solid fa-list"></i> Categories
                     </a>
                 </li>
                 <li class="admin-menu-item">

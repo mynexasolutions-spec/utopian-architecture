@@ -19,7 +19,7 @@ if Config.CLOUDINARY_URL and Config.CLOUDINARY_URL.startswith("cloudinary://"):
                 secure=True
             )
 
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp', 'jfif', 'avif', 'heic', 'heif', 'svg'}
 
 def allowed_file(filename):
     """Check if the file has an allowed extension."""
@@ -27,11 +27,11 @@ def allowed_file(filename):
 
 def upload_image_to_cloudinary(file, folder_name="utopia"):
     """
-    Uploads an image file to Cloudinary.
+    Uploads an image file to Cloudinary, or falls back to local storage if Cloudinary is not configured.
     
     Args:
         file: The file-like object from request.files
-        folder_name: The Cloudinary folder to store the image in.
+        folder_name: The folder to store the image in.
         
     Returns:
         The secure URL of the uploaded image if successful, or None if failed.
@@ -42,31 +42,78 @@ def upload_image_to_cloudinary(file, folder_name="utopia"):
     if not allowed_file(file.filename):
         return None
         
+    # Check if Cloudinary is configured
+    is_cloudinary_configured = False
+    if Config.CLOUDINARY_URL and Config.CLOUDINARY_URL.startswith("cloudinary://") and "API_KEY" not in Config.CLOUDINARY_URL:
+        is_cloudinary_configured = True
+        
+    if is_cloudinary_configured:
+        try:
+            # Upload the file to Cloudinary
+            upload_result = cloudinary.uploader.upload(
+                file,
+                folder=f"utopia/{folder_name}",
+                resource_type="image"
+            )
+            # Return the secure URL provided by Cloudinary
+            if upload_result.get("secure_url"):
+                return upload_result.get("secure_url")
+        except Exception as e:
+            print(f"Cloudinary upload error: {e}. Falling back to local storage...")
+            
+    # Local fallback
     try:
-        # Upload the file to Cloudinary
-        upload_result = cloudinary.uploader.upload(
-            file,
-            folder=f"utopia/{folder_name}",
-            resource_type="image"
-        )
-        # Return the secure URL provided by Cloudinary
-        return upload_result.get("secure_url")
+        import time
+        filename = secure_filename(file.filename)
+        # Append timestamp to prevent filename collisions
+        if '.' in filename:
+            name_parts = filename.rsplit('.', 1)
+            timestamped_filename = f"{name_parts[0]}_{int(time.time())}.{name_parts[1]}"
+        else:
+            timestamped_filename = f"{filename}_{int(time.time())}"
+        
+        # Save to static/uploads/folder_name/
+        basedir = os.path.abspath(os.path.dirname(__file__))
+        upload_folder = os.path.join(basedir, 'static', 'uploads', folder_name)
+        os.makedirs(upload_folder, exist_ok=True)
+        
+        filepath = os.path.join(upload_folder, timestamped_filename)
+        # Reset the stream cursor to ensure we read from start if Cloudinary had started reading
+        file.seek(0)
+        file.save(filepath)
+        
+        # Return relative static URL path
+        return f"/static/uploads/{folder_name}/{timestamped_filename}"
     except Exception as e:
-        print(f"Cloudinary upload error: {e}")
+        print(f"Local file upload error: {e}")
         return None
 
 def delete_image_from_cloudinary(image_url):
     """
-    Deletes an image from Cloudinary given its secure URL.
-    This attempts to extract the public_id from the URL.
+    Deletes an image from Cloudinary given its secure URL, or from local storage if it's a local file.
     """
-    if not image_url or "cloudinary.com" not in image_url:
+    if not image_url:
+        return False
+        
+    # Local file deletion fallback
+    if image_url.startswith('/static/uploads/'):
+        try:
+            basedir = os.path.abspath(os.path.dirname(__file__))
+            # Convert /static/uploads/... to absolute path
+            relative_path = image_url.lstrip('/')
+            filepath = os.path.join(basedir, relative_path)
+            if os.path.exists(filepath):
+                os.remove(filepath)
+                return True
+        except Exception as e:
+            print(f"Local file delete error: {e}")
+            return False
+            
+    if "cloudinary.com" not in image_url:
         return False
         
     try:
         # Extract public_id from the standard Cloudinary URL
-        # e.g., https://res.cloudinary.com/cloud_name/image/upload/v1234567/utopia/slider/filename.jpg
-        # The public_id is "utopia/slider/filename"
         parts = image_url.split('/upload/')
         if len(parts) == 2:
             path_part = parts[1]
