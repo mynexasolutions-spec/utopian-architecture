@@ -10,7 +10,7 @@ from werkzeug.utils import secure_filename
 
 # Import custom configuration and helpers
 from config import Config
-from helpers import upload_image_to_cloudinary, delete_image_from_cloudinary, allowed_file
+from helpers import upload_image_to_cloudinary, delete_image_from_cloudinary, allowed_file, format_product_description
 
 # Load environment variables from .env
 load_dotenv()
@@ -939,14 +939,22 @@ def admin_add_catalog():
     cat_obj = Category.query.get(category_id) if category_id else None
     if cat_obj:
         category_name = cat_obj.name.lower().replace(" & ", "-").replace(" ", "-")
+        cat_display_name = cat_obj.name
     else:
         category_name = "other"
+        cat_display_name = "Other"
+        
+    sub_obj = Subcategory.query.get(subcategory_id) if subcategory_id else None
+    subcat_display_name = sub_obj.name if sub_obj else "N/A"
             
     name = request.form.get('name')
     mrp = request.form.get('mrp')
     in_stock = request.form.get('in_stock') == 'on'
     short_description = request.form.get('short_description')
-    description = request.form.get('description')
+    
+    # Automatically format description if it's plain text
+    raw_desc = request.form.get('description')
+    description = format_product_description(raw_desc, cat_display_name, subcat_display_name, mrp)
     
     if not name or not mrp:
         flash("Please fill out all product details.", "danger")
@@ -1009,21 +1017,30 @@ def admin_edit_catalog(id):
         cat_obj = Category.query.get(category_id)
         if cat_obj:
             prod.category = cat_obj.name.lower().replace(" & ", "-").replace(" ", "-")
+            cat_display_name = cat_obj.name
     else:
         prod.category_id = None
         prod.category = "other"
+        cat_display_name = "Other"
         
     if subcategory_id:
         prod.subcategory_id = int(subcategory_id)
+        sub_obj = Subcategory.query.get(subcategory_id)
+        subcat_display_name = sub_obj.name if sub_obj else "N/A"
     else:
         prod.subcategory_id = None
+        subcat_display_name = "N/A"
         
     prod.name = request.form.get('name')
     prod.mrp = request.form.get('mrp')
     prod.in_stock = request.form.get('in_stock') == 'on'
     prod.short_description = request.form.get('short_description')
-    prod.description = request.form.get('description')
     
+    # Automatically format description if it's plain text
+    raw_desc = request.form.get('description')
+    prod.description = format_product_description(raw_desc, cat_display_name, subcat_display_name, prod.mrp)
+    
+
     image_file = request.files.get('image')
     if image_file and image_file.filename != '':
         new_image_url = upload_image_to_cloudinary(image_file, folder_name="catalog")

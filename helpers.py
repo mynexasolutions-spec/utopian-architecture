@@ -134,3 +134,89 @@ def delete_image_from_cloudinary(image_url):
         return False
         
     return False
+
+def format_product_description(raw_text, category_name, subcategory_name, mrp):
+    """
+    Automatically formats a plain paragraph product description into structured HTML.
+    Includes Overview, Key Features, and Specifications.
+    """
+    if not raw_text:
+        return ""
+        
+    # If it seems like it's already HTML formatted, return as is
+    if "<h3>" in raw_text or "<p>" in raw_text or "<ul>" in raw_text:
+        return raw_text
+
+    import re
+    
+    # Defaults
+    overview_text = ""
+    features_list = []
+    dimensions_val = 'Standard (Customizable on request)'
+    price_val = f"₹{mrp}" if mrp else "N/A"
+    cat_display = category_name.replace('-', ' ').title() if category_name else "N/A"
+    subcat_display = subcategory_name if subcategory_name else "N/A"
+    
+    # Regex to split by labels
+    pattern = re.compile(r'(Features:|Dimensions:|Price:|Category:|Sub-Category:)', re.IGNORECASE)
+    parts = pattern.split(raw_text)
+    
+    if len(parts) > 1:
+        overview_text = parts[0].strip()
+        
+        for i in range(1, len(parts), 2):
+            label = parts[i].lower()
+            content = parts[i+1].strip()
+            
+            if label == "features:":
+                # Clean features into a list, stripping existing bullets and newlines
+                lines = [line.strip() for line in re.split(r'\n|•|-', content) if line.strip()]
+                # If there was no clear separator, try splitting by sentences
+                if len(lines) == 1 and not content.startswith('•') and '.' in content:
+                     lines = [s.strip() for s in re.split(r'(?<=[.!?]) +', content) if s.strip()]
+                features_list = lines
+                
+            elif label == "dimensions:":
+                dimensions_val = content.strip('.,; ')
+            elif label == "price:":
+                price_val = content.strip('.,; ')
+            elif label == "category:":
+                cat_display = content.strip('.,; ')
+            elif label == "sub-category:":
+                subcat_display = content.strip('.,; ')
+                
+    else:
+        # Fallback to existing logic if no labels found
+        sentences = re.split(r'(?<=[.!?]) +', raw_text.strip())
+        if len(sentences) <= 2:
+            overview_text = raw_text
+            features_list.extend([
+                "Premium quality materials and craftsmanship.",
+                "Modern and elegant design suitable for any space.",
+                "Durable and built for long-lasting comfort."
+            ])
+        else:
+            overview_text = " ".join(sentences[:2])
+            for s in sentences[2:]:
+                if s.strip():
+                    features_list.append(s.strip())
+
+    features_html = "\n".join([f"<li>{f.strip('• -')}</li>" for f in features_list])
+    
+    html = f"""<h3>Product Overview</h3>
+<p>{overview_text}</p>
+
+<h3 style="margin-top: 25px;">Key Features</h3>
+<ul style="padding-left: 20px; margin-bottom: 25px;">
+{features_html}
+</ul>
+
+<h3 style="margin-top: 25px;">Specifications</h3>
+<div class="specifications" style="background: #fdfcf9; padding: 25px; border-radius: 16px; border: 1px solid rgba(144, 110, 73, 0.15); margin-top: 15px; box-shadow: 0px 4px 15px rgba(0,0,0,0.02);">
+<p style="margin-bottom: 12px; font-size: 15px;"><strong>Dimensions:</strong> {dimensions_val}</p>
+<p style="margin-bottom: 12px; font-size: 15px;"><strong>Price:</strong> {price_val}</p>
+<p style="margin-bottom: 12px; font-size: 15px;"><strong>Category:</strong> {cat_display}</p>
+<p style="margin-bottom: 0; font-size: 15px;"><strong>Sub-Category:</strong> {subcat_display}</p>
+</div>"""
+
+    return html

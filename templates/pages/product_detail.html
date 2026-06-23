@@ -382,7 +382,7 @@
               {% endif %}
 
               <a
-                href="{{ url_for('home') }}#shop-decor"
+                href="{{ url_for('shop') }}"
                 class="btn-back-catalog"
                 id="btn-back-catalog-link"
               >
@@ -405,7 +405,7 @@
               >
                 Detailed Specifications &amp; Overview
               </h4>
-              <p style="margin-bottom: 0">{{ product.description }}</p>
+              <p style="margin-bottom: 0">{{ product.description | safe }}</p>
             </div>
             {% endif %}
           </div>
