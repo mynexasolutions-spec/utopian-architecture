@@ -10,13 +10,13 @@ venv/
 env/
 ENV/
 .env
-.env.example
 # IDE configurations
 .vscode/
 .idea/
 
 # Database files (local only)
-
+instance/
+*.db
 
 # Vercel output
 .vercel/
