@@ -1,0 +1,293 @@
+{% extends 'admin/layout.html' %}
+
+{% block title %}Gallery Categories – UtopiaAdmin{% endblock %}
+
+{% block content %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="admin-alert admin-alert-{{ category }}" style="margin-bottom: 30px;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <style>
+        .gallery-cat-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        @media (max-width: 576px) {
+            .admin-modal-card {
+                padding: 20px !important;
+                max-height: 85vh !important;
+            }
+            .admin-modal-actions {
+                flex-direction: column !important;
+                gap: 10px !important;
+            }
+            .admin-modal-actions button {
+                width: 100% !important;
+            }
+        }
+    </style>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px;">
+        <div>
+            <h1 class="admin-page-title" style="margin-bottom: 2px;">Gallery Categories</h1>
+            <p class="admin-page-subtitle" style="margin-bottom: 0;">Manage categories for the Explore By Category section.</p>
+        </div>
+        <div>
+            <button class="admin-btn admin-btn-accent" onclick="openAddModal()" style="padding: 10px 18px; font-size: 14px; border-radius: 6px;">
+                <i class="fa-solid fa-plus"></i> Add Category
+            </button>
+        </div>
+    </div>
+
+    {% if categories %}
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 20px;">
+            {% for cat in categories %}
+                <div class="admin-panel" style="align-items: flex-start; text-align: left; padding: 25px; min-height: auto; border-top: 4px solid var(--admin-accent); position: relative; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; width: 100%; box-sizing: border-box;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.1)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0, 0, 0, 0.05)';">
+                    
+                    <div style="position: relative; width: 100%; margin-bottom: 15px; border-radius: 8px; overflow: hidden; height: 200px; background-image: url('{{ cat.image_url if cat.image_url and (cat.image_url.startswith('http') or cat.image_url.startswith('/') or cat.image_url.startswith('data:')) else (url_for('static', filename=cat.image_url) if cat.image_url else '') }}'); background-size: cover; background-position: center;">
+                        <span style="position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.75); color: white; padding: 5px 12px; border-radius: 6px; font-size: 13px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; backdrop-filter: blur(4px);">
+                            {% if cat.icon_class and ('/' in cat.icon_class or '.' in cat.icon_class or cat.icon_class.startswith('img')) %}
+                            <img src="{{ cat.icon_class if (cat.icon_class.startswith('http') or cat.icon_class.startswith('/') or cat.icon_class.startswith('data:')) else url_for('static', filename=cat.icon_class) }}" alt="icon" style="width: 18px; height: 18px; object-fit: contain;">
+                            {% elif cat.icon_class %}
+                            <i class="fa {{ cat.icon_class }}"></i>
+                            {% endif %}
+                            {{ cat.name }}
+                        </span>
+                    </div>
+                    
+                    <div style="margin-bottom: 15px; width: 100%;">
+                        <strong style="color: var(--admin-accent); font-size: 14px;">Slug:</strong>
+                        <div style="background: rgba(144, 110, 73, 0.05); padding: 8px 12px; border-radius: 6px; font-size: 14px; font-weight: 600; color: #252525; margin-top: 5px; word-break: break-all;">
+                            {{ cat.slug }}
+                        </div>
+                        <div style="margin-top: 10px;">
+                            <strong style="color: var(--admin-accent); font-size: 14px;">Position:</strong> <span style="font-weight: 600; color: #252525;">{{ cat.position }}</span>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px; width: 100%; margin-top: auto; justify-content: flex-end; flex-wrap: wrap;">
+                        <button type="button" class="admin-btn edit-btn" 
+                                data-id="{{ cat.id }}"
+                                data-name="{{ cat.name | e }}"
+                                data-slug="{{ cat.slug | e }}"
+                                data-position="{{ cat.position }}"
+                                onclick="openEditModal(this)"
+                                style="padding: 8px 15px; font-size: 13px; background: transparent; border: 1px solid var(--admin-accent); color: var(--admin-accent); border-radius: 6px;">
+                            <i class="fa-solid fa-pen"></i> Edit
+                        </button>
+                        <button type="button" class="admin-btn" 
+                                data-id="{{ cat.id }}"
+                                data-name="{{ cat.name | e }}"
+                                onclick="openDeleteModal(this)"
+                                style="padding: 8px 15px; font-size: 13px; background: #dc3545; color: white; border: none; border-radius: 6px;">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="admin-panel" style="padding: 50px 20px; text-align: center;">
+            <div style="font-size: 48px; color: #ccc; margin-bottom: 20px;">
+                <i class="fa-solid fa-folder-open"></i>
+            </div>
+            <h3 style="margin-bottom: 10px;">No Categories Found</h3>
+            <p style="color: #666; margin-bottom: 20px;">You haven't added any gallery categories yet.</p>
+            <button class="admin-btn admin-btn-accent" onclick="openAddModal()" style="margin: 0 auto;">
+                <i class="fa-solid fa-plus"></i> Add First Category
+            </button>
+        </div>
+    {% endif %}
+
+    <!-- Add Category Modal -->
+    <div id="addModal" class="gallery-cat-modal">
+        <div class="admin-login-card admin-modal-card" style="width: 100%; max-width: 550px; position: relative; padding: 30px; max-height: 90vh; overflow-y: auto; box-sizing: border-box; background: #fff; text-align: left;">
+            <button type="button" onclick="closeAllModals()" style="position: absolute; right: 20px; top: 20px; background: transparent; border: none; font-size: 24px; cursor: pointer; color: var(--admin-text); transition: color 0.2s;" onmouseover="this.style.color='#ff4757';" onmouseout="this.style.color='var(--admin-text)';"><i class="ri-close-line"></i></button>
+            <h2 class="admin-page-title" style="margin-bottom: 20px; font-size: 22px;">Add Category</h2>
+            
+            <form action="{{ url_for('add_portfolio_category') }}" method="POST" enctype="multipart/form-data" id="addForm">
+                <div style="margin-bottom: 18px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #444; font-size: 14px;">Name <span style="color: #dc3545">*</span></label>
+                    <input type="text" name="name" required placeholder="e.g. LIVING ROOMS"
+                           style="width: 100%; box-sizing: border-box; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: inherit; transition: border-color 0.3s;"
+                           onfocus="this.style.borderColor='var(--admin-accent)'; this.style.outline='none';"
+                           onblur="this.style.borderColor='#ddd';">
+                </div>
+                
+                <div style="margin-bottom: 18px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #444; font-size: 14px;">Slug <span style="color: #dc3545">*</span></label>
+                    <input type="text" name="slug" required placeholder="e.g. living-rooms"
+                           style="width: 100%; box-sizing: border-box; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: inherit; transition: border-color 0.3s;"
+                           onfocus="this.style.borderColor='var(--admin-accent)'; this.style.outline='none';"
+                           onblur="this.style.borderColor='#ddd';">
+                </div>
+
+                <div style="margin-bottom: 18px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #444; font-size: 14px;">Position</label>
+                    <input type="number" name="position" value="0"
+                           style="width: 100%; box-sizing: border-box; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: inherit; transition: border-color 0.3s;"
+                           onfocus="this.style.borderColor='var(--admin-accent)'; this.style.outline='none';"
+                           onblur="this.style.borderColor='#ddd';">
+                </div>
+
+                <div style="margin-bottom: 22px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #444; font-size: 14px;">Background Image <span style="color: #dc3545">*</span></label>
+                    <div style="position: relative; width: 100%; border: 1px dashed #ccc; border-radius: 8px; padding: 15px; background: rgb(250, 250, 250); cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center;" onmouseover="this.style.borderColor='var(--admin-accent)'; this.style.background='rgba(144, 110, 73, 0.02)';" onmouseout="this.style.borderColor='#ccc'; this.style.background='#fafafa';">
+                        <input type="file" id="add-cat-image" name="image" accept="image/*" required style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; z-index: 10;" onchange="document.getElementById('add-file-name-display').innerText = this.files[0] ? this.files[0].name : 'Choose an image or drag &amp; drop'; document.getElementById('add-file-name-display').style.color = this.files[0] ? 'var(--admin-accent)' : '#888';">
+                        <div style="pointer-events: none; display: flex; align-items: center; gap: 15px;">
+                            <i class="fa-solid fa-cloud-arrow-up" style="font-size: 28px; color: var(--admin-accent);"></i>
+                            <div style="text-align: left;">
+                                <div id="add-file-name-display" style="font-size: 13px; color: #888; font-weight: 500;">Choose an image or drag &amp; drop</div>
+                                <div style="font-size: 11px; color: #aaa; margin-top: 2px;">Supported formats: JPEG, PNG, WEBP</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="admin-modal-actions" style="display: flex; gap: 15px; margin-top: 25px;">
+                    <button type="button" onclick="closeAllModals()" style="flex: 1; padding: 12px; border: 1px solid #ddd; background: white; border-radius: 8px; font-weight: 600; color: #555; cursor: pointer; transition: background 0.3s;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='white'">Cancel</button>
+                    <button type="submit" style="flex: 1; padding: 12px; border: none; background: var(--admin-accent); border-radius: 8px; font-weight: 600; color: white; cursor: pointer; transition: opacity 0.3s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">Add Category</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Category Modal -->
+    <div id="editModal" class="gallery-cat-modal">
+        <div class="admin-login-card admin-modal-card" style="width: 100%; max-width: 550px; position: relative; padding: 30px; max-height: 90vh; overflow-y: auto; box-sizing: border-box; background: #fff; text-align: left;">
+            <button type="button" onclick="closeAllModals()" style="position: absolute; right: 20px; top: 20px; background: transparent; border: none; font-size: 24px; cursor: pointer; color: var(--admin-text); transition: color 0.2s;" onmouseover="this.style.color='#ff4757';" onmouseout="this.style.color='var(--admin-text)';"><i class="ri-close-line"></i></button>
+            <h2 class="admin-page-title" style="margin-bottom: 20px; font-size: 22px;">Edit Category</h2>
+            
+            <form action="" method="POST" enctype="multipart/form-data" id="editForm">
+                <div style="margin-bottom: 18px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #444; font-size: 14px;">Name <span style="color: #dc3545">*</span></label>
+                    <input type="text" name="name" id="editName" required
+                           style="width: 100%; box-sizing: border-box; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: inherit; transition: border-color 0.3s;"
+                           onfocus="this.style.borderColor='var(--admin-accent)'; this.style.outline='none';"
+                           onblur="this.style.borderColor='#ddd';">
+                </div>
+
+                <div style="margin-bottom: 18px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #444; font-size: 14px;">Slug <span style="color: #dc3545">*</span></label>
+                    <input type="text" name="slug" id="editSlug" required
+                           style="width: 100%; box-sizing: border-box; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: inherit; transition: border-color 0.3s;"
+                           onfocus="this.style.borderColor='var(--admin-accent)'; this.style.outline='none';"
+                           onblur="this.style.borderColor='#ddd';">
+                </div>
+
+                <div style="margin-bottom: 18px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #444; font-size: 14px;">Position</label>
+                    <input type="number" name="position" id="editPosition"
+                           style="width: 100%; box-sizing: border-box; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: inherit; transition: border-color 0.3s;"
+                           onfocus="this.style.borderColor='var(--admin-accent)'; this.style.outline='none';"
+                           onblur="this.style.borderColor='#ddd';">
+                </div>
+
+                <div style="margin-bottom: 22px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #444; font-size: 14px;">Background Image (Leave empty to keep current)</label>
+                    <div style="position: relative; width: 100%; border: 1px dashed #ccc; border-radius: 8px; padding: 15px; background: rgb(250, 250, 250); cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center;" onmouseover="this.style.borderColor='var(--admin-accent)'; this.style.background='rgba(144, 110, 73, 0.02)';" onmouseout="this.style.borderColor='#ccc'; this.style.background='#fafafa';">
+                        <input type="file" id="edit-cat-image" name="image" accept="image/*" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; z-index: 10;" onchange="document.getElementById('edit-file-name-display').innerText = this.files[0] ? this.files[0].name : 'Choose a new image or drag &amp; drop'; document.getElementById('edit-file-name-display').style.color = this.files[0] ? 'var(--admin-accent)' : '#888';">
+                        <div style="pointer-events: none; display: flex; align-items: center; gap: 15px;">
+                            <i class="fa-solid fa-cloud-arrow-up" style="font-size: 28px; color: var(--admin-accent);"></i>
+                            <div style="text-align: left;">
+                                <div id="edit-file-name-display" style="font-size: 13px; color: #888; font-weight: 500;">Choose a new image or drag &amp; drop</div>
+                                <div style="font-size: 11px; color: #aaa; margin-top: 2px;">Supported formats: JPEG, PNG, WEBP</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="admin-modal-actions" style="display: flex; gap: 15px; margin-top: 25px;">
+                    <button type="button" onclick="closeAllModals()" style="flex: 1; padding: 12px; border: 1px solid #ddd; background: white; border-radius: 8px; font-weight: 600; color: #555; cursor: pointer; transition: background 0.3s;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='white'">Cancel</button>
+                    <button type="submit" style="flex: 1; padding: 12px; border: none; background: var(--admin-accent); border-radius: 8px; font-weight: 600; color: white; cursor: pointer; transition: opacity 0.3s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="gallery-cat-modal">
+        <div class="admin-login-card admin-modal-card" style="width: 100%; max-width: 420px; position: relative; padding: 30px 25px; box-sizing: border-box; text-align: center; border-radius: 12px; background: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+            <button type="button" onclick="closeAllModals()" style="position: absolute; right: 20px; top: 20px; background: transparent; border: none; font-size: 24px; cursor: pointer; color: var(--admin-text); transition: color 0.2s;" onmouseover="this.style.color='#ff4757';" onmouseout="this.style.color='var(--admin-text)';"><i class="ri-close-line"></i></button>
+            <div style="font-size: 48px; color: #dc3545; margin-bottom: 15px; line-height: 1;">
+                <i class="ri-error-warning-line"></i>
+            </div>
+            <h3 style="font-size: 20px; margin-bottom: 10px; color: #252525; font-weight: 600;">Confirm Deletion</h3>
+            <p style="color: #666; font-size: 14px; margin-bottom: 25px; line-height: 1.5;">This action cannot be undone. This will permanently delete the category <strong id="deleteNameText" style="color: #252525;"></strong>.</p>
+            
+            <form action="" method="POST" id="deleteForm">
+                <div class="admin-modal-actions" style="display: flex; gap: 12px; justify-content: center;">
+                    <button type="button" onclick="closeAllModals()" style="flex: 1; padding: 12px; border: 1px solid #ddd; background: white; border-radius: 8px; font-weight: 600; color: #555; cursor: pointer; transition: background 0.3s;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='white'">Cancel</button>
+                    <button type="submit" style="flex: 1; padding: 12px; border: none; background: #dc3545; border-radius: 8px; font-weight: 600; color: white; cursor: pointer; transition: opacity 0.3s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"><i class="ri-delete-bin-line"></i> Yes, Delete It</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const addModal = document.getElementById('addModal');
+        const editModal = document.getElementById('editModal');
+        const deleteModal = document.getElementById('deleteModal');
+
+        function openAddModal() {
+            addModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function openEditModal(btn) {
+            const id = btn.getAttribute('data-id');
+            const name = btn.getAttribute('data-name');
+            const slug = btn.getAttribute('data-slug');
+            const position = btn.getAttribute('data-position');
+
+            document.getElementById('editForm').action = "/admin/portfolio-categories/edit/" + id;
+            document.getElementById('editName').value = name;
+            document.getElementById('editSlug').value = slug;
+            document.getElementById('editPosition').value = position;
+
+            editModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function openDeleteModal(btn) {
+            const id = btn.getAttribute('data-id');
+            const name = btn.getAttribute('data-name');
+
+            document.getElementById('deleteForm').action = "/admin/portfolio-categories/delete/" + id;
+            document.getElementById('deleteNameText').textContent = '"' + name + '"';
+
+            deleteModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAllModals() {
+            if (addModal) addModal.style.display = 'none';
+            if (editModal) editModal.style.display = 'none';
+            if (deleteModal) deleteModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.addEventListener('click', function(e) {
+            if (e.target.classList.contains('gallery-cat-modal')) {
+                closeAllModals();
+            }
+        });
+    </script>
+{% endblock %}

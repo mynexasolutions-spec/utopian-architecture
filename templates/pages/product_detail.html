@@ -333,6 +333,8 @@
         <!-- Right Column: Details -->
         <div class="col-lg-6 col-12 d-flex flex-column justify-content-center">
           <div>
+            {% set main_mrp = product.mrp | replace('$', '') | replace(',', '') | float if product.mrp else 0 %}
+            {% set main_sale = product.sale_price | replace('$', '') | replace(',', '') | float if product.sale_price else main_mrp %}
             <span class="product-info-badge" id="product-category-badge"
               >{{ product.category | replace('-', ' ') | title }}</span
             >
@@ -340,7 +342,10 @@
               {{ product.name }}
             </h1>
             <div class="product-detail-price" id="product-price-display">
-              ₹{{ product.mrp | replace('$', '') }}
+              <span class="product-price fw-bold" style="font-size: 28px; color: #906e49;">₹{{ "{:,.0f}".format(main_sale) }}</span>
+              {% if main_sale < main_mrp %}
+              <span class="original-price text-muted text-decoration-line-through" style="font-size: 18px; margin-left: 10px;">₹{{ "{:,.0f}".format(main_mrp) }}</span>
+              {% endif %}
             </div>
 
             {% if product.in_stock %}
@@ -444,10 +449,19 @@
       <div class="swiper related-products-slider" style="padding: 10px 5px; margin: -10px -5px;">
       <div class="swiper-wrapper">
       {% for prod in related_products %}
+      {% set mrp_val = prod.mrp | replace('$', '') | replace(',', '') | float if prod.mrp else 0 %}
+      {% set sale_price_val = prod.sale_price | replace('$', '') | replace(',', '') | float if prod.sale_price else mrp_val %}
       <div class="swiper-slide h-auto">
         <div class="decor-product-card h-100 d-flex flex-column">
           <a href="{{ url_for('product_detail', product_id=prod.id) }}">
-            <div class="product-img-container">
+            <div class="product-img-container position-relative">
+              {% if mrp_val > 0 and sale_price_val < mrp_val %}
+              {% set discount_pct = ((mrp_val - sale_price_val) / mrp_val * 100) | round | int %}
+              <div class="discount-badge d-flex flex-column justify-content-center align-items-center" style="position: absolute; top: 0; left: 0; background-color: #906e49; color: white; width: 55px; height: 55px; border-bottom-right-radius: 12px; z-index: 10;">
+                <span class="fs-6 fw-bold lh-1">{{ discount_pct }}%</span>
+                <span class="lh-1 mt-1" style="font-size: 10px !important;">OFF</span>
+              </div>
+              {% endif %}
               <img src="{{ prod.image_url }}" alt="{{ prod.name }}" loading="lazy" />
             </div>
           </a>
@@ -466,7 +480,12 @@
                   {{ prod.name }}
                 </a>
               </h4>
-              <span class="product-price" style="font-size: 18px;">₹{{ prod.mrp | replace('$', '') }}</span>
+              <div class="product-pricing text-end">
+                <span class="product-price fw-bold" style="font-size: 18px; color: #906e49;">₹{{ "{:,.0f}".format(sale_price_val) }}</span>
+                {% if sale_price_val < mrp_val %}
+                <br><span class="original-price text-muted text-decoration-line-through" style="font-size: 13px;">₹{{ "{:,.0f}".format(mrp_val) }}</span>
+                {% endif %}
+              </div>
             </div>
             
             {% if prod.in_stock %}

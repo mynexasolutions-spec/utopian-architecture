@@ -62,6 +62,7 @@ class CatalogProduct(db.Model):
     subcategory_id = db.Column(db.Integer, db.ForeignKey('subcategories.id', ondelete='SET NULL'), nullable=True)
     name = db.Column(db.String(100), nullable=False)
     mrp = db.Column(db.String(50), nullable=False)
+    sale_price = db.Column(db.String(50), nullable=True)
     image_url = db.Column(db.String(255), nullable=False)
     in_stock = db.Column(db.Boolean, default=True, nullable=False)
     short_description = db.Column(db.Text, nullable=True)
@@ -75,6 +76,20 @@ class CatalogProduct(db.Model):
 
     def __repr__(self):
         return f"<CatalogProduct {self.name}>"
+
+class PortfolioCategory(db.Model):
+    __tablename__ = 'portfolio_categories'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    slug = db.Column(db.String(100), nullable=False, unique=True)
+    icon_class = db.Column(db.String(50), default='img/gallery_icons/default_icons.png')
+    image_url = db.Column(db.String(255), nullable=False)
+    position = db.Column(db.Integer, default=0)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return f"<PortfolioCategory {self.name}>"
 
 class GalleryImage(db.Model):
     __tablename__ = 'gallery_images'
@@ -635,20 +650,86 @@ def services():
     """Renders the Services Page."""
     return render_template('pages/services.html')
 
-@app.route('/gallery')
-def gallery():
-    """Renders the Gallery Page."""
+@app.route('/portfolio')
+def portfolio():
+    """Renders the Portfolio Page."""
+    current_category = request.args.get('category')
     images = GalleryImage.query.order_by(GalleryImage.created_at.desc()).all()
     
     gallery_items = []
     for img in images:
+        cat_name = img.category or "other"
+        f_class = cat_name.lower().replace(" ", "-")
+        # If a category is requested, only include images matching it (or if it's 'all', include all)
+        if current_category and current_category != 'all':
+            # Loose matching to allow 'residential' to match 'living-room' or 'bedroom' if needed,
+            # For strict matching:
+            if f_class != current_category and current_category not in f_class:
+                # Custom mapping for high level categories if needed
+                if current_category == 'residential' and f_class not in ['living-room', 'bedroom', 'kitchen']:
+                    continue
+                elif current_category == 'commercial' and f_class not in ['office', 'restaurant', 'cafe', 'retail']:
+                    continue
+                elif current_category not in ['residential', 'commercial']:
+                    continue
+
         gallery_items.append({
-            'filter_class': img.category,
+            'id': img.id,
             'image_url': img.image_url,
+            'category': cat_name,
+            'filter_class': f_class,
             'alt': img.alt_text or "Gallery Image"
         })
         
-    return render_template('pages/gallery.html', gallery_items=gallery_items)
+    db_cats = PortfolioCategory.query.order_by(PortfolioCategory.position).all()
+    if db_cats:
+        # Ensure gallery icons are updated if they are still fa-image or fontawesome
+        if any(c.icon_class == 'fa-image' or not c.icon_class or not ('/' in c.icon_class or '.' in c.icon_class) for c in db_cats):
+            icon_mapping = {
+                'residential': 'img/gallery_icons/1.png',
+                'commercial': 'img/gallery_icons/2.png',
+                'living-room': 'img/gallery_icons/3.png',
+                'kitchen': 'img/gallery_icons/4.png',
+                'bedroom': 'img/gallery_icons/5.png',
+                'sofaset': 'img/gallery_icons/6.png',
+                'other': 'img/gallery_icons/7.png',
+                'cafe': 'img/gallery_icons/8.png',
+                'hotel': 'img/gallery_icons/9.png',
+                'restaurant': 'img/gallery_icons/10.png',
+                'office': 'img/gallery_icons/11.png',
+                'retail': 'img/gallery_icons/12.png',
+                'bar': 'img/gallery_icons/13.png',
+                'outdoor': 'img/gallery_icons/14.png'
+            }
+            for idx, c in enumerate(db_cats, start=1):
+                if c.slug in icon_mapping:
+                    c.icon_class = icon_mapping[c.slug]
+                else:
+                    c.icon_class = f'img/gallery_icons/{idx}.png'
+            try:
+                db.session.commit()
+            except Exception:
+                db.session.rollback()
+        portfolio_categories = db_cats
+    else:
+        portfolio_categories = [
+            {"slug": "residential", "name": "RESIDENTIAL<br>INTERIORS", "image_url": "img/gallery/living_room/lr1.webp", "icon_class": "img/gallery_icons/1.png"},
+            {"slug": "commercial", "name": "COMMERCIAL<br>SPACES", "image_url": "img/gallery/office/office1.webp", "icon_class": "img/gallery_icons/2.png"},
+            {"slug": "living-room", "name": "LIVING<br>ROOMS", "image_url": "img/gallery/living_room/lr1.webp", "icon_class": "img/gallery_icons/3.png"},
+            {"slug": "kitchen", "name": "KITCHENS", "image_url": "img/gallery/kitchen/kit1.webp", "icon_class": "img/gallery_icons/4.png"},
+            {"slug": "bedroom", "name": "BEDROOMS", "image_url": "img/gallery/bedroom/bed1.webp", "icon_class": "img/gallery_icons/5.png"},
+            {"slug": "sofaset", "name": "CUSTOM<br>FURNITURE", "image_url": "img/gallery/sofaset/sofa-set.webp", "icon_class": "img/gallery_icons/6.png"},
+            {"slug": "other", "name": "BEFORE & AFTER<br>TRANSFORMATIONS", "image_url": "img/gallery/other/entertainmentcenter.webp", "icon_class": "img/gallery_icons/7.png"},
+            {"slug": "cafe", "name": "CAFE<br>INTERIORS", "image_url": "img/gallery/office/office1.webp", "icon_class": "img/gallery_icons/8.png"},
+            {"slug": "hotel", "name": "HOTEL<br>INTERIORS", "image_url": "img/gallery/living_room/lr1.webp", "icon_class": "img/gallery_icons/9.png"},
+            {"slug": "restaurant", "name": "RESTAURANT<br>INTERIORS", "image_url": "img/gallery/kitchen/kit1.webp", "icon_class": "img/gallery_icons/10.png"},
+            {"slug": "office", "name": "OFFICE<br>INTERIORS", "image_url": "img/gallery/office/office1.webp", "icon_class": "img/gallery_icons/11.png"},
+            {"slug": "retail", "name": "RETAIL<br>INTERIORS", "image_url": "img/gallery/other/entertainmentcenter.webp", "icon_class": "img/gallery_icons/12.png"},
+            {"slug": "bar", "name": "BAR & LOUNGE<br>INTERIORS", "image_url": "img/gallery/kitchen/kit1.webp", "icon_class": "img/gallery_icons/13.png"},
+            {"slug": "outdoor", "name": "OUTDOOR &<br>TERRACE SPACES", "image_url": "img/gallery/living_room/lr1.webp", "icon_class": "img/gallery_icons/14.png"}
+        ]
+        
+    return render_template('pages/portfolio.html', gallery_items=gallery_items, current_category=current_category, portfolio_categories=portfolio_categories)
 
 @app.route('/shop')
 def shop():
@@ -949,6 +1030,7 @@ def admin_add_catalog():
             
     name = request.form.get('name')
     mrp = request.form.get('mrp')
+    sale_price = request.form.get('sale_price')
     in_stock = request.form.get('in_stock') == 'on'
     short_description = request.form.get('short_description')
     
@@ -988,6 +1070,7 @@ def admin_add_catalog():
             subcategory_id=int(subcategory_id) if subcategory_id else None,
             name=name,
             mrp=mrp,
+            sale_price=sale_price,
             image_url=image_url,
             in_stock=in_stock,
             short_description=short_description,
@@ -1033,6 +1116,7 @@ def admin_edit_catalog(id):
         
     prod.name = request.form.get('name')
     prod.mrp = request.form.get('mrp')
+    prod.sale_price = request.form.get('sale_price')
     prod.in_stock = request.form.get('in_stock') == 'on'
     prod.short_description = request.form.get('short_description')
     
@@ -1122,7 +1206,8 @@ def admin_gallery():
     """Displays the gallery dashboard."""
     try:
         images = GalleryImage.query.order_by(GalleryImage.created_at.desc()).all()
-        return render_template('admin/gallery.html', images=images)
+        categories = PortfolioCategory.query.order_by(PortfolioCategory.position).all()
+        return render_template('admin/gallery.html', images=images, categories=categories)
     except Exception as e:
         app.logger.error(f"Error fetching admin gallery: {e}")
         return "An error occurred while loading the gallery. Please verify database setup.", 500
@@ -1132,10 +1217,12 @@ def admin_gallery():
 def admin_add_gallery():
     """Endpoint for adding a new gallery image."""
     category = request.form.get('category')
+    custom_cat_name = None
     if category == 'other':
         custom_category = request.form.get('custom_category')
         if custom_category:
-            category = custom_category.strip().lower().replace(' ', '-')
+            custom_cat_name = custom_category.strip()
+            category = custom_cat_name.lower().replace(' ', '-')
             
     alt_text = request.form.get('alt_text')
     
@@ -1160,6 +1247,10 @@ def admin_add_gallery():
             alt_text=alt_text
         )
         db.session.add(new_img)
+        if not PortfolioCategory.query.filter_by(slug=category).first():
+            cat_display = custom_cat_name.upper() if custom_cat_name else category.replace('-', ' ').upper()
+            new_cat = PortfolioCategory(name=cat_display, slug=category, image_url=image_url)
+            db.session.add(new_cat)
         db.session.commit()
         flash("Gallery image added successfully.", "success")
     except Exception as e:
@@ -1355,6 +1446,77 @@ def admin_delete_category(id):
         app.logger.error(f"Error deleting category: {e}")
         flash("Failed to delete the category.", "danger")
     return redirect(url_for('admin_categories'))
+
+# ---------------------------------------------------------
+# Admin Portfolio Categories Routes
+# ---------------------------------------------------------
+
+@app.route('/admin/portfolio-categories')
+@login_required
+def admin_portfolio_categories():
+    categories = PortfolioCategory.query.order_by(PortfolioCategory.position).all()
+    return render_template('admin/portfolio_categories.html', categories=categories)
+
+@app.route('/admin/portfolio-categories/add', methods=['POST'])
+@login_required
+def add_portfolio_category():
+    name = request.form.get('name')
+    slug = request.form.get('slug')
+    icon_class = request.form.get('icon_class') or 'img/gallery_icons/default_icons.png'
+    position = request.form.get('position', 0, type=int)
+    
+    file = request.files.get('image')
+    image_url = None
+    if file and file.filename != '':
+        image_url = upload_image_to_cloudinary(file, folder="portfolio_categories")
+        
+    if not image_url:
+        flash('Background image is required.', 'danger')
+        return redirect(url_for('admin_portfolio_categories'))
+
+    cat = PortfolioCategory(
+        name=name,
+        slug=slug,
+        icon_class=icon_class,
+        image_url=image_url,
+        position=position
+    )
+    db.session.add(cat)
+    db.session.commit()
+    flash('Portfolio category added successfully!', 'success')
+    return redirect(url_for('admin_portfolio_categories'))
+
+@app.route('/admin/portfolio-categories/edit/<int:id>', methods=['POST'])
+@login_required
+def edit_portfolio_category(id):
+    cat = PortfolioCategory.query.get_or_404(id)
+    cat.name = request.form.get('name')
+    cat.slug = request.form.get('slug')
+    cat.icon_class = request.form.get('icon_class') or cat.icon_class
+    cat.position = request.form.get('position', 0, type=int)
+    
+    file = request.files.get('image')
+    if file and file.filename != '':
+        new_image_url = upload_image_to_cloudinary(file, folder="portfolio_categories")
+        if new_image_url:
+            if cat.image_url:
+                delete_image_from_cloudinary(cat.image_url)
+            cat.image_url = new_image_url
+
+    db.session.commit()
+    flash('Portfolio category updated successfully!', 'success')
+    return redirect(url_for('admin_portfolio_categories'))
+
+@app.route('/admin/portfolio-categories/delete/<int:id>', methods=['POST'])
+@login_required
+def delete_portfolio_category(id):
+    cat = PortfolioCategory.query.get_or_404(id)
+    if cat.image_url:
+        delete_image_from_cloudinary(cat.image_url)
+    db.session.delete(cat)
+    db.session.commit()
+    flash('Portfolio category deleted successfully!', 'success')
+    return redirect(url_for('admin_portfolio_categories'))
 
 # --- CUSTOM 404 ERROR HANDLER ---
 

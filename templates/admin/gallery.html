@@ -32,7 +32,8 @@
                     
                     <div style="width: 100%; margin-bottom: 15px; border-radius: 8px; overflow: hidden; height: 200px; background-image: url('{{ img.image_url }}'); background-size: cover; background-position: center;">
                         <span style="position: absolute; top: 35px; left: 35px; background: rgba(0,0,0,0.7); color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500;">
-                            {{ img.category | replace('-', ' ') | title }}
+                            {% set cat_obj = categories | selectattr('slug', 'equalto', img.category) | first %}
+                            {% if cat_obj %}{{ cat_obj.name | striptags }}{% else %}{{ img.category | replace('-', ' ') | title }}{% endif %}
                         </span>
                     </div>
                     
@@ -91,19 +92,19 @@
 
                 <div class="admin-form-group" style="margin-bottom: 12px; width: 100%;">
                     <label for="img-category" style="display: block; margin-bottom: 5px; font-weight: 500; color: #252525; text-align: left; font-size: 13px;">Category</label>
-                    <div style="display: flex; gap: 10px;">
-                        <select id="img-category" name="category" class="admin-form-control" style="flex: 1; box-sizing: border-box; padding: 10px 35px 10px 12px; font-size: 14px; border-radius: 6px; border: 1px solid var(--admin-border); background-color: #fff; cursor: pointer;" required>
+                    <select id="img-category" name="category" class="admin-form-control" style="width: 100%; box-sizing: border-box; padding: 10px 35px 10px 12px; font-size: 14px; border-radius: 6px; border: 1px solid var(--admin-border); background-color: #fff; cursor: pointer;" required>
+                        {% if categories %}
+                            {% for cat in categories %}
+                            <option value="{{ cat.slug }}">{{ cat.name | striptags }}</option>
+                            {% endfor %}
+                        {% else %}
                             <option value="living-room">Living Room</option>
                             <option value="bedroom">Bedroom</option>
                             <option value="kitchen">Kitchen</option>
                             <option value="office">Office</option>
                             <option value="sofaset">Sofa Set</option>
-                            <option value="other">Other (Add New)</option>
-                        </select>
-                        <div id="custom-category-container" style="display: none; flex: 1;">
-                            <input type="text" id="custom-category" name="custom_category" class="admin-form-control" placeholder="Enter new category" style="width: 100%; box-sizing: border-box; padding: 10px 12px; font-size: 14px; border-radius: 6px; border: 1px solid var(--admin-border);">
-                        </div>
-                    </div>
+                        {% endif %}
+                    </select>
                 </div>
 
                 <div class="admin-form-group" style="margin-bottom: 12px; width: 100%;">
@@ -152,19 +153,7 @@
                     document.getElementById('img-file-help').style.display = 'block';
                     document.getElementById('img-file').removeAttribute('required');
 
-                    let predefinedCategories = ['living-room', 'bedroom', 'kitchen', 'office', 'sofaset'];
-                    let cat = btn.getAttribute('data-category');
-                    if (predefinedCategories.includes(cat)) {
-                        document.getElementById('img-category').value = cat;
-                        document.getElementById('custom-category-container').style.display = 'none';
-                        document.getElementById('custom-category').removeAttribute('required');
-                    } else {
-                        document.getElementById('img-category').value = 'other';
-                        document.getElementById('custom-category-container').style.display = 'block';
-                        // Convert hyphenated back to Title Case for editing
-                        document.getElementById('custom-category').value = cat.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-                        document.getElementById('custom-category').setAttribute('required', 'required');
-                    }
+                    document.getElementById('img-category').value = btn.getAttribute('data-category');
                     
                     document.getElementById('img-alttext').value = btn.getAttribute('data-alttext');
                     
@@ -203,15 +192,7 @@
                 }
             });
 
-            document.getElementById('img-category').addEventListener('change', function() {
-                if (this.value === 'other') {
-                    document.getElementById('custom-category-container').style.display = 'block';
-                    document.getElementById('custom-category').setAttribute('required', 'required');
-                } else {
-                    document.getElementById('custom-category-container').style.display = 'none';
-                    document.getElementById('custom-category').removeAttribute('required');
-                }
-            });
+
         });
 
         function openAddModal() {
@@ -226,9 +207,6 @@
             document.getElementById('img-file').setAttribute('required', 'required');
 
             document.getElementById('img-category').value = 'living-room';
-            document.getElementById('custom-category-container').style.display = 'none';
-            document.getElementById('custom-category').value = '';
-            document.getElementById('custom-category').removeAttribute('required');
             
             document.getElementById('img-alttext').value = '';
             

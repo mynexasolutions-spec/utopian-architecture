@@ -2973,3 +2973,31 @@ footer .footer-top-left {
 .floating-whatsapp {
   background-color: #25d366;
 }
+
+/* Our Services Section Styles */
+.our-services-section {
+  background-color: #fbfaf8;
+}
+.our-services-section h2 {
+  font-family: 'Playfair Display', serif;
+  color: #1a2f24;
+  letter-spacing: 0.5px;
+}
+.our-services-section p.text-muted {
+  font-size: 16px;
+  max-width: 600px;
+}
+.services-box {
+  background-color: #fdfcfa;
+  border: 1px solid #ede8e1;
+}
+.service-col img {
+  max-width: 70px;
+  height: auto;
+}
+.service-col h6 {
+  color: #111;
+  font-size: 15px;
+  letter-spacing: 1px;
+  line-height: 1.4;
+}

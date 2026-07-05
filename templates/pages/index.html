@@ -1,6 +1,10 @@
 {% extends 'base.html' %} {% from 'components/_pagination.html' import
 render_pagination %} {% block title %}Home – Utopia Furniture &amp;
-D&eacute;cor{% endblock %} {% block body_class %}home-3 bg-secondarylight{%
+D&eacute;cor{% endblock %} 
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/limited-offers.css') }}" />
+{% endblock %}
+{% block body_class %}home-3 bg-secondarylight{%
 endblock %} {% block content %}
 <!-- Banner Section Starts -->
 <section class="banner position-relative overflow-hidden p-0">
@@ -43,6 +47,280 @@ endblock %} {% block content %}
   </div>
 </section>
 <!-- Banner Section Ends -->
+
+<!-- Our Services Section Starts -->
+<section class="our-services-section py-5">
+  <div class="container py-2">
+    <div class="text-center mb-3">
+      <h2 class="display-6 fw-bold mb-3">OUR SERVICES</h2>
+      <p class="text-muted mx-auto" style="font-size: 15px;">End-to-end interior design solutions tailored to your style and needs.</p>
+    </div>
+    
+    <div class="services-box rounded-4">
+      <div class="row g-0">
+        <!-- Service 1 -->
+        <div class="col-6 col-lg-3 text-center p-2 p-lg-3 service-col border-end-lg border-bottom-sm">
+          <img src="{{ url_for('static', filename='img/our_services/1.png') }}" alt="Residential Interiors" class="mb-2">
+          <h6 class="mb-0 fw-bold">RESIDENTIAL<br>INTERIORS</h6>
+        </div>
+        <!-- Service 2 -->
+        <div class="col-6 col-lg-3 text-center p-2 p-lg-3 service-col border-end-lg border-bottom-sm">
+          <img src="{{ url_for('static', filename='img/our_services/2.png') }}" alt="Commercial Interiors" class="mb-2">
+          <h6 class="mb-0 fw-bold">COMMERCIAL<br>INTERIORS</h6>
+        </div>
+        <!-- Service 3 -->
+        <div class="col-6 col-lg-3 text-center p-2 p-lg-3 service-col border-end-lg">
+          <img src="{{ url_for('static', filename='img/our_services/3.png') }}" alt="Turnkey Solutions" class="mb-2">
+          <h6 class="mb-0 fw-bold">TURNKEY<br>SOLUTIONS</h6>
+        </div>
+        <!-- Service 4 -->
+        <div class="col-6 col-lg-3 text-center p-2 p-lg-3 service-col">
+          <img src="{{ url_for('static', filename='img/our_services/4.png') }}" alt="Custom Furniture" class="mb-2">
+          <h6 class="mb-0 fw-bold">CUSTOM<br>FURNITURE</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Our Services Section Ends -->
+
+
+<!-- Exclusive Offers Banner Starts -->
+<section class="exclusive-offers position-relative p-0" style="background-color: #ffffff; overflow: hidden;">
+  <div class="row g-0">
+    <!-- Left Content area -->
+    <div class="col-lg-6 position-relative z-2 d-flex align-items-center" style="background-color: #ffffff; min-height: 420px;">
+      <!-- S-Curve SVG Divider -->
+      <svg class="d-none d-lg-block position-absolute h-100" style="top: 0; right: -119px; z-index: 2; width: 120px;" preserveAspectRatio="none" viewBox="0 0 100 100">
+        <path d="M0,0 C60,20 20,80 100,100 L0,100 Z" fill="#ffffff" />
+      </svg>
+      
+      <div class="content-wrapper p-4 p-md-5 w-100 ms-lg-4 text-center text-lg-start" style="position: relative; z-index: 3;">
+       
+        <h6 class="text-uppercase mb-2" style="color: #906e49; font-weight: 600; letter-spacing: 1.5px; font-size: 13px;">
+          Exclusive Offers
+        </h6>
+        <div class="mx-auto mx-lg-0" style="width: 40px; height: 1px; background-color: #906e49; margin-bottom: 25px;"></div>
+        
+        <h1 class="display-4 fw-bold mb-3" style="font-family: 'Playfair Display', serif; line-height: 1.2; color: #222;">
+          Beautiful Spaces,<br>
+          <span style="color: #906e49;">Better Deals</span>
+        </h1>
+        
+        <p class="text-muted mb-4 mx-auto mx-lg-0" style="font-size: 17px; max-width: 400px;">
+          Discover limited-time offers on premium furniture and interior solutions.
+        </p>
+        
+        <div class="d-flex flex-wrap justify-content-center justify-content-lg-start gap-3 mt-4">
+          <a href="{{ url_for('shop') }}" class="btn btn-shop-all text-white text-uppercase d-flex align-items-center justify-content-center" style="background-color: #906e49; padding: 10px 24px; font-weight: 600; font-size: 12px; letter-spacing: 1px; border: 1px solid #906e49; border-radius: 2px; transition: all 0.3s ease;">
+            Shop All Offers
+          </a>
+          <a href="{{ url_for('shop') }}" class="btn btn-explore text-uppercase d-flex align-items-center justify-content-center" style="background-color: transparent; color: #906e49; padding: 10px 24px; font-weight: 600; font-size: 12px; letter-spacing: 1px; border: 1px solid #906e49; border-radius: 2px; transition: all 0.3s ease;">
+            Explore Collections
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Right Image Area -->
+    <div class="col-lg-6 position-relative z-1 exclusive-banner-img">
+      <img src="{{ url_for('static', filename='img/gallery/other/pouffe3.webp') }}" alt="Beautiful Spaces" class="w-100 h-100 position-absolute" style="object-fit: cover; object-position: center; top: 0; left: 0;" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .exclusive-banner-img {
+    min-height: 250px;
+  }
+  @media (min-width: 992px) {
+    .exclusive-banner-img {
+      position: absolute !important;
+      top: 0;
+      right: 0;
+      width: 50%;
+      height: 100%;
+    }
+  }
+  .btn-shop-all:hover {
+    background-color: #7a5d3e !important;
+    border-color: #7a5d3e !important;
+  }
+  .btn-explore:hover {
+    background-color: #906e49 !important;
+    color: #ffffff !important;
+  }
+</style>
+<!-- Exclusive Offers Banner Ends -->
+
+
+<!-- Features Banner Section -->
+<section class="features-banner w-100 mt-0" style="background-color: #906e49; padding: 25px 0; overflow: hidden;">
+  <div class="container-fluid px-3 px-lg-5">
+    <div class="row align-items-center justify-content-around row-gap-4 features-slider-track">
+      
+      <!-- Feature 1 -->
+      <div class="col-6 col-md-4 col-xl-2 feature-slide">
+        <div class="d-flex align-items-center justify-content-start justify-content-xl-center feature-item">
+          <img src="{{ url_for('static', filename='img/Exclusive_Offers/1.png') }}" alt="Best Prices" class="me-2 me-md-3">
+          <div style="color: #ffffff; font-size: 15px; font-weight: 500; line-height: 1.3;">
+            Best Prices<br>Guaranteed
+          </div>
+        </div>
+      </div>
+      
+      <!-- Divider -->
+      <div class="col-auto d-none d-xl-flex justify-content-center px-0 divider-slide" style="width: 1px;">
+        <div style="width: 1px; height: 40px; background-color: rgba(255,255,255,0.25);"></div>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="col-6 col-md-4 col-xl-2 feature-slide">
+        <div class="d-flex align-items-center justify-content-start justify-content-xl-center feature-item">
+          <img src="{{ url_for('static', filename='img/Exclusive_Offers/2.png') }}" alt="Premium Quality" class="me-2 me-md-3">
+          <div style="color: #ffffff; font-size: 15px; font-weight: 500; line-height: 1.3;">
+            Premium<br>Quality
+          </div>
+        </div>
+      </div>
+      
+      <!-- Divider -->
+      <div class="col-auto d-none d-xl-flex justify-content-center px-0 divider-slide" style="width: 1px;">
+        <div style="width: 1px; height: 40px; background-color: rgba(255,255,255,0.25);"></div>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="col-6 col-md-4 col-xl-2 feature-slide">
+        <div class="d-flex align-items-center justify-content-start justify-content-xl-center feature-item">
+          <img src="{{ url_for('static', filename='img/Exclusive_Offers/3.png') }}" alt="Secure Payments" class="me-2 me-md-3">
+          <div style="color: #ffffff; font-size: 15px; font-weight: 500; line-height: 1.3;">
+            Secure<br>Payments
+          </div>
+        </div>
+      </div>
+      
+      <!-- Divider -->
+      <div class="col-auto d-none d-xl-flex justify-content-center px-0 divider-slide" style="width: 1px;">
+        <div style="width: 1px; height: 40px; background-color: rgba(255,255,255,0.25);"></div>
+      </div>
+
+      <!-- Feature 4 -->
+      <div class="col-6 col-md-4 col-xl-2 feature-slide">
+        <div class="d-flex align-items-center justify-content-start justify-content-xl-center feature-item">
+          <img src="{{ url_for('static', filename='img/Exclusive_Offers/4.png') }}" alt="Fast Delivery" class="me-2 me-md-3">
+          <div style="color: #ffffff; font-size: 15px; font-weight: 500; line-height: 1.3;">
+            Fast & Free<br>Delivery
+          </div>
+        </div>
+      </div>
+      
+      <!-- Divider -->
+      <div class="col-auto d-none d-xl-flex justify-content-center px-0 divider-slide" style="width: 1px;">
+        <div style="width: 1px; height: 40px; background-color: rgba(255,255,255,0.25);"></div>
+      </div>
+
+      <!-- Feature 5 -->
+      <div class="col-12 col-md-4 col-xl-2 feature-slide">
+        <div class="d-flex align-items-center justify-content-start justify-content-xl-center feature-item">
+          <img src="{{ url_for('static', filename='img/Exclusive_Offers/5.png') }}" alt="Dedicated Support" class="me-2 me-md-3">
+          <div style="color: #ffffff; font-size: 15px; font-weight: 500; line-height: 1.3;">
+            Dedicated<br>Support
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .feature-item img {
+    width: 50px;
+    height: auto;
+    filter: brightness(0) invert(1);
+  }
+  @media (max-width: 767.98px) {
+    .feature-item img {
+      width: 40px;
+    }
+    .feature-item div {
+      font-size: 13px !important;
+    }
+    /* Hide dividers from slick */
+    .divider-slide {
+      display: none !important;
+    }
+  }
+</style>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    function initFeaturesSlider() {
+      var $slider = $('.features-slider-track');
+      if ($(window).width() < 768) {
+        if (!$slider.hasClass('slick-initialized')) {
+          $slider.slick({
+            slide: '.feature-slide',
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 0,
+            speed: 4000,
+            cssEase: 'linear',
+            infinite: true,
+            arrows: false,
+            dots: false,
+            pauseOnHover: false,
+            swipeToSlide: true
+          });
+        }
+      } else {
+        if ($slider.hasClass('slick-initialized')) {
+          $slider.slick('unslick');
+        }
+      }
+    }
+    
+    // Check if jQuery and Slick are loaded
+    if (typeof jQuery !== 'undefined') {
+      // Delay initialization slightly to ensure slick is fully parsed
+      setTimeout(function() {
+        if ($.fn.slick) {
+          initFeaturesSlider();
+          $(window).on('resize', initFeaturesSlider);
+        }
+      }, 500);
+    }
+  });
+</script>
+
+<style>
+  .promo-overlay {
+    width: 65%;
+    clip-path: polygon(0 0, 100% 0, 80% 100%, 0 100%);
+  }
+  .promo-content-wrap {
+    width: 90%;
+  }
+  .promo-btn-1:hover {
+    background-color: #ffffff;
+    color: #906e49 !important;
+  }
+  .promo-btn-2:hover {
+    background-color: #ffffff !important;
+    color: #906e49 !important;
+  }
+  @media (max-width: 767.98px) {
+    .promo-overlay {
+      width: 100%;
+      clip-path: none;
+    }
+    .promo-content-wrap {
+      width: 100%;
+      text-align: center;
+      align-items: center;
+    }
+  }
+<!-- Promo Banners Section Ends -->
 
 <!-- Best-selling Categories Section Starts -->
 <style>
@@ -279,7 +557,7 @@ endblock %} {% block content %}
 <section class="best-selling-categories py-5 bg-white">
   <div class="container">
     <div class="section-title text-center text-md-start mb-5">
-      <h2 class="mb-2">Best-selling Categories</h2>
+      <h2 class="mb-2">Shop By Categories</h2>
       <p class="text-muted mb-0">
         Explore our premium range of luxury furniture and interior collections.
       </p>
@@ -326,7 +604,7 @@ endblock %} {% block content %}
               <span>View All</span>
               <div
                 class="arrow-circle d-flex align-items-center justify-content-center bg-white rounded-circle"
-                style="width: 24px; height: 24px; color: #8e1c2e"
+                style="width: 24px; height: 24px; color: #906e49"
               >
                 <i
                   class="fa fa-long-arrow-right"
@@ -366,547 +644,128 @@ endblock %} {% block content %}
       </div>
       {% endfor %}
     </div>
-
-    <!-- Pagination -->
-    <!-- {{ render_pagination(home_categories_pagination, 'home', {}) }} -->
   </div>
 </section>
-
 <!-- Best-selling Categories Section Ends -->
 
-<!-- About Us Section Starts -->
-<section class="about-us">
+<!-- Limited Time Offers Section Starts -->
+<section class="limited-time-offers bg-secondarylight pt-5 pb-3">
   <div class="container">
-    <div class="about-us-inner text-center text-lg-start">
-      <div class="row align-items-center gx-md-5 gy-5">
-        <div class="col-xl-3 col-md-6">
-          <div class="about-left">
-            <h6 class="secondary mb-0">About Us</h6>
-            <h2 class="mb-3">About Utopia Furniture &amp; D&eacute;cor</h2>
-            <p class="mb-0">Creating Elegant Interiors With Timeless Design</p>
-          </div>
-        </div>
-        <div class="col-xl-4 col-md-6">
-          <div class="about-center position-relative">
-            <img
-              src="{{ url_for('static', filename='img/about/about-living-room.jpg') }}"
-              alt="about image"
-              class="rounded-3"
-            />
-          </div>
-        </div>
-        <div class="col-xl-5">
-          <div class="about-right">
-            <p class="mb-4">
-              Utopia Furniture &amp; D&eacute;cor is a premier interior design
-              and custom furniture company based in Muzaffarnagar, Uttar
-              Pradesh. Founded in 2021 under the leadership of Abdul Qadir
-              (Architect), we bring international design standards and Gulf
-              region experience to every project we undertake.
-            </p>
-            <ul
-              class="d-flex rounded-4 justify-content-between flex-wrap gap-1 mb-4"
-            >
-              <li class="">
-                <span class="h2 primary teko mb-0 lh-sm">120+</span>
-                <span class="teko h6 d-block mb-0 secondary"
-                  >Projects Completed</span
-                >
-              </li>
-              <li class="">
-                <span class="h2 primary teko mb-0 lh-sm">8+</span>
-                <span class="teko h6 d-block mb-0 secondary"
-                  >Years Experience</span
-                >
-              </li>
-            </ul>
-            <a href="{{ url_for('about') }}" class="btn1"
-              >Discover More<i
-                class="fa fa-long-arrow-right"
-                aria-hidden="true"
-              ></i
-            ></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- About Us Section Ends -->
-
-<!-- Services Section Starts -->
-<section class="services bg-white border-right-left-top">
-  <div class="container-fluid">
-    <div class="services-inner">
-      <div class="services-title mb-5 text-center text-lg-start">
-        <div class="container">
-          <div class="row align-items-center justify-content-between gy-3">
-            <div class="col-lg-4">
-              <div class="services-title-left">
-                <h6 class="secondary mb-0">Our Services</h6>
-                <h2 class="mb-0">Transforming Spaces with Style</h2>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="services-title-right text-lg-start">
-                <p class="mb-3">
-                  We offer end-to-end interior and furniture solutions tailored
-                  to your lifestyle and budget.
-                </p>
-                <a href="{{ url_for('services') }}" class="btn1"
-                  >View All Services<i
-                    class="fa fa-long-arrow-right"
-                    aria-hidden="true"
-                  ></i
-                ></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="services-body">
-        <div
-          class="row row-cols-lg-3 row-cols-md-2 row-cols-1 gy-4 justify-content-center mx-auto"
-          style="max-width: 1400px"
-        >
-          <div class="col">
-            <div class="service-box position-relative">
-              <div class="overlay rounded-4"></div>
-              <div class="services-image">
-                <img
-                  src="{{ url_for('static', filename='img/services/residential.jpg') }}"
-                  alt="Interior Design"
-                  class="rounded-4"
-                  style="height: 280px; object-fit: cover; width: 100%"
-                />
-              </div>
-              <div
-                class="services-info position-relative p-3 position-absolute bottom-0 w-100 rounded-top-0 white"
-              >
-                <h4 class="mb-1">
-                  <a href="{{ url_for('services') }}">Interior Design</a>
-                </h4>
-                <p class="mb-0">
-                  Premium quality workmanship with modern aesthetics and durable
-                  materials.
-                </p>
-              </div>
-              <a
-                href="{{ url_for('services') }}"
-                class="bg-secondary arrow rounded-circle position-absolute p-0"
-                style="top: 15px; right: 15px"
-              >
-                <i
-                  class="fa fa-long-arrow-right m-0 text-center"
-                  aria-hidden="true"
-                ></i>
-              </a>
-            </div>
-          </div>
-          <div class="col">
-            <div class="service-box position-relative">
-              <div class="overlay rounded-4"></div>
-              <div class="services-image">
-                <img
-                  src="{{ url_for('static', filename='img/services/Custom_Furniture.webp') }}"
-                  alt="Custom Furniture"
-                  class="rounded-4"
-                  style="height: 280px; object-fit: cover; width: 100%"
-                />
-              </div>
-              <div
-                class="services-info position-relative p-3 position-absolute bottom-0 w-100 rounded-top-0 white"
-              >
-                <h4 class="mb-1">
-                  <a href="{{ url_for('services') }}">Custom Furniture</a>
-                </h4>
-                <p class="mb-0">
-                  Premium quality workmanship with modern aesthetics and durable
-                  materials.
-                </p>
-              </div>
-              <a
-                href="{{ url_for('services') }}"
-                class="bg-secondary arrow rounded-circle position-absolute p-0"
-                style="top: 15px; right: 15px"
-              >
-                <i
-                  class="fa fa-long-arrow-right m-0 text-center"
-                  aria-hidden="true"
-                ></i>
-              </a>
-            </div>
-          </div>
-          <div class="col">
-            <div class="service-box position-relative">
-              <div class="overlay rounded-4"></div>
-              <div class="services-image">
-                <img
-                  src="{{ url_for('static', filename='img/services/Pergola_works.webp') }}"
-                  alt="Pergola &amp; Outdoor Works"
-                  class="rounded-4"
-                  style="height: 280px; object-fit: cover; width: 100%"
-                />
-              </div>
-              <div
-                class="services-info position-relative p-3 position-absolute bottom-0 w-100 rounded-top-0 white"
-              >
-                <h4 class="mb-1">
-                  <a href="{{ url_for('services') }}"
-                    >Pergola &amp; Outdoor Works</a
-                  >
-                </h4>
-                <p class="mb-0">
-                  Premium quality workmanship with modern aesthetics and durable
-                  materials.
-                </p>
-              </div>
-              <a
-                href="{{ url_for('services') }}"
-                class="bg-secondary arrow rounded-circle position-absolute p-0"
-                style="top: 15px; right: 15px"
-              >
-                <i
-                  class="fa fa-long-arrow-right m-0 text-center"
-                  aria-hidden="true"
-                ></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- Services Section Ends -->
-
-<!-- Portfolio Section Starts -->
-<section class="featured-projects py-5">
-  <div class="container">
-    <div class="featured-projects-inner">
+    <div class="offers-inner">
       <!-- Section Header -->
-      <div class="row align-items-center justify-content-between mb-5 gy-3">
-        <div class="col-md-8 text-center text-md-start">
-          <div class="section-title-left">
-            <h2 class="mb-2">Featured Projects</h2>
-            <p class="mb-0">
-              Elegant and modern interior projects crafted with precision.
+      <div class="row justify-content-center text-center mb-5">
+        <div class="col-lg-8 col-md-10 col-12">
+          <h2 class="mb-3" style="font-family: 'Playfair Display', serif; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">TOP DEALS OF THE SEASON</h2>
+          <div class="d-flex align-items-center justify-content-center gap-3">
+            <div style="height: 1px; width: 40px; background-color: #d3d3d3;"></div>
+            <p class="text-muted mb-0" style="font-size: 16px;">
+              Grab these exclusive deals before they're gone.
             </p>
-          </div>
-        </div>
-        <div class="col-md-4 text-center text-md-end">
-          <a href="{{ url_for('gallery') }}" class="btn-explore-projects"
-            >Explore All Projects</a
-          >
-        </div>
-      </div>
-
-      <!-- Cards Grid -->
-      <div class="row g-4">
-        <!-- Card 1 -->
-        <div class="col-lg-4 col-md-6 col-12">
-          <div class="project-grid-card">
-            <div class="project-card-image">
-              <img
-                src="{{ url_for('static', filename='img/featured/Modern_Villa_Interior.webp') }}"
-                alt="Modern Villa Interior"
-              />
-            </div>
-            <div class="project-card-info">
-              <h4 class="project-card-title">
-                <a href="{{ url_for('gallery') }}">Modern Villa Interior</a>
-              </h4>
-              <p class="project-card-location">Riyadh</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="col-lg-4 col-md-6 col-12">
-          <div class="project-grid-card">
-            <div class="project-card-image">
-              <img
-                src="{{ url_for('static', filename='img/featured/bed_6.webp') }}"
-                alt="Luxury Living Room"
-              />
-            </div>
-            <div class="project-card-info">
-              <h4 class="project-card-title">
-                <a href="{{ url_for('gallery') }}">Luxury Living Room</a>
-              </h4>
-              <p class="project-card-location">Jeddah</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="col-lg-4 col-md-6 col-12">
-          <div class="project-grid-card">
-            <div class="project-card-image">
-              <img
-                src="{{ url_for('static', filename='img/featured/conference-room.jpeg') }}"
-                alt="Office Design"
-              />
-            </div>
-            <div class="project-card-info">
-              <h4 class="project-card-title">
-                <a href="{{ url_for('gallery') }}">Office Design</a>
-              </h4>
-              <p class="project-card-location">KAFD</p>
-            </div>
+            <div style="height: 1px; width: 40px; background-color: #d3d3d3;"></div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-<!-- Portfolio Section Ends -->
 
-<!-- Shop Section Starts -->
-<section class="shop-decor bg-secondarylight py-6">
-  <div class="container">
-    <div class="shop-decor-inner">
-      <!-- Section Header -->
-      <div class="row justify-content-center text-center mb-4">
-        <div class="col-lg-auto col-md-auto col-12">
-          <h2 class="mb-2">Furniture &amp; Home Decor</h2>
-          <p class="text-muted mb-0">
-            Explore premium furniture, luxury home decor, lighting, and
-            accessories.
-          </p>
-        </div>
-      </div>
-
-      <!-- Sticky Container Starts -->
-      <div class="sticky-products-container">
-        <!-- Category Filters (Sticky) -->
-        <div class="decor-filters-wrapper sticky-top mb-5 text-center">
-          <div class="decor-filters d-inline-flex flex-wrap justify-content-center gap-2 py-2 px-4">
-            <button class="decor-filter-btn active" data-filter="all">
-              All
-            </button>
-            <button class="decor-filter-btn" data-filter="living-room">
-              Living Room
-            </button>
-            <button class="decor-filter-btn" data-filter="bedroom">
-              Bedroom
-            </button>
-            <button class="decor-filter-btn" data-filter="dining-room">
-              Dining Room
-            </button>
-            <button class="decor-filter-btn" data-filter="decor-lighting">
-              Decor Lighting
-            </button>
-          </div>
-        </div>
-
-      <!-- Products Grid -->
-      <div class="row g-4 decor-products-grid">
+      <!-- Products Slider -->
+      <div class="limited-time-slider mt-4">
         {% for prod in catalog_products %}
-        <div
-          class="col-lg-3 col-md-4 col-sm-6 col-12 decor-product-item"
-          data-category="{{ prod.category }}"
-        >
-          <div class="decor-product-card">
-            <a href="{{ url_for('product_detail', product_id=prod.id) }}">
-              <div class="product-img-container">
-                <img src="{{ prod.image_url }}" alt="{{ prod.name }}" />
+        {% set mrp_val = prod.mrp | replace('$', '') | replace(',', '') | float if prod.mrp else 0 %}
+        {% set sale_price_val = prod.sale_price | replace('$', '') | replace(',', '') | float if prod.sale_price else mrp_val %}
+        <div class="px-2 pb-3 h-100 d-flex">
+          <div class="offer-card h-100 d-flex flex-column bg-white">
+            <div class="offer-img-container position-relative">
+              {% if mrp_val > 0 and sale_price_val < mrp_val %}
+              {% set discount_pct = ((mrp_val - sale_price_val) / mrp_val * 100) | round | int %}
+              <div class="discount-badge d-flex flex-column justify-content-center align-items-center">
+                <span class="fs-5 fw-bold lh-1">{{ discount_pct }}%</span>
+                <span class="fs-6 lh-1 mt-1" style="font-size: 11px !important;">OFF</span>
               </div>
-            </a>
-            <div class="product-details">
-              <span class="product-badge"
-                >{{ prod.category | replace('-', ' ') | title }}</span
-              >
-              <div
-                class="d-flex justify-content-between align-items-center mb-3"
-              >
-                <h4 class="product-title mb-0">
-                  <a
-                    href="{{ url_for('product_detail', product_id=prod.id) }}"
-                    style="color: inherit; text-decoration: none"
-                  >
-                    {{ prod.name }}
-                  </a>
-                </h4>
-                <span class="product-price"
-                  >₹{{ prod.mrp | replace('$', '') }}</span
-                >
-              </div>
-              {% if prod.in_stock %}
-              <button class="btn-add-cart w-100">Get Quote</button>
-              {% else %}
-              <button
-                class="btn-add-cart w-100"
-                disabled
-                style="
-                  background-color: #cccccc !important;
-                  color: #666666 !important;
-                  border: none !important;
-                  cursor: not-allowed;
-                  pointer-events: none;
-                "
-              >
-                Out of Stock
-              </button>
               {% endif %}
+              <a href="{{ url_for('product_detail', product_id=prod.id) }}">
+                <img src="{{ prod.image_url }}" alt="{{ prod.name }}" class="img-fluid offer-img" />
+              </a>
+            </div>
+            <div class="offer-details p-4 text-center d-flex flex-column flex-grow-1">
+              <h5 class="offer-title text-uppercase mb-3" style="font-size: 14px; font-weight: 600; letter-spacing: 0.5px; line-height: 1.4;">
+                <a href="{{ url_for('product_detail', product_id=prod.id) }}" class="text-dark text-decoration-none">
+                  {{ prod.name }}
+                </a>
+              </h5>
+              <div class="offer-pricing mb-4">
+                <span class="discounted-price me-2" style="color: #906e49; font-size: 22px; font-weight: 700;">₹{{ "{:,.0f}".format(sale_price_val) }}</span>
+                {% if sale_price_val < mrp_val %}
+                <span class="original-price text-muted text-decoration-line-through" style="font-size: 16px;">₹{{ "{:,.0f}".format(mrp_val) }}</span>
+                {% endif %}
+              </div>
+              <div class="mt-auto">
+                <a href="{{ url_for('product_detail', product_id=prod.id) }}" class="btn-shop-now w-100 d-inline-block text-uppercase">Shop Now</a>
+              </div>
             </div>
           </div>
         </div>
         {% endfor %}
       </div>
-      </div>
-      <!-- Sticky Container Ends -->
+    </div>
+  </div>
+</section>
+<!-- Limited Time Offers Section Ends -->
 
-      <!-- Load More Button -->
-      <div class="text-center mt-5" id="load-more-container" style="display: none;">
-        <button id="load-more-btn" class="btn1">Load More</button>
+<!-- Promo Banners Section Starts -->
+<section class="promo-banners-section py-5">
+  <div class="container">
+    <div class="row g-4">
+      <!-- Banner 1 -->
+      <div class="col-lg-6">
+        <div class="promo-banner-1 position-relative rounded-4 overflow-hidden h-100" style="min-height: 250px;">
+          <!-- Background Image -->
+          <img src="{{ url_for('static', filename='img/hero/banner-1.jpg') }}" alt="Extra Savings" class="position-absolute w-100 h-100" style="object-fit: cover; top: 0; left: 0; z-index: 1;">
+          
+          <!-- Slanted Overlay -->
+          <div class="promo-overlay position-absolute h-100" style="background-color: #906e49; top: 0; left: 0; z-index: 2;"></div>
+          
+          <!-- Content -->
+          <div class="position-relative z-3 p-4 p-md-5 d-flex flex-column justify-content-center h-100 text-white promo-content-wrap">
+            <h6 class="text-uppercase mb-2" style="font-size: 12px; letter-spacing: 2px;">Extra Savings</h6>
+            <h2 class="display-5 mb-1" style="font-family: 'Playfair Display', serif; line-height: 1.1;font-weight: 650;color: #ffffff;">Flat 10% Off</h2>
+            <p class="fs-5 mb-4">On Bulk Orders</p>
+            <div>
+              <a href="{{ url_for('shop') }}" class="btn text-white text-uppercase promo-btn-1" style="border: 1px solid rgba(255,255,255,0.5); font-size: 12px; letter-spacing: 1px; padding: 10px 20px; border-radius: 2px; transition: all 0.3s ease;">Get Extra Discount</a>
+            </div>
+          </div>
+        </div>
       </div>
+      
+      <!-- Banner 2 -->
+      <div class="col-lg-6">
+        <div class="promo-banner-2 rounded-4 h-100 p-4 p-md-5 d-flex" style="background-color: #F3ECE4; min-height: 250px;border: 1px solid #906e49;">
+          <div class="row align-items-start w-100 g-4">
+            <div class="col-sm-4 text-center">
+              <div class="icon-wrapper rounded-circle mx-auto d-flex align-items-center justify-content-center" style="width: 120px; height: 120px; background-color: #ede2d3;">
+                <img src="{{ url_for('static', filename='img/our_services/1.png') }}" alt="Consultation" style="max-width: 65px;">
+              </div>
+            </div>
+            <div class="col-sm-8 text-center text-sm-start">
+              <h2 class="mb-3" style="font-family: 'Playfair Display', serif; color: #1a2f24; font-size: 32px; line-height: 1.2;">Not Sure What<br>You Need?</h2>
+              <p class="text-muted mb-4" style="font-size: 15px;">Get personalized recommendations from our design experts.</p>
+              <a href="{{ url_for('contact') }}" class="btn text-uppercase fw-bold promo-btn-2" style="color: #ffffff; border: 1px solid #906e49; font-size: 12px; letter-spacing: 1px; padding: 10px 20px; border-radius: 2px; transition: all 0.3s ease; background-color: #906e49;">Book A Free Consultation</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
 
-<style>
-  .decor-product-item {
-    display: none; /* Hidden by default, JS will show them */
-    opacity: 0;
-  }
-  .decor-product-item.fade-in {
-    animation: fadeInProduct 0.5s ease-in-out forwards;
-  }
-  @keyframes fadeInProduct {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .decor-filters-wrapper {
-    z-index: 2;
-    top: 80px;
-  }
-  .decor-filters {
-    border-radius: 50px;
-    transition: all 0.3s ease;
-    border: 1px solid transparent;
-  }
-  .decor-filters.decor-filters-stuck {
-    background-color: #ffffff !important;
-    box-shadow: 0 4px 25px rgba(0,0,0,0.08);
-    border-color: #f1f1f1 !important;
-  }
-  
-  /* Mobile Responsive Overrides */
-  @media (max-width: 768px) {
-    .decor-filters-wrapper {
-      top: 50px !important;
-    }
-    .decor-filters {
-      border-radius: 5px !important;
-      padding-left: 10px !important;
-      padding-right: 10px !important;
-    }
-    .decor-filter-btn {
-      font-size: 13px !important;
-      padding: 6px 12px !important;
-    }
-  }
-</style>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const stickyWrapper = document.querySelector('.decor-filters-wrapper');
-  const filtersContainer = document.querySelector('.decor-filters');
-
-  window.addEventListener('scroll', function() {
-    if (stickyWrapper && filtersContainer) {
-      const computedTop = parseInt(window.getComputedStyle(stickyWrapper).top, 10) || 80;
-      if (stickyWrapper.getBoundingClientRect().top <= computedTop + 1) {
-        filtersContainer.classList.add('decor-filters-stuck');
-      } else {
-        filtersContainer.classList.remove('decor-filters-stuck');
-      }
-    }
-  });
-
-  const filterBtns = document.querySelectorAll('.decor-filter-btn');
-  const allProducts = Array.from(document.querySelectorAll('.decor-product-item'));
-  const loadMoreBtn = document.getElementById('load-more-btn');
-  const loadMoreContainer = document.getElementById('load-more-container');
-  
-  let currentCategory = 'all';
-  let visibleCount = 4;
-  const increment = 4;
-
-  function updateProducts(isLoadMore = false) {
-    let filteredProducts = allProducts;
-    if (currentCategory !== 'all') {
-      filteredProducts = allProducts.filter(p => {
-        let cat = p.getAttribute('data-category');
-        if (!cat) return false;
-        return cat.toLowerCase().replace(/\s+/g, '-') === currentCategory || cat.toLowerCase() === currentCategory;
-      });
-    }
-
-    if (!isLoadMore) {
-      // If switching tabs, hide everything first
-      allProducts.forEach(p => {
-        p.style.display = 'none';
-        p.classList.remove('fade-in');
-      });
-    }
-
-    let newlyShown = 0;
-    // Show products up to visibleCount
-    let currentVisible = filteredProducts.slice(0, visibleCount);
-    currentVisible.forEach((p, index) => {
-      // Only animate if it's currently hidden
-      if (p.style.display !== 'block') {
-        p.style.display = 'block';
-        setTimeout(() => {
-          p.classList.add('fade-in');
-        }, newlyShown * 100);
-        newlyShown++;
-      }
-    });
-
-    // Toggle Load More button visibility
-    if (filteredProducts.length > visibleCount) {
-      loadMoreContainer.style.display = 'block';
-    } else {
-      loadMoreContainer.style.display = 'none';
-    }
-  }
-
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', function() {
-      // Update active state of buttons
-      filterBtns.forEach(b => b.classList.remove('active'));
-      this.classList.add('active');
-
-      currentCategory = this.getAttribute('data-filter');
-      visibleCount = 4; // Reset visible count on category change
-      
-      updateProducts(false);
-    });
-  });
-
-  if (loadMoreBtn) {
-    loadMoreBtn.addEventListener('click', function() {
-      visibleCount += increment;
-      updateProducts(true);
-    });
-  }
-
-  // Initial setup call
-  updateProducts(false);
-});
-</script>
-<!-- Shop Section Ends -->
 
 <!-- Process Section Starts -->
-<section class="process pt-0">
+<section class="process pt-3">
   <div class="container">
     <div class="process-inner">
       <div class="process-title mb-5 text-center text-lg-start">
         <div class="row align-items-center">
-          <div class="col-lg-6">
+          <div class="col-lg-6 pt-3">
             <div class="process-title-left">
               <h6 class="secondary mb-0">How it works</h6>
               <h2 class="mb-0">A Simple &amp; Transparent Process</h2>
@@ -1249,6 +1108,66 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 <!-- Why Us section Ends -->
 
+<!-- About Us Section Starts -->
+<section class="about-us">
+  <div class="container">
+    <div class="about-us-inner text-center text-lg-start">
+      <div class="row align-items-center gx-md-5 gy-5">
+        <div class="col-xl-3 col-md-6">
+          <div class="about-left">
+            <h6 class="secondary mb-0">About Us</h6>
+            <h2 class="mb-3">About Utopia Furniture &amp; D&eacute;cor</h2>
+            <p class="mb-0">Creating Elegant Interiors With Timeless Design</p>
+          </div>
+        </div>
+        <div class="col-xl-4 col-md-6">
+          <div class="about-center position-relative">
+            <img
+              src="{{ url_for('static', filename='img/about/about-living-room.jpg') }}"
+              alt="about image"
+              class="rounded-3"
+            />
+          </div>
+        </div>
+        <div class="col-xl-5">
+          <div class="about-right">
+            <p class="mb-4">
+              Utopia Furniture &amp; D&eacute;cor is a premier interior design
+              and custom furniture company based in Muzaffarnagar, Uttar
+              Pradesh. Founded in 2021 under the leadership of Abdul Qadir
+              (Architect), we bring international design standards and Gulf
+              region experience to every project we undertake.
+            </p>
+            <ul
+              class="d-flex rounded-4 justify-content-between flex-wrap gap-1 mb-4"
+            >
+              <li class="">
+                <span class="h2 primary teko mb-0 lh-sm">120+</span>
+                <span class="teko h6 d-block mb-0 secondary"
+                  >Projects Completed</span
+                >
+              </li>
+              <li class="">
+                <span class="h2 primary teko mb-0 lh-sm">8+</span>
+                <span class="teko h6 d-block mb-0 secondary"
+                  >Years Experience</span
+                >
+              </li>
+            </ul>
+            <a href="{{ url_for('about') }}" class="btn1"
+              >Discover More<i
+                class="fa fa-long-arrow-right"
+                aria-hidden="true"
+              ></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- About Us Section Ends -->
+
 <!-- Testimonial Section Starts -->
 <section class="testimonial bg-white rounded-5 mt-5 py-5">
   <div class="container">
@@ -1544,6 +1463,42 @@ document.addEventListener('DOMContentLoaded', function() {
 <script>
   $(document).ready(function(){
     $('.best-selling-slider').slick({
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 4000,
+      arrows: true,
+      prevArrow: '<button type="button" class="slick-prev slick-arrow-beautiful slick-arrow"><i class="fa fa-angle-left"></i></button>',
+      nextArrow: '<button type="button" class="slick-next slick-arrow-beautiful slick-arrow"><i class="fa fa-angle-right"></i></button>',
+      dots: false,
+      infinite: false,
+      responsive: [
+        {
+          breakpoint: 1200,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 1
+          }
+        },
+        {
+          breakpoint: 992,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1
+          }
+        },
+        {
+          breakpoint: 576,
+          settings: {
+            slidesToShow: 1.5,
+            slidesToScroll: 1,
+            arrows: true
+          }
+        }
+      ]
+    });
+
+    $('.limited-time-slider').slick({
       slidesToShow: 4,
       slidesToScroll: 1,
       autoplay: true,

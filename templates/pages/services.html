@@ -69,14 +69,322 @@
     <!-- Service Areas Ribbon Ends -->
 
     <!-- Service Section Starts -->
-    <section class="service">
-      <div class="container">
-        <div
-          class="service-title text-center mb-5"
-          style="background-image: none"
-        >
-          <h2>Solutions for every <span class="secondary">corner</span></h2>
-          <p class="mb-0">
+    <style>
+      /* Premium Service Cards CSS */
+      .premium-service-card {
+        background: #fdfdfd; /* match reference warm light background */
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+        border: 1px solid rgba(144, 110, 73, 0.1);
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        height: 100%;
+        display: grid;
+        grid-template-columns: 38% 1fr;
+        grid-template-rows: auto 1fr;
+        column-gap: 20px;
+        row-gap: 25px;
+      }
+      .premium-service-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(144, 110, 73, 0.15);
+      }
+      
+      .premium-service-icon {
+        width: 55px;
+        height: 55px;
+        background-color: #f5f0e9; /* theme secondary light */
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #906e49;
+        font-size: 25px;
+        transition: transform 0.4s ease;
+      }
+      .premium-service-card:hover .premium-service-icon {
+        transform: scale(1.1);
+      }
+      
+      .premium-service-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 22px;
+        font-weight: 700;
+        line-height: 1.3;
+        color: #222;
+        margin-bottom: 0;
+        align-self: center;
+        text-align: left;
+      }
+      
+      .service-number {
+        font-size: 22px;
+        color: #906e49;
+        font-weight: 600;
+        margin-right: 6px;
+        font-family: 'Playfair Display', serif;
+      }
+      
+      .premium-service-img-wrapper {
+        border-radius: 8px;
+        overflow: hidden;
+        position: relative;
+        height: 100%;
+        min-height: 220px;
+      }
+      
+      .premium-service-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+      }
+      .premium-service-card:hover .premium-service-img {
+        transform: scale(1.1);
+      }
+      
+      .premium-service-content {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        height: 100%;
+      }
+      
+      .premium-service-list {
+        margin-top: 10px;
+        list-style: none;
+        padding-left: 0;
+        margin-bottom: 10px;
+        flex-grow: 1;
+      }
+      
+      .premium-service-list li {
+        position: relative;
+        padding-left: 14px;
+        margin-bottom: 10px;
+        font-size: 13px;
+        color: #444;
+        line-height: 1.4;
+        font-weight: 500;
+      }
+      
+      .premium-service-list li::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 6px;
+        width: 5px;
+        height: 5px;
+        background-color: #906e49;
+        border-radius: 50%;
+      }
+      
+      .premium-service-btn {
+        margin-top: auto;
+        padding: 8px 12px !important;
+        font-size: 13px !important;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        font-weight: 600;
+        width: 100%;
+        text-align: center;
+        display: block;
+      }
+
+      /* Hover animations */
+      @keyframes fadeUpCustom {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .service-animate {
+        animation: fadeUpCustom 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+        opacity: 0;
+      }
+      .delay-1 { animation-delay: 0.1s; }
+      .delay-2 { animation-delay: 0.2s; }
+      .delay-3 { animation-delay: 0.3s; }
+      .delay-4 { animation-delay: 0.4s; }
+      .delay-5 { animation-delay: 0.5s; }
+      .delay-6 { animation-delay: 0.6s; }
+      
+      /* Mobile adjustments */
+      @media (max-width: 991px) {
+        .premium-service-img-wrapper {
+          min-height: 200px;
+        }
+      }
+      @media (max-width: 575px) {
+        .premium-service-card {
+          grid-template-columns: 1fr;
+          grid-template-rows: auto auto auto 1fr;
+          row-gap: 15px;
+        }
+        .premium-service-title {
+          width: 100%;
+          align-self: stretch;
+          font-size: 20px;
+        }
+        .premium-service-title br {
+          display: none;
+        }
+        .premium-service-img-wrapper {
+          min-height: 180px;
+        }
+      }
+
+      /* Why Choose Utopian Decors Ribbon CSS */
+      .why-choose-utopian-section {
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 45px 30px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+        border: 1px solid rgba(144, 110, 73, 0.15);
+        margin-top: 50px;
+        overflow: hidden;
+      }
+
+      .why-choose-title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        font-family: 'Popins', sans-serif;
+        font-weight: 700;
+        font-size: 18px;
+        color: #222222;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+      }
+
+      .why-choose-title::before,
+      .why-choose-title::after {
+        content: "";
+        display: inline-block;
+        width: 45px;
+        height: 2px;
+        background-color: #906e49;
+        border-radius: 2px;
+      }
+
+      .why-choose-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 10px 15px;
+        position: relative;
+        transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        cursor: default;
+        height: auto;
+      }
+
+      /* Vertical separator lines between items */
+      .why-choose-item::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 10%;
+        height: 80%;
+        width: 1px;
+        background: linear-gradient(to bottom, rgba(144, 110, 73, 0.05), rgba(144, 110, 73, 0.25), rgba(144, 110, 73, 0.05));
+      }
+
+      .why-choose-icon-wrap {
+        width: 64px;
+        height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      .why-choose-icon-wrap img {
+        max-width: 50px;
+        max-height: 50px;
+        object-fit: contain;
+        transition: filter 0.3s ease;
+      }
+
+      .why-choose-label {
+        font-family: 'Popins', sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        color: #333333;
+        line-height: 1.35;
+        margin-bottom: 0;
+        transition: color 0.3s ease;
+      }
+
+      .why-choose-item:hover .why-choose-icon-wrap {
+        transform: translateY(-6px) scale(1.1);
+      }
+
+      .why-choose-item:hover .why-choose-label {
+        color: #906e49;
+      }
+
+      /* Desktop Layout (>= 1200px) */
+      @media (min-width: 1200px) {
+        .why-choose-grid {
+          display: grid !important;
+          grid-template-columns: repeat(6, 1fr) !important;
+          align-items: start !important;
+        }
+        .why-choose-item:last-child::after {
+          display: none;
+        }
+      }
+
+      /* Tablet & Mobile (< 1200px) */
+      @media (max-width: 1199px) {
+        .why-choose-utopian-section {
+          padding: 35px 15px;
+          margin-top: 35px;
+        }
+        .why-choose-title {
+          font-size: 16px;
+          gap: 12px;
+          margin-bottom: 30px;
+        }
+        .why-choose-title::before,
+        .why-choose-title::after {
+          width: 25px;
+        }
+        .why-choose-label {
+          font-size: 14px;
+        }
+        .why-choose-icon-wrap {
+          width: 56px;
+          height: 56px;
+          margin-bottom: 12px;
+        }
+        .why-choose-icon-wrap img {
+          max-width: 42px;
+          max-height: 42px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .why-choose-title {
+          font-size: 14px;
+        }
+        .why-choose-title::before,
+        .why-choose-title::after {
+          width: 18px;
+        }
+      }
+    </style>
+    
+    <section class="service pt-2 pb-3 bg-secondarylight">
+      <div class="container pt-2 pb-2">
+        <div class="service-title text-center mb-5" style="background-image: none">
+          <h2>Our <span class="secondary">Premium Services</span></h2>
+          <p class="mb-0 mx-auto" style="max-width: 700px;">
             From concept to completion, we offer a full range of interior design
             and furniture services tailored to transform every corner of your
             home or workplace into something extraordinary.
@@ -84,229 +392,228 @@
         </div>
         <div class="service-body position-relative">
           <div class="row gy-4">
-            <!-- Residential Interior Design -->
+            <!-- 01. Residential Interior Design -->
             <div class="col-lg-4 col-md-6">
-              <div class="service-box-custom text-center">
-                <div class="service-icon mb-4">
+              <div class="premium-service-card service-animate delay-1">
+                <div class="premium-service-icon">
                   <i class="fa fa-home"></i>
                 </div>
-                <h3>Residential Interior Design</h3>
-                <p class="mb-0 text-muted">
-                  Transform your home into a stylish and comfortable living
-                  space with customized interior solutions.
-                </p>
-                <ul class="service-list">
-                  <li><i class="fa fa-check"></i> Villas &amp; Bungalows</li>
-                  <li><i class="fa fa-check"></i> Apartments &amp; Flats</li>
-                  <li><i class="fa fa-check"></i> Bedrooms</li>
-                  <li><i class="fa fa-check"></i> Living Rooms</li>
-                  <li><i class="fa fa-check"></i> Dining Areas</li>
-                  <li><i class="fa fa-check"></i> Modular Kitchens</li>
-                  <li><i class="fa fa-check"></i> Home Offices</li>
-                  <li><i class="fa fa-check"></i> Luxury Furniture Design</li>
-                </ul>
-                <a
-                  href="https://wa.me/917351949490?text=Hello%20Utopia%20Team!%20I%20am%20interested%20in%20your%20Residential%20Interior%20Design%20services.%20Please%20share%20more%20details."
-                  target="_blank"
-                  class="btn-primary"
-                >
-                  Request Quote
-                </a>
-              </div>
-            </div>
-            <!-- Commercial Interior Design -->
-            <div class="col-lg-4 col-md-6">
-              <div class="service-box-custom text-center">
-                <div class="service-icon mb-4">
-                  <i class="fa fa-building-o"></i>
+                <h4 class="premium-service-title">
+                  <span class="service-number">01.</span> Residential<br>Interior Design
+                </h4>
+                <div class="premium-service-img-wrapper">
+                  <img src="{{ url_for('static', filename='img/services/residential.jpg') }}" class="premium-service-img" alt="Residential Interior Design">
                 </div>
-                <h3>Commercial Interior Design</h3>
-                <p class="mb-0 text-muted">
-                  Professional and functional interiors designed to enhance
-                  productivity and brand identity.
-                </p>
-                <ul class="service-list">
-                  <li><i class="fa fa-check"></i> Corporate Offices</li>
-                  <li><i class="fa fa-check"></i> Retail Stores</li>
-                  <li><i class="fa fa-check"></i> Showrooms</li>
-                  <li><i class="fa fa-check"></i> Restaurants &amp; Caf&eacute;s</li>
-                  <li>
-                    <i class="fa fa-check"></i> Clinics &amp; Healthcare Facilities
-                  </li>
-                  <li><i class="fa fa-check"></i> Educational Institutions</li>
-                  <li><i class="fa fa-check"></i> Hospitality Projects</li>
-                </ul>
-                <a
-                  href="https://wa.me/917351949490?text=Hello%20Utopia%20Team!%20I%20am%20interested%20in%20your%20Commercial%20Interior%20Design%20services.%20Please%20share%20more%20details."
-                  target="_blank"
-                  class="btn-primary"
-                >
-                  Request Quote
-                </a>
+                <div class="premium-service-content">
+                  <ul class="premium-service-list">
+                    <li>Living Room Design</li>
+                    <li>Bedroom Design</li>
+                    <li>Dining Room Design</li>
+                    <li>Modular Wardrobes</li>
+                    <li>Kids' Room Design</li>
+                    <li>Space Planning</li>
+                  </ul>
+                  <a href="https://wa.me/917351949490?text=Hello%20Utopia%20Team!%20I%20am%20interested%20in%20your%20Residential%20Interior%20Design%20services.%20Please%20share%20more%20details." target="_blank" class="btn-primary premium-service-btn">
+                    Request Quote
+                  </a>
+                </div>
               </div>
             </div>
-            <!-- Customized Furniture Manufacturing -->
+
+            <!-- 02. Commercial Interior Solutions -->
             <div class="col-lg-4 col-md-6">
-              <div class="service-box-custom text-center">
-                <div class="service-icon mb-4">
+              <div class="premium-service-card service-animate delay-2">
+                <div class="premium-service-icon">
+                  <i class="fa fa-building"></i>
+                </div>
+                <h4 class="premium-service-title">
+                  <span class="service-number">02.</span> Commercial<br>Interior Solutions
+                </h4>
+                <div class="premium-service-img-wrapper">
+                  <img src="{{ url_for('static', filename='img/services/commercial.jpg') }}" class="premium-service-img" alt="Commercial Interior Solutions">
+                </div>
+                <div class="premium-service-content">
+                  <ul class="premium-service-list">
+                    <li>Office Interiors</li>
+                    <li>Executive Cabins</li>
+                    <li>Reception Areas</li>
+                    <li>Conference Rooms</li>
+                    <li>Workspace Planning</li>
+                    <li>Storage Solutions</li>
+                  </ul>
+                  <a href="https://wa.me/917351949490?text=Hello%20Utopia%20Team!%20I%20am%20interested%20in%20your%20Commercial%20Interior%20Design%20services.%20Please%20share%20more%20details." target="_blank" class="btn-primary premium-service-btn">
+                    Request Quote
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 03. Custom Furniture Design -->
+            <div class="col-lg-4 col-md-6">
+              <div class="premium-service-card service-animate delay-3">
+                <div class="premium-service-icon">
                   <i class="fa fa-bed"></i>
                 </div>
-                <h3>Customized Furniture Manufacturing</h3>
-                <p class="mb-0 text-muted">
-                  We design and manufacture premium custom furniture tailored to
-                  your space and requirements.
-                </p>
-                <ul class="service-list">
-                  <li><i class="fa fa-check"></i> Bedroom Furniture</li>
-                  <li><i class="fa fa-check"></i> Wardrobes &amp; Closets</li>
-                  <li><i class="fa fa-check"></i> TV Units</li>
-                  <li><i class="fa fa-check"></i> Sofa Sets</li>
-                  <li><i class="fa fa-check"></i> Dining Sets</li>
-                  <li>
-                    <i class="fa fa-check"></i> Office Tables &amp; Workstations
-                  </li>
-                  <li><i class="fa fa-check"></i> Reception Counters</li>
-                  <li><i class="fa fa-check"></i> Storage Solutions</li>
-                  <li><i class="fa fa-check"></i> Luxury Custom Furniture</li>
-                </ul>
-                <a
-                  href="https://wa.me/917351949490?text=Hello%20Utopia%20Team!%20I%20am%20interested%20in%20your%20Customized%20Furniture%20Manufacturing.%20Please%20share%20more%20details."
-                  target="_blank"
-                  class="btn-primary"
-                >
-                  Request Quote
-                </a>
-              </div>
-            </div>
-            <!-- Office Furniture Solutions -->
-            <div class="col-lg-4 col-md-6">
-              <div class="service-box-custom text-center">
-                <div class="service-icon mb-4">
-                  <i class="fa fa-briefcase"></i>
+                <h4 class="premium-service-title">
+                  <span class="service-number">03.</span> Custom<br>Furniture Design
+                </h4>
+                <div class="premium-service-img-wrapper">
+                  <img src="{{ url_for('static', filename='img/services/Custom_Furniture.webp') }}" class="premium-service-img" alt="Custom Furniture Design">
                 </div>
-                <h3>Office Furniture Solutions</h3>
-                <p class="mb-0 text-muted">
-                  Modern and ergonomic office furniture designed for efficiency,
-                  durability, and comfort.
-                </p>
-                <ul class="service-list">
-                  <li><i class="fa fa-check"></i> Executive Tables</li>
-                  <li><i class="fa fa-check"></i> Workstations</li>
-                  <li><i class="fa fa-check"></i> Conference Tables</li>
-                  <li><i class="fa fa-check"></i> Office Chairs</li>
-                  <li><i class="fa fa-check"></i> Reception Furniture</li>
-                  <li><i class="fa fa-check"></i> Storage Cabinets</li>
-                </ul>
-                <a
-                  href="https://wa.me/917351949490?text=Hello%20Utopia%20Team!%20I%20am%20interested%20in%20your%20Office%20Furniture%20Solutions.%20Please%20share%20more%20details."
-                  target="_blank"
-                  class="btn-primary"
-                >
-                  Request Quote
-                </a>
+                <div class="premium-service-content">
+                  <ul class="premium-service-list">
+                    <li>Made-to-Measure Furniture</li>
+                    <li>Custom Sofas &amp; Beds</li>
+                    <li>Dining Sets</li>
+                    <li>TV Units</li>
+                    <li>Wardrobes &amp; Cabinets</li>
+                    <li>Luxury Finishes</li>
+                  </ul>
+                  <a href="https://wa.me/917351949490?text=Hello%20Utopia%20Team!%20I%20am%20interested%20in%20your%20Customized%20Furniture%20Manufacturing.%20Please%20share%20more%20details." target="_blank" class="btn-primary premium-service-btn">
+                    Request Quote
+                  </a>
+                </div>
               </div>
             </div>
-            <!-- Home D&eacute;cor &amp; Styling -->
+
+            <!-- 04. Décor & Styling Services -->
             <div class="col-lg-4 col-md-6">
-              <div class="service-box-custom text-center">
-                <div class="service-icon mb-4">
+              <div class="premium-service-card service-animate delay-4">
+                <div class="premium-service-icon">
                   <i class="fa fa-paint-brush"></i>
                 </div>
-                <h3>Home D&eacute;cor &amp; Styling</h3>
-                <p class="mb-0 text-muted">
-                  Enhance your interiors with carefully selected d&eacute;cor elements
-                  and space styling by experts.
-                </p>
-                <ul class="service-list">
-                  <li><i class="fa fa-check"></i> Decorative Lighting</li>
-                  <li><i class="fa fa-check"></i> Wall Art &amp; Paintings</li>
-                  <li><i class="fa fa-check"></i> Curtains &amp; Blinds</li>
-                  <li><i class="fa fa-check"></i> Wallpapers</li>
-                  <li><i class="fa fa-check"></i> Decorative Accessories</li>
-                  <li><i class="fa fa-check"></i> Carpets &amp; Rugs</li>
-                  <li><i class="fa fa-check"></i> Space Styling</li>
-                </ul>
-                <a
-                  href="https://wa.me/917351949490?text=Hello%20Utopia%20Team!%20I%20am%20interested%20in%20your%20Home%20Decor%20and%20Styling%20services.%20Please%20share%20more%20details."
-                  target="_blank"
-                  class="btn-primary"
-                >
-                  Request Quote
-                </a>
+                <h4 class="premium-service-title">
+                  <span class="service-number">04.</span> Décor &amp;<br>Styling Services
+                </h4>
+                <div class="premium-service-img-wrapper">
+                  <img src="{{ url_for('static', filename='img/services/vintage.jpg') }}" class="premium-service-img" alt="Décor & Styling Services">
+                </div>
+                <div class="premium-service-content">
+                  <ul class="premium-service-list">
+                    <li>Wall Décor &amp; Artwork</li>
+                    <li>Lighting Consultation</li>
+                    <li>Home Accessories</li>
+                    <li>Rugs &amp; Soft Furnishings</li>
+                    <li>Seasonal Styling</li>
+                    <li>Decorative Accents</li>
+                  </ul>
+                  <a href="https://wa.me/917351949490?text=Hello%20Utopia%20Team!%20I%20am%20interested%20in%20your%20Home%20Decor%20and%20Styling%20services.%20Please%20share%20more%20details." target="_blank" class="btn-primary premium-service-btn">
+                    Request Quote
+                  </a>
+                </div>
               </div>
             </div>
-            <!-- Turnkey Interior Projects -->
+
+            <!-- 05. 3D Design & Visualization -->
             <div class="col-lg-4 col-md-6">
-              <div class="service-box-custom text-center">
-                <div class="service-icon mb-4">
-                  <i class="fa fa-key"></i>
+              <div class="premium-service-card service-animate delay-5">
+                <div class="premium-service-icon">
+                  <i class="fa fa-desktop"></i>
                 </div>
-                <h3>Turnkey Interior Projects</h3>
-                <p class="mb-0 text-muted">
-                  Complete end-to-end project management from consultation to
-                  final keys handover.
-                </p>
-                <ul class="service-list">
-                  <li><i class="fa fa-check"></i> Design Consultation</li>
-                  <li><i class="fa fa-check"></i> 3D Visualization</li>
-                  <li><i class="fa fa-check"></i> Material Selection</li>
-                  <li><i class="fa fa-check"></i> Furniture Manufacturing</li>
-                  <li><i class="fa fa-check"></i> Site Supervision</li>
-                  <li><i class="fa fa-check"></i> Installation &amp; Finishing</li>
-                  <li><i class="fa fa-check"></i> Final Handover</li>
-                </ul>
-                <a
-                  href="https://wa.me/917351949490?text=Hello%20Utopia%20Team!%20I%20am%20interested%20in%20your%20Turnkey%20Interior%20Projects.%20Please%20share%20more%20details."
-                  target="_blank"
-                  class="btn-primary"
-                >
-                  Request Quote
-                </a>
+                <h4 class="premium-service-title">
+                  <span class="service-number">05.</span> 3D Design &amp;<br>Visualization
+                </h4>
+                <div class="premium-service-img-wrapper">
+                  <img src="{{ url_for('static', filename='img/services/space-planning.jpg') }}" class="premium-service-img" alt="3D Design & Visualization">
+                </div>
+                <div class="premium-service-content">
+                  <ul class="premium-service-list">
+                    <li>Concept Development</li>
+                    <li>Mood Boards</li>
+                    <li>3D Renders</li>
+                    <li>Material Selection</li>
+                    <li>Layout Planning</li>
+                    <li>Design Consultation</li>
+                  </ul>
+                  <a href="https://wa.me/917351949490?text=Hello%20Utopia%20Team!%20I%20am%20interested%20in%20your%20Turnkey%20Interior%20Projects.%20Please%20share%20more%20details." target="_blank" class="btn-primary premium-service-btn">
+                    Request Quote
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 06. Delivery & Installation -->
+            <div class="col-lg-4 col-md-6">
+              <div class="premium-service-card service-animate delay-6">
+                <div class="premium-service-icon">
+                  <i class="fa fa-truck"></i>
+                </div>
+                <h4 class="premium-service-title">
+                  <span class="service-number">06.</span> Delivery &amp;<br>Installation
+                </h4>
+                <div class="premium-service-img-wrapper">
+                  <img src="{{ url_for('static', filename='img/services/Pergola_works.webp') }}" class="premium-service-img" alt="Delivery & Installation">
+                </div>
+                <div class="premium-service-content">
+                  <ul class="premium-service-list">
+                    <li>Furniture Delivery</li>
+                    <li>Professional Installation</li>
+                    <li>Assembly Services</li>
+                    <li>Site Coordination</li>
+                    <li>Final Styling</li>
+                    <li>After-Sales Support</li>
+                  </ul>
+                  <a href="https://wa.me/917351949490?text=Hello%20Utopia%20Team!%20I%20am%20interested%20in%20your%20Turnkey%20Interior%20Projects.%20Please%20share%20more%20details." target="_blank" class="btn-primary premium-service-btn">
+                    Request Quote
+                  </a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Why Choose Utopian Decors Section Starts -->
+        <div class="why-choose-utopian-section">
+          <div class="why-choose-title">
+            WHY CHOOSE UTOPIAN DECORS?
+          </div>
+          <div class="swiper why-choose-swiper">
+            <div class="swiper-wrapper why-choose-grid">
+              <div class="swiper-slide why-choose-item">
+                <div class="why-choose-icon-wrap">
+                  <img src="{{ url_for('static', filename='img/services_icons/1.png') }}" alt="Premium Materials">
+                </div>
+                <h5 class="why-choose-label">Premium<br>Materials</h5>
+              </div>
+              <div class="swiper-slide why-choose-item">
+                <div class="why-choose-icon-wrap">
+                  <img src="{{ url_for('static', filename='img/services_icons/2.png') }}" alt="Customized Designs">
+                </div>
+                <h5 class="why-choose-label">Customized<br>Designs</h5>
+              </div>
+              <div class="swiper-slide why-choose-item">
+                <div class="why-choose-icon-wrap">
+                  <img src="{{ url_for('static', filename='img/services_icons/3.png') }}" alt="Expert Designers">
+                </div>
+                <h5 class="why-choose-label">Expert<br>Designers</h5>
+              </div>
+              <div class="swiper-slide why-choose-item">
+                <div class="why-choose-icon-wrap">
+                  <img src="{{ url_for('static', filename='img/services_icons/4.png') }}" alt="End-to-End Execution">
+                </div>
+                <h5 class="why-choose-label">End-to-End<br>Execution</h5>
+              </div>
+              <div class="swiper-slide why-choose-item">
+                <div class="why-choose-icon-wrap">
+                  <img src="{{ url_for('static', filename='img/services_icons/5.png') }}" alt="Timely Delivery">
+                </div>
+                <h5 class="why-choose-label">Timely<br>Delivery</h5>
+              </div>
+              <div class="swiper-slide why-choose-item">
+                <div class="why-choose-icon-wrap">
+                  <img src="{{ url_for('static', filename='img/services_icons/6.png') }}" alt="Dedicated Support">
+                </div>
+                <h5 class="why-choose-label">Dedicated<br>Support</h5>
               </div>
             </div>
           </div>
         </div>
+        <!-- Why Choose Utopian Decors Section Ends -->
+
       </div>
     </section>
     <!-- Service Section Ends -->
-
-    <!-- Stat Section Starts -->
-    <section class="stat position-relative">
-      <div class="overlay bg-primary opacity-100"></div>
-      <div class="container position-relative">
-        <div class="stat-inner grey">
-          <div
-            class="stat-title mb-4 pb-4 border-bottom border-2 border-light text-center text-lg-start"
-          >
-            <div class="row align-items-center">
-              <div class="col-lg-6">
-                <div class="stat-title-left">
-                  <h2 class="mb-0 white">
-                    Milestones that We Are Proud of
-                    <span class="secondary">Reaching</span>
-                  </h2>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="stat-title-right">
-                  <p class="mb-0">
-                    Since our founding in 2021, Utopia Furniture &amp; D&eacute;cor has
-                    grown rapidly — driven by our passion for design excellence
-                    and an unwavering commitment to client satisfaction. Every
-                    number below represents a real person, a real space, and a
-                    real story of transformation.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="stat-body text-center">
-            <ul class="list-unstyled d-flex justify-content-evenly flex-wrap gap-4 mb-0"> <li class="d-flex align-items-center text-start"> <span class="h1 mb-0 me-3">120+</span> <span class="teko h4 mb-0 secondary"> Projects <br> Completed </span> </li> <li class="d-flex align-items-center text-start"> <span class="h1 mb-0 me-3">8+</span> <span class="teko h4 mb-0 secondary"> Years <br> Experience </span> </li> </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Stat Section Ends -->
 
     <!-- Why Us Section Starts -->
     <section class="why-us">
@@ -599,3 +906,56 @@
     </div>
     <!-- Appointment Section Ends -->
 {% endblock %}
+
+{% block scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    let whyChooseSwiperInstance = null;
+
+    function handleWhyChooseSwiper() {
+      const swiperEl = document.querySelector('.why-choose-swiper');
+      if (!swiperEl || typeof Swiper === 'undefined') return;
+
+      if (window.innerWidth < 1200) {
+        if (!whyChooseSwiperInstance) {
+          whyChooseSwiperInstance = new Swiper('.why-choose-swiper', {
+            slidesPerView: 2,
+            spaceBetween: 10,
+            loop: true,
+            speed: 800,
+            autoplay: {
+              delay: 1800,
+              disableOnInteraction: false,
+            },
+            breakpoints: {
+              320: {
+                slidesPerView: 2,
+                spaceBetween: 10
+              },
+              576: {
+                slidesPerView: 3,
+                spaceBetween: 15
+              },
+              768: {
+                slidesPerView: 4,
+                spaceBetween: 20
+              },
+              992: {
+                slidesPerView: 4,
+                spaceBetween: 20
+              }
+            }
+          });
+        }
+      } else {
+        if (whyChooseSwiperInstance) {
+          whyChooseSwiperInstance.destroy(true, true);
+          whyChooseSwiperInstance = null;
+        }
+      }
+    }
+
+    handleWhyChooseSwiper();
+    window.addEventListener('resize', handleWhyChooseSwiper);
+  });
+</script>2{% endblock %}

@@ -68,6 +68,7 @@
                                 data-subcategory-id="{{ prod.subcategory_id if prod.subcategory_id else '' }}"
                                 data-name="{{ prod.name | e }}"
                                 data-mrp="{{ prod.mrp | replace('$', '') | e }}"
+                                data-sale-price="{{ prod.sale_price | replace('$', '') | e if prod.sale_price else '' }}"
                                 data-instock="{{ 'true' if prod.in_stock else 'false' }}"
                                 data-short-description="{{ prod.short_description | e if prod.short_description else '' }}"
                                 data-description="{{ prod.description | e if prod.description else '' }}"
@@ -153,6 +154,10 @@
                 <div class="admin-form-group" style="margin-bottom: 12px; width: 100%;">
                     <label for="prod-mrp" style="display: block; margin-bottom: 5px; font-weight: 500; color: #252525; text-align: left; font-size: 13px;">MRP (Price)</label>
                     <input type="text" id="prod-mrp" name="mrp" class="admin-form-control" placeholder='e.g. 1,250' style="width: 100%; box-sizing: border-box; padding: 10px 12px; font-size: 14px; border-radius: 6px; border: 1px solid var(--admin-border);" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="prod-sale-price" style="display: block; margin-bottom: 8px; font-weight: 500; color: #555;">Sale Price (Optional)</label>
+                    <input type="text" id="prod-sale-price" name="sale_price" class="admin-form-control" placeholder='e.g. 750' style="width: 100%; box-sizing: border-box; padding: 10px 12px; font-size: 14px; border-radius: 6px; border: 1px solid var(--admin-border);">
                 </div>
 
                 <div class="admin-form-group" style="margin-bottom: 12px; width: 100%;">
@@ -263,6 +268,7 @@
                     
                     document.getElementById('prod-name').value = btn.getAttribute('data-name');
                     document.getElementById('prod-mrp').value = btn.getAttribute('data-mrp');
+                    document.getElementById('prod-sale-price').value = btn.getAttribute('data-sale-price') || '';
                     document.getElementById('prod-instock').checked = btn.getAttribute('data-instock') === 'true';
                     document.getElementById('prod-short-desc').value = btn.getAttribute('data-short-description') || '';
                     document.getElementById('prod-desc').value = btn.getAttribute('data-description') || '';
