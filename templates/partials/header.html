@@ -31,13 +31,6 @@
                 </li>
                 <li class="nav-item">
                   <a
-                    class="nav-link text fw-medium text-uppercase {% if request.endpoint == 'about' %}active{% endif %}"
-                    href="{{ url_for('about') }}"
-                    >About</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a
                     class="nav-link text fw-medium text-uppercase {% if request.endpoint == 'services' %}active{% endif %}"
                     href="{{ url_for('services') }}"
                     >Services</a
@@ -55,6 +48,13 @@
                     class="nav-link text fw-medium text-uppercase {% if request.endpoint == 'portfolio' %}active{% endif %}"
                     href="{{ url_for('portfolio') }}"
                     >Portfolio</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link text fw-medium text-uppercase {% if request.endpoint == 'about' %}active{% endif %}"
+                    href="{{ url_for('about') }}"
+                    >About</a
                   >
                 </li>
                 <li class="nav-item">
