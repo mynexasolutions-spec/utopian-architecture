@@ -15,7 +15,7 @@
 <style>
   @media (max-width: 1180px) {
     .slicknav_btn {
-      top: -10px;
+      top: -6px;
       position: absolute;
       right: 70px;
     }
@@ -289,7 +289,7 @@
                 <div class="product-img-container position-relative">
                   {% if mrp_val > 0 and sale_price_val < mrp_val %}
                   {% set discount_pct = ((mrp_val - sale_price_val) / mrp_val * 100) | round | int %}
-                  <div class="discount-badge d-flex flex-column justify-content-center align-items-center" style="position: absolute; top: 0; left: 0; background-color: #906e49; color: white; width: 55px; height: 55px; border-bottom-right-radius: 12px; z-index: 10;">
+                  <div class="discount-badge d-flex flex-column justify-content-center align-items-center" style="position: absolute; top: 0; left: 0; background-color: #842e13; color: white; width: 55px; height: 55px; border-bottom-right-radius: 12px; z-index: 10;">
                     <span class="fs-6 fw-bold lh-1">{{ discount_pct }}%</span>
                     <span class="lh-1 mt-1" style="font-size: 10px !important;">OFF</span>
                   </div>
@@ -313,7 +313,7 @@
                     </a>
                   </h4>
                   <div class="product-pricing text-end">
-                    <span class="product-price fw-bold" style="font-size: 18px; color: #906e49;">₹{{ "{:,.0f}".format(sale_price_val) }}</span>
+                    <span class="product-price fw-bold" style="font-size: 18px; color: #842e13;">₹{{ "{:,.0f}".format(sale_price_val) }}</span>
                     {% if sale_price_val < mrp_val %}
                     <br><span class="original-price text-muted text-decoration-line-through" style="font-size: 13px;">₹{{ "{:,.0f}".format(mrp_val) }}</span>
                     {% endif %}
@@ -345,7 +345,7 @@
           <i class="fa fa-couch text-muted mb-3" style="font-size: 48px; color: #b0a483 !important;"></i>
           <h3>No Products Found</h3>
           <p class="text-muted px-3">We don't have any items registered in this category yet. Check back soon!</p>
-          <a href="{{ url_for('shop') }}" class="btn1 btn-sm mt-2">Browse All Products</a>
+          <a href="{{ url_for('shop') }}" class="btn1 btn-sm mt-2" style="display: inline-block;margin-top: 20px !important;">Browse All Products</a>
         </div>
         {% endif %}
       </div>

@@ -31,9 +31,7 @@
                 <div class="admin-panel" style="align-items: flex-start; text-align: left; padding: 25px; min-height: auto; border-top: 4px solid {{ cat.bg_color or 'var(--admin-accent)' }}; position: relative; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.1)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0, 0, 0, 0.05)';">
                     
                     <div style="width: 100%; margin-bottom: 15px; border-radius: 8px; overflow: hidden; height: 180px; background-image: url('{{ cat.image_url if cat.image_url and (cat.image_url.startswith('http') or cat.image_url.startswith('/') or cat.image_url.startswith('data:')) else (url_for('static', filename=cat.image_url) if cat.image_url else '') }}'); background-size: cover; background-position: center;">
-                        <span style="position: absolute; top: 35px; left: 35px; background: {{ cat.bg_color or '#b0a483' }}; color: #fff; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; text-shadow: 0 1px 2px rgba(0,0,0,0.2);">
-                            Color: {{ cat.bg_color }}
-                        </span>
+
                     </div>
                     
                     <div style="margin-bottom: 15px; width: 100%;">
@@ -106,19 +104,6 @@
                     <input type="text" id="cat-name" name="name" class="admin-form-control" placeholder='e.g. Living Room' style="width: 100%; box-sizing: border-box; padding: 10px 12px; font-size: 14px; border-radius: 6px; border: 1px solid var(--admin-border);" required>
                 </div>
 
-                <div class="admin-form-group" style="margin-bottom: 12px; width: 100%;">
-                    <label for="cat-bg-color" style="display: block; margin-bottom: 5px; font-weight: 500; color: #252525; text-align: left; font-size: 13px;">Card Color Block (Pastel Themes)</label>
-                    <div style="display: flex; gap: 10px; align-items: center;">
-                        <select id="cat-color-preset" class="admin-form-control" style="flex: 1; box-sizing: border-box; padding: 10px; font-size: 14px; border-radius: 6px; border: 1px solid var(--admin-border); background-color: #fff; cursor: pointer;">
-                            <option value="#b0a483">Living Room Beige</option>
-                            <option value="#f4bcae">Bedroom Pastel Peach</option>
-                            <option value="#b9c8df">Dining Room Muted Blue</option>
-                            <option value="#e6d5b3">Decor & Lighting Yellow</option>
-                            <option value="custom">Custom Color...</option>
-                        </select>
-                        <input type="text" id="cat-bg-color" name="bg_color" class="admin-form-control" placeholder='e.g. #b0a483' style="width: 100px; box-sizing: border-box; padding: 10px; font-size: 14px; border-radius: 6px; border: 1px solid var(--admin-border);" value="#b0a483">
-                    </div>
-                </div>
 
                 <div class="admin-form-group" style="margin-bottom: 12px; width: 100%;">
                     <label style="display: block; margin-bottom: 5px; font-weight: 500; color: #252525; text-align: left; font-size: 13px;">Subcategories</label>
@@ -284,8 +269,6 @@
             const modal = document.getElementById('categoryModal');
             const form = document.getElementById('categoryForm');
             const modalTitle = document.getElementById('modalTitle');
-            const presetSelect = document.getElementById('cat-color-preset');
-            const customInput = document.getElementById('cat-bg-color');
 
             // Add button hook
             document.getElementById('add-subcategory-btn').addEventListener('click', addSubcategory);
@@ -309,16 +292,6 @@
                     
                     document.getElementById('cat-name').value = btn.getAttribute('data-name');
                     
-                    const colorVal = btn.getAttribute('data-bg-color') || '#b0a483';
-                    customInput.value = colorVal;
-                    
-                    let presets = ['#b0a483', '#f4bcae', '#b9c8df', '#e6d5b3'];
-                    if (presets.includes(colorVal)) {
-                        presetSelect.value = colorVal;
-                    } else {
-                        presetSelect.value = 'custom';
-                    }
-                    
                     const subStr = btn.getAttribute('data-subcategories') || '';
                     subcategories = subStr ? subStr.split(',').map(s => s.trim()).filter(s => s) : [];
                     renderSubcategories();
@@ -336,20 +309,6 @@
                 }
             });
 
-            presetSelect.addEventListener('change', () => {
-                if (presetSelect.value !== 'custom') {
-                    customInput.value = presetSelect.value;
-                }
-            });
-
-            customInput.addEventListener('input', () => {
-                let presets = ['#b0a483', '#f4bcae', '#b9c8df', '#e6d5b3'];
-                if (presets.includes(customInput.value)) {
-                    presetSelect.value = customInput.value;
-                } else {
-                    presetSelect.value = 'custom';
-                }
-            });
 
             const deleteBtns = document.querySelectorAll('.delete-btn');
             const deleteModal = document.getElementById('deleteModal');
@@ -387,9 +346,6 @@
             if(document.getElementById('cat-image-asterisk')) document.getElementById('cat-image-asterisk').style.display = 'inline';
             
             document.getElementById('cat-name').value = '';
-            
-            document.getElementById('cat-color-preset').value = '#b0a483';
-            document.getElementById('cat-bg-color').value = '#b0a483';
             
             subcategories = [];
             renderSubcategories();

@@ -1,0 +1,327 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+{% if post.meta_description %}
+<meta name="description" content="{{ post.meta_description }}" />
+{% else %}
+<meta name="description" content="{{ post.short_description | default('Utopia Furniture & Décor Blog', true) }}" />
+{% endif %}
+{% endblock %}
+
+{% block title %}{{ post.meta_title if post.meta_title else post.title }} – Utopia Furniture &amp; D&eacute;cor{% endblock %}
+
+{% block styles %}
+<style>
+  /* Blog Banner Styling */
+  .blog-category-banner {
+    background-image: url("{{ url_for('static', filename='img/blog_pages/blog_pages.jpeg') }}");
+    background-size: cover;
+    background-position: right center;
+    padding: 50px 0;
+    margin-bottom: 40px;
+    background-color: #FAF9F7;  
+    padding-left: 50px;
+  }
+  .blog-category-banner h2 {
+    color: #1a3224;
+    font-family: 'Playfair Display', serif;
+    font-size: 65px;
+    font-weight: 650;
+    margin-bottom: 15px;
+  }
+  .blog-category-divider {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+  .blog-category-divider .line {
+    height: 1px;
+    width: 80px;
+    background-color: #bfa173;
+  }
+  .blog-category-divider .diamonds {
+    display: flex;
+    gap: 5px;
+    margin: 0 15px;
+  }
+  .blog-category-divider .diamonds span {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border: 1px solid #bfa173;
+    transform: rotate(45deg);
+  }
+  .blog-category-divider .diamonds span:nth-child(2) {
+    background-color: #bfa173;
+  }
+
+  @media (max-width: 991px) {
+    .blog-category-banner {
+      background-position: center center;
+      padding-left: 30px;
+    }
+  }
+  @media (max-width: 767px) {
+    .blog-category-banner {
+      padding: 60px 0;
+      background-position: 65% center;
+    }
+    .blog-category-banner h2 {
+      font-size: 40px;
+      font-weight: 550;
+    }
+    .blog-category-divider {
+      justify-content: center;
+    }
+    .blog-category-banner-content {
+      text-align: center !important;
+    }
+  }
+
+  /* Blog Detail Styles */
+  .post-header {
+    margin-bottom: 30px;
+  }
+  .post-meta {
+    font-size: 13px;
+    font-weight: 600;
+    color: #a37a44;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  .post-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a3028;
+    line-height: 1.3;
+    margin-bottom: 25px;
+  }
+  .post-hero-img {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 40px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+  }
+  .post-content {
+    font-size: 16px;
+    color: #444;
+    line-height: 1.8;
+  }
+  .post-content h2, .post-content h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    color: #1a3028;
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+  .post-content p {
+    margin-bottom: 25px;
+  }
+  .post-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 20px 0;
+  }
+    .post-content blockquote {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #a37a44;
+    border-left: 4px solid #a37a44;
+    padding-left: 20px;
+    margin: 30px 0;
+  }
+  .post-content ul, .post-content ol {
+    margin-bottom: 25px;
+    padding-left: 20px;
+  }
+  .post-content li {
+    margin-bottom: 12px;
+    line-height: 1.8;
+  }
+  @media (max-width: 767px) {
+    .post-content li {
+      margin-bottom: 15px;
+      line-height: 1.9;
+    }
+      .post-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1a3028;
+    line-height: 1.3;
+    margin-bottom: 20px;
+  }
+  }
+
+  /* Sidebar Styles */
+  .sidebar-widget {
+    background: #FAF9F7;
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+  }
+  .sidebar-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1a3028;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e5e0d8;
+  }
+  .sidebar-category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .sidebar-category-list li {
+    margin-bottom: 12px;
+  }
+  .sidebar-category-list a {
+    color: #666;
+    text-decoration: none;
+    font-size: 14.5px;
+    display: flex;
+    justify-content: space-between;
+    transition: color 0.3s ease;
+  }
+  .sidebar-category-list a:hover {
+    color: #a37a44;
+  }
+  
+  .recent-post-item {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  .recent-post-item:last-child {
+    margin-bottom: 0;
+  }
+  .recent-post-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 6px;
+    object-fit: cover;
+  }
+  .recent-post-info {
+    flex: 1;
+  }
+  .recent-post-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a3028;
+    text-decoration: none;
+    line-height: 1.4;
+    display: block;
+    margin-bottom: 5px;
+    transition: color 0.3s ease;
+  }
+  .recent-post-title:hover {
+    color: #a37a44;
+  }
+  .recent-post-date {
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- 1. Hero Banner Section -->
+<section class="blog-category-banner position-relative">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-8 blog-category-banner-content text-md-start">
+        <h2 style="font-weight: 500;">Blog &amp;<br>Inspiration</h2>
+        <div class="blog-category-divider justify-content-md-start">
+          <div class="line"></div>
+          <div class="diamonds">
+            <span></span>
+            <span class="diamond-filled"></span>
+            <span></span>
+          </div>
+          <div class="line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. Blog Detail Section -->
+<section class="py-5">
+  <div class="container">
+    <div class="row g-5">
+      <!-- Main Content -->
+      <div class="col-lg-8">
+        <div class="post-header">
+          <div class="post-meta">
+            <span>{% if post.category %}{{ post.category.name }}{% else %}Uncategorized{% endif %}</span>
+            <span>&bull;</span>
+            <span>{{ post.created_at.strftime('%b %d, %Y') }}</span>
+          </div>
+          <h1 class="post-title">{{ post.title }}</h1>
+        </div>
+
+        {% if post.image_url %}
+        <img src="{{ post.image_url if (post.image_url.startswith('http') or post.image_url.startswith('/')) else url_for('static', filename=post.image_url) }}" alt="{{ post.title }}" class="post-hero-img">
+        {% endif %}
+
+        <div class="post-content">
+          {{ post.content | safe }}
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-lg-4">
+        <!-- Categories Widget -->
+        <div class="sidebar-widget">
+          <h3 class="sidebar-title">Categories</h3>
+          <ul class="sidebar-category-list">
+            <li><a href="{{ url_for('blog') }}">All Categories <span></span></a></li>
+            {% for cat in categories %}
+            <li>
+              <a href="{{ url_for('blog', category=cat.slug) }}#latest-articles">
+                {{ cat.name }} <span>({{ cat.posts | length }})</span>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <!-- Recent Posts Widget -->
+        {% if recent_posts %}
+        <div class="sidebar-widget">
+          <h3 class="sidebar-title">Recent Posts</h3>
+          {% for r_post in recent_posts %}
+          <div class="recent-post-item">
+            {% if r_post.image_url %}
+            <img src="{{ r_post.image_url if (r_post.image_url.startswith('http') or r_post.image_url.startswith('/')) else url_for('static', filename=r_post.image_url) }}" alt="{{ r_post.title }}" class="recent-post-img">
+            {% else %}
+            <div style="width: 80px; height: 80px; border-radius: 6px; background: #eee; display: flex; align-items: center; justify-content: center; color: #ccc;"><i class="fa-solid fa-image"></i></div>
+            {% endif %}
+            <div class="recent-post-info">
+              <a href="{{ url_for('blog_detail', slug=r_post.slug) }}" class="recent-post-title">{{ r_post.title }}</a>
+              <span class="recent-post-date">{{ r_post.created_at.strftime('%b %d, %Y') }}</span>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

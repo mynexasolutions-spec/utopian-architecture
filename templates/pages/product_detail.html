@@ -3,7 +3,7 @@
 <style>
   @media (max-width: 1180px) {
     .slicknav_btn {
-      top: -10px;
+      top: -6px;
       position: absolute;
       right: 70px;
     }
@@ -342,7 +342,7 @@
               {{ product.name }}
             </h1>
             <div class="product-detail-price" id="product-price-display">
-              <span class="product-price fw-bold" style="font-size: 28px; color: #906e49;">₹{{ "{:,.0f}".format(main_sale) }}</span>
+              <span class="product-price fw-bold" style="font-size: 28px; color: #842e13;">₹{{ "{:,.0f}".format(main_sale) }}</span>
               {% if main_sale < main_mrp %}
               <span class="original-price text-muted text-decoration-line-through" style="font-size: 18px; margin-left: 10px;">₹{{ "{:,.0f}".format(main_mrp) }}</span>
               {% endif %}
@@ -457,7 +457,7 @@
             <div class="product-img-container position-relative">
               {% if mrp_val > 0 and sale_price_val < mrp_val %}
               {% set discount_pct = ((mrp_val - sale_price_val) / mrp_val * 100) | round | int %}
-              <div class="discount-badge d-flex flex-column justify-content-center align-items-center" style="position: absolute; top: 0; left: 0; background-color: #906e49; color: white; width: 55px; height: 55px; border-bottom-right-radius: 12px; z-index: 10;">
+              <div class="discount-badge d-flex flex-column justify-content-center align-items-center" style="position: absolute; top: 0; left: 0; background-color: #842e13; color: white; width: 55px; height: 55px; border-bottom-right-radius: 12px; z-index: 10;">
                 <span class="fs-6 fw-bold lh-1">{{ discount_pct }}%</span>
                 <span class="lh-1 mt-1" style="font-size: 10px !important;">OFF</span>
               </div>
@@ -481,7 +481,7 @@
                 </a>
               </h4>
               <div class="product-pricing text-end">
-                <span class="product-price fw-bold" style="font-size: 18px; color: #906e49;">₹{{ "{:,.0f}".format(sale_price_val) }}</span>
+                <span class="product-price fw-bold" style="font-size: 18px; color: #842e13;">₹{{ "{:,.0f}".format(sale_price_val) }}</span>
                 {% if sale_price_val < mrp_val %}
                 <br><span class="original-price text-muted text-decoration-line-through" style="font-size: 13px;">₹{{ "{:,.0f}".format(mrp_val) }}</span>
                 {% endif %}

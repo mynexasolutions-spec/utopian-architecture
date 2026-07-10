@@ -50,7 +50,14 @@
                     
                     <div style="margin-bottom: 20px; font-size: 14px; color: #555; background: #fafafa; padding: 10px 15px; border-radius: 8px; border: 1px solid #eee; width: 100%; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center;">
                         <strong style="color: var(--admin-accent);"><i class="ri-price-tag-3-line"></i> MRP:</strong>
-                        <span style="font-weight: 600; font-size: 16px;">₹{{ prod.mrp | replace('$', '') }}</span>
+                        <div style="text-align: right;">
+                            {% if prod.sale_price %}
+                            <span style="font-weight: 600; font-size: 16px; color: #842e13;">₹{{ prod.sale_price | replace('$', '') }}</span>
+                            <br><span style="font-size: 12px; text-decoration: line-through; color: #999;">₹{{ prod.mrp | replace('$', '') }}</span>
+                            {% else %}
+                            <span style="font-weight: 600; font-size: 16px;">₹{{ prod.mrp | replace('$', '') }}</span>
+                            {% endif %}
+                        </div>
                     </div>
                     
                     <div style="display: flex; gap: 10px; width: 100%; margin-top: auto; justify-content: flex-end;">

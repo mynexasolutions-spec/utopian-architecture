@@ -1,6 +1,6 @@
 {% extends 'admin/layout.html' %}
 
-{% block title %}Gallery Categories – UtopiaAdmin{% endblock %}
+{% block title %}Collection Categories – UtopiaAdmin{% endblock %}
 
 {% block content %}
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -46,7 +46,7 @@
 
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px;">
         <div>
-            <h1 class="admin-page-title" style="margin-bottom: 2px;">Gallery Categories</h1>
+            <h1 class="admin-page-title" style="margin-bottom: 2px;">Collection Categories</h1>
             <p class="admin-page-subtitle" style="margin-bottom: 0;">Manage categories for the Explore By Category section.</p>
         </div>
         <div>
@@ -59,7 +59,12 @@
     {% if categories %}
         <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 20px;">
             {% for cat in categories %}
-                <div class="admin-panel" style="align-items: flex-start; text-align: left; padding: 25px; min-height: auto; border-top: 4px solid var(--admin-accent); position: relative; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; width: 100%; box-sizing: border-box;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.1)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0, 0, 0, 0.05)';">
+                <div class="admin-panel" style="align-items: flex-start; text-align: left; padding: 34px 25px 25px 25px; min-height: auto; border-top: 4px solid var(--admin-accent); position: relative; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; width: 100%; box-sizing: border-box;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.1)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0, 0, 0, 0.05)';">
+                    {% if cat.show_on_projects or cat.show_on_projects is none %}
+                    <span style="position: absolute; top: 5px; right: 12px; background: #28a745; color: white; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); z-index: 20;">
+                        <i class="fa-solid fa-check-circle"></i> Shown on Projects
+                    </span>
+                    {% endif %}
                     
                     <div style="position: relative; width: 100%; margin-bottom: 15px; border-radius: 8px; overflow: hidden; height: 200px; background-image: url('{{ cat.image_url if cat.image_url and (cat.image_url.startswith('http') or cat.image_url.startswith('/') or cat.image_url.startswith('data:')) else (url_for('static', filename=cat.image_url) if cat.image_url else '') }}'); background-size: cover; background-position: center;">
                         <span style="position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.75); color: white; padding: 5px 12px; border-radius: 6px; font-size: 13px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; backdrop-filter: blur(4px);">
@@ -88,6 +93,7 @@
                                 data-name="{{ cat.name | e }}"
                                 data-slug="{{ cat.slug | e }}"
                                 data-position="{{ cat.position }}"
+                                data-show-on-projects="{{ 'true' if (cat.show_on_projects or cat.show_on_projects is none) else 'false' }}"
                                 onclick="openEditModal(this)"
                                 style="padding: 8px 15px; font-size: 13px; background: transparent; border: 1px solid var(--admin-accent); color: var(--admin-accent); border-radius: 6px;">
                             <i class="fa-solid fa-pen"></i> Edit
@@ -109,7 +115,7 @@
                 <i class="fa-solid fa-folder-open"></i>
             </div>
             <h3 style="margin-bottom: 10px;">No Categories Found</h3>
-            <p style="color: #666; margin-bottom: 20px;">You haven't added any gallery categories yet.</p>
+            <p style="color: #666; margin-bottom: 20px;">You haven't added any collection categories yet.</p>
             <button class="admin-btn admin-btn-accent" onclick="openAddModal()" style="margin: 0 auto;">
                 <i class="fa-solid fa-plus"></i> Add First Category
             </button>
@@ -145,6 +151,13 @@
                            style="width: 100%; box-sizing: border-box; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: inherit; transition: border-color 0.3s;"
                            onfocus="this.style.borderColor='var(--admin-accent)'; this.style.outline='none';"
                            onblur="this.style.borderColor='#ddd';">
+                </div>
+
+                <div style="margin-bottom: 18px; background: #fdfbf7; padding: 14px 16px; border-radius: 8px; border: 1px solid #e8dec8;">
+                    <label style="display: flex; align-items: center; gap: 10px; font-weight: 600; color: #333; font-size: 14px; cursor: pointer; margin-bottom: 0;">
+                        <input type="checkbox" name="show_on_projects" id="addShowOnProjects" checked style="width: 18px; height: 18px; cursor: pointer; accent-color: var(--admin-accent);">
+                        <span>Show on Projects Page?</span>
+                    </label>
                 </div>
 
                 <div style="margin-bottom: 22px;">
@@ -198,6 +211,13 @@
                            style="width: 100%; box-sizing: border-box; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: inherit; transition: border-color 0.3s;"
                            onfocus="this.style.borderColor='var(--admin-accent)'; this.style.outline='none';"
                            onblur="this.style.borderColor='#ddd';">
+                </div>
+
+                <div style="margin-bottom: 18px; background: #fdfbf7; padding: 14px 16px; border-radius: 8px; border: 1px solid #e8dec8;">
+                    <label style="display: flex; align-items: center; gap: 10px; font-weight: 600; color: #333; font-size: 14px; cursor: pointer; margin-bottom: 0;">
+                        <input type="checkbox" name="show_on_projects" id="editShowOnProjects" style="width: 18px; height: 18px; cursor: pointer; accent-color: var(--admin-accent);">
+                        <span>Show on Projects Page?</span>
+                    </label>
                 </div>
 
                 <div style="margin-bottom: 22px;">
@@ -256,11 +276,16 @@
             const name = btn.getAttribute('data-name');
             const slug = btn.getAttribute('data-slug');
             const position = btn.getAttribute('data-position');
+            const showOnProjects = btn.getAttribute('data-show-on-projects') === 'true';
 
             document.getElementById('editForm').action = "/admin/portfolio-categories/edit/" + id;
             document.getElementById('editName').value = name;
             document.getElementById('editSlug').value = slug;
             document.getElementById('editPosition').value = position;
+            const editCheckbox = document.getElementById('editShowOnProjects');
+            if (editCheckbox) {
+                editCheckbox.checked = showOnProjects;
+            }
 
             editModal.style.display = 'flex';
             document.body.style.overflow = 'hidden';

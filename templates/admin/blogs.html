@@ -1,0 +1,390 @@
+{% extends 'admin/layout.html' %}
+
+{% block title %}Blog Posts – UtopiaAdmin{% endblock %}
+
+{% block content %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="admin-alert admin-alert-{{ category }}" style="margin-bottom: 30px;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <style>
+        .blog-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        @media (max-width: 576px) {
+            .admin-modal-card {
+                padding: 20px !important;
+                max-height: 85vh !important;
+            }
+            .admin-modal-actions {
+                flex-direction: column !important;
+                gap: 10px !important;
+            }
+            .admin-modal-actions button {
+                width: 100% !important;
+            }
+        }
+    </style>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px;">
+        <div>
+            <h1 class="admin-page-title" style="margin-bottom: 2px;">Blog Posts</h1>
+            <p class="admin-page-subtitle" style="margin-bottom: 0;">Manage your articles and posts.</p>
+        </div>
+        <div>
+            <button class="admin-btn admin-btn-accent" onclick="openAddModal()" style="padding: 10px 18px; font-size: 14px; border-radius: 6px;">
+                <i class="fa-solid fa-plus"></i> Add Post
+            </button>
+        </div>
+    </div>
+
+    {% if posts %}
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 350px), 1fr)); gap: 20px;">
+            {% for post in posts %}
+                <div class="admin-panel" style="align-items: flex-start; text-align: left; padding: 0; min-height: auto; position: relative; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; width: 100%; box-sizing: border-box; border-radius: 12px; display: flex; flex-direction: column;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.1)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0, 0, 0, 0.05)';">
+                    
+                    <div style="position: relative; width: 100%; height: 200px; background-color: #f5f5f5;">
+                        {% if post.image_url %}
+                        <img src="{{ post.image_url if (post.image_url.startswith('http') or post.image_url.startswith('/')) else url_for('static', filename=post.image_url) }}" style="width: 100%; height: 100%; object-fit: cover;">
+                        {% else %}
+                        <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #ccc; font-size: 40px;">
+                            <i class="fa-solid fa-image"></i>
+                        </div>
+                        {% endif %}
+                        
+                        {% if not post.is_published %}
+                        <span style="position: absolute; top: 12px; left: 12px; background: #dc3545; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 600;">Draft</span>
+                        {% else %}
+                        <span style="position: absolute; top: 12px; left: 12px; background: #28a745; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 600;">Published</span>
+                        {% endif %}
+                    </div>
+                    
+                    <div style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column;">
+                        <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 10px;">
+                            <span style="color: #cca471; font-size: 12px; font-weight: 600; text-transform: uppercase;">
+                                {% if post.category %}{{ post.category.name }}{% else %}Uncategorized{% endif %}
+                            </span>
+                            <span style="color: #999; font-size: 12px;">{{ post.created_at.strftime('%b %d, %Y') }}</span>
+                        </div>
+                        
+                        <h3 style="margin: 0 0 10px 0; font-size: 18px; color: var(--admin-text); line-height: 1.4;">{{ post.title }}</h3>
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #666; line-height: 1.5; flex-grow: 1;">
+                            {{ post.short_description | truncate(100) }}
+                        </p>
+                        
+                        <div style="display: flex; gap: 10px; width: 100%; justify-content: flex-end; flex-wrap: wrap;">
+                            <button type="button" class="admin-btn edit-btn" 
+                                    data-id="{{ post.id }}"
+                                    data-title="{{ post.title | e }}"
+                                    data-slug="{{ post.slug | e }}"
+                                    data-category="{{ post.category_id }}"
+                                    data-metatitle="{{ post.meta_title | e if post.meta_title else '' }}"
+                                    data-metadescription="{{ post.meta_description | e if post.meta_description else '' }}"
+                                    data-short="{{ post.short_description | e }}"
+                                    data-content="{{ post.content | e }}"
+                                    data-published="{{ 'true' if post.is_published else 'false' }}"
+                                    onclick="openEditModal(this)"
+                                    style="padding: 8px 15px; font-size: 13px; background: transparent; border: 1px solid var(--admin-accent); color: var(--admin-accent); border-radius: 6px;">
+                                <i class="fa-solid fa-pen"></i> Edit
+                            </button>
+                            <button type="button" class="admin-btn" 
+                                    data-id="{{ post.id }}"
+                                    data-title="{{ post.title | e }}"
+                                    onclick="openDeleteModal(this)"
+                                    style="padding: 8px 15px; font-size: 13px; background: #dc3545; color: white; border: none; border-radius: 6px;">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="admin-panel" style="padding: 50px 20px; text-align: center;">
+            <div style="font-size: 48px; color: #ccc; margin-bottom: 20px;">
+                <i class="fa-solid fa-pen-nib"></i>
+            </div>
+            <h3 style="margin-bottom: 10px;">No Blog Posts Found</h3>
+            <p style="color: #666; margin-bottom: 20px;">You haven't added any blog posts yet.</p>
+            <button class="admin-btn admin-btn-accent" onclick="openAddModal()" style="margin: 0 auto;">
+                <i class="fa-solid fa-plus"></i> Write First Post
+            </button>
+        </div>
+    {% endif %}
+
+    <!-- Add Post Modal -->
+    <div id="addModal" class="blog-modal">
+        <div class="admin-login-card admin-modal-card" style="width: 100%; max-width: 800px; position: relative; padding: 30px; max-height: 90vh; overflow-y: auto; box-sizing: border-box; background: #fff; text-align: left;">
+            <button type="button" onclick="closeAllModals()" style="position: absolute; right: 20px; top: 20px; background: transparent; border: none; font-size: 24px; cursor: pointer; color: var(--admin-text); transition: color 0.2s;" onmouseover="this.style.color='#ff4757';" onmouseout="this.style.color='var(--admin-text)';"><i class="ri-close-line"></i></button>
+            <h2 class="admin-page-title" style="margin-bottom: 20px; font-size: 22px;">Add Blog Post</h2>
+            
+            <form action="{{ url_for('add_blog_post') }}" method="POST" enctype="multipart/form-data" id="addForm">
+                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 250px;">
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #444; font-size: 14px;">Title <span style="color: #dc3545">*</span></label>
+                            <input type="text" name="title" required placeholder="Post Title" oninput="generateSlug(this.value, 'addSlug')"
+                                   style="width: 100%; box-sizing: border-box; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: inherit; transition: border-color 0.3s;"
+                                   onfocus="this.style.borderColor='var(--admin-accent)'; this.style.outline='none';" onblur="this.style.borderColor='#ddd';">
+                        </div>
+                        
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #444; font-size: 14px;">Slug <span style="color: #dc3545">*</span></label>
+                            <input type="text" name="slug" id="addSlug" required placeholder="post-title-slug"
+                                   style="width: 100%; box-sizing: border-box; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: inherit; transition: border-color 0.3s;"
+                                   onfocus="this.style.borderColor='var(--admin-accent)'; this.style.outline='none';" onblur="this.style.borderColor='#ddd';">
+                        </div>
+                        
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #444; font-size: 14px;">Meta Title (SEO)</label>
+                            <input type="text" name="meta_title" placeholder="SEO Title..."
+                                   style="width: 100%; box-sizing: border-box; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: inherit; transition: border-color 0.3s;"
+                                   onfocus="this.style.borderColor='var(--admin-accent)'; this.style.outline='none';" onblur="this.style.borderColor='#ddd';">
+                        </div>
+
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #444; font-size: 14px;">Category</label>
+                            <select name="category_id" style="width: 100%; box-sizing: border-box; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: inherit;">
+                                <option value="">-- Uncategorized --</option>
+                                {% for cat in categories %}
+                                <option value="{{ cat.id }}">{{ cat.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #444; font-size: 14px;">Cover Image</label>
+                            <input type="file" name="image" accept="image/*"
+                                   style="width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; background: #f9f9f9;">
+                        </div>
+                        
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="checkbox" name="is_published" checked style="width: 18px; height: 18px; accent-color: var(--admin-accent);">
+                                <span style="font-weight: 500; color: #444; font-size: 14px;">Publish immediately</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div style="flex: 1.5; min-width: 300px;">
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #444; font-size: 14px;">Meta Description (SEO)</label>
+                            <textarea name="meta_description" rows="2" placeholder="SEO Description..."
+                                      style="width: 100%; box-sizing: border-box; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: inherit; transition: border-color 0.3s; resize: vertical;"
+                                      onfocus="this.style.borderColor='var(--admin-accent)'; this.style.outline='none';" onblur="this.style.borderColor='#ddd';"></textarea>
+                        </div>
+
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #444; font-size: 14px;">Short Description</label>
+                            <textarea name="short_description" rows="3" placeholder="A brief summary for the blog card..."
+                                      style="width: 100%; box-sizing: border-box; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: inherit; transition: border-color 0.3s; resize: vertical;"
+                                      onfocus="this.style.borderColor='var(--admin-accent)'; this.style.outline='none';" onblur="this.style.borderColor='#ddd';"></textarea>
+                        </div>
+                        
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #444; font-size: 14px;">Content (HTML supported) <span style="color: #dc3545">*</span></label>
+                            <textarea name="content" required rows="12" placeholder="<p>Write your blog post content here...</p>"
+                                      style="width: 100%; box-sizing: border-box; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: monospace; transition: border-color 0.3s; resize: vertical;"
+                                      onfocus="this.style.borderColor='var(--admin-accent)'; this.style.outline='none';" onblur="this.style.borderColor='#ddd';"></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="admin-modal-actions" style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 20px; border-top: 1px solid #eee; padding-top: 20px;">
+                    <button type="button" onclick="closeAllModals()" class="admin-btn" style="background: #f1f1f1; color: #333; border: none; padding: 10px 20px; font-size: 14px; border-radius: 6px;">Cancel</button>
+                    <button type="submit" class="admin-btn admin-btn-accent" style="padding: 10px 20px; font-size: 14px; border-radius: 6px;">Save Post</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Post Modal -->
+    <div id="editModal" class="blog-modal">
+        <div class="admin-login-card admin-modal-card" style="width: 100%; max-width: 800px; position: relative; padding: 30px; max-height: 90vh; overflow-y: auto; box-sizing: border-box; background: #fff; text-align: left;">
+            <button type="button" onclick="closeAllModals()" style="position: absolute; right: 20px; top: 20px; background: transparent; border: none; font-size: 24px; cursor: pointer; color: var(--admin-text); transition: color 0.2s;" onmouseover="this.style.color='#ff4757';" onmouseout="this.style.color='var(--admin-text)';"><i class="ri-close-line"></i></button>
+            <h2 class="admin-page-title" style="margin-bottom: 20px; font-size: 22px;">Edit Blog Post</h2>
+            
+            <form id="editForm" method="POST" enctype="multipart/form-data">
+                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 250px;">
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #444; font-size: 14px;">Title <span style="color: #dc3545">*</span></label>
+                            <input type="text" name="title" id="editTitle" required
+                                   style="width: 100%; box-sizing: border-box; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: inherit; transition: border-color 0.3s;"
+                                   onfocus="this.style.borderColor='var(--admin-accent)'; this.style.outline='none';" onblur="this.style.borderColor='#ddd';">
+                        </div>
+                        
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #444; font-size: 14px;">Slug <span style="color: #dc3545">*</span></label>
+                            <input type="text" name="slug" id="editSlug" required
+                                   style="width: 100%; box-sizing: border-box; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: inherit; transition: border-color 0.3s;"
+                                   onfocus="this.style.borderColor='var(--admin-accent)'; this.style.outline='none';" onblur="this.style.borderColor='#ddd';">
+                        </div>
+                        
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #444; font-size: 14px;">Meta Title (SEO)</label>
+                            <input type="text" name="meta_title" id="editMetaTitle"
+                                   style="width: 100%; box-sizing: border-box; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: inherit; transition: border-color 0.3s;"
+                                   onfocus="this.style.borderColor='var(--admin-accent)'; this.style.outline='none';" onblur="this.style.borderColor='#ddd';">
+                        </div>
+
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #444; font-size: 14px;">Category</label>
+                            <select name="category_id" id="editCategory" style="width: 100%; box-sizing: border-box; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: inherit;">
+                                <option value="None">-- Uncategorized --</option>
+                                {% for cat in categories %}
+                                <option value="{{ cat.id }}">{{ cat.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #444; font-size: 14px;">Update Image (Optional)</label>
+                            <input type="file" name="image" accept="image/*"
+                                   style="width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; background: #f9f9f9;">
+                        </div>
+                        
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="checkbox" name="is_published" id="editPublished" style="width: 18px; height: 18px; accent-color: var(--admin-accent);">
+                                <span style="font-weight: 500; color: #444; font-size: 14px;">Published</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div style="flex: 1.5; min-width: 300px;">
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #444; font-size: 14px;">Meta Description (SEO)</label>
+                            <textarea name="meta_description" id="editMetaDescription" rows="2"
+                                      style="width: 100%; box-sizing: border-box; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: inherit; transition: border-color 0.3s; resize: vertical;"
+                                      onfocus="this.style.borderColor='var(--admin-accent)'; this.style.outline='none';" onblur="this.style.borderColor='#ddd';"></textarea>
+                        </div>
+
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #444; font-size: 14px;">Short Description</label>
+                            <textarea name="short_description" id="editShortDesc" rows="3"
+                                      style="width: 100%; box-sizing: border-box; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: inherit; transition: border-color 0.3s; resize: vertical;"
+                                      onfocus="this.style.borderColor='var(--admin-accent)'; this.style.outline='none';" onblur="this.style.borderColor='#ddd';"></textarea>
+                        </div>
+                        
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #444; font-size: 14px;">Content (HTML supported) <span style="color: #dc3545">*</span></label>
+                            <textarea name="content" id="editContent" required rows="12"
+                                      style="width: 100%; box-sizing: border-box; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: monospace; transition: border-color 0.3s; resize: vertical;"
+                                      onfocus="this.style.borderColor='var(--admin-accent)'; this.style.outline='none';" onblur="this.style.borderColor='#ddd';"></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="admin-modal-actions" style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 20px; border-top: 1px solid #eee; padding-top: 20px;">
+                    <button type="button" onclick="closeAllModals()" class="admin-btn" style="background: #f1f1f1; color: #333; border: none; padding: 10px 20px; font-size: 14px; border-radius: 6px;">Cancel</button>
+                    <button type="submit" class="admin-btn admin-btn-accent" style="padding: 10px 20px; font-size: 14px; border-radius: 6px;">Update Post</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="blog-modal">
+        <div class="admin-login-card admin-modal-card" style="width: 100%; max-width: 400px; padding: 30px; box-sizing: border-box; background: #fff; text-align: center;">
+            <div style="font-size: 50px; color: #dc3545; margin-bottom: 15px;">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h2 style="margin-bottom: 15px; font-size: 22px; color: #333;">Delete Post?</h2>
+            <p style="color: #666; margin-bottom: 25px; line-height: 1.5;">Are you sure you want to delete the post <strong id="deleteName" style="color: #222;"></strong>? This cannot be undone.</p>
+            
+            <form id="deleteForm" method="POST">
+                <div class="admin-modal-actions" style="display: flex; justify-content: center; gap: 12px;">
+                    <button type="button" onclick="closeAllModals()" class="admin-btn" style="background: #f1f1f1; color: #333; border: none; padding: 10px 20px; font-size: 14px; border-radius: 6px;">Cancel</button>
+                    <button type="submit" class="admin-btn" style="background: #dc3545; color: white; border: none; padding: 10px 20px; font-size: 14px; border-radius: 6px;">Yes, Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function generateSlug(text, targetId) {
+            const slug = text.toString().toLowerCase()
+                .replace(/\s+/g, '-')
+                .replace(/[^\w\-]+/g, '')
+                .replace(/\-\-+/g, '-')
+                .replace(/^-+/, '')
+                .replace(/-+$/, '');
+            document.getElementById(targetId).value = slug;
+        }
+
+        function closeAllModals() {
+            document.querySelectorAll('.blog-modal').forEach(modal => {
+                modal.style.display = 'none';
+            });
+        }
+
+        function openAddModal() {
+            closeAllModals();
+            document.getElementById('addForm').reset();
+            document.getElementById('addModal').style.display = 'flex';
+        }
+
+        function openEditModal(btn) {
+            closeAllModals();
+            const id = btn.getAttribute('data-id');
+            
+            document.getElementById('editTitle').value = btn.getAttribute('data-title');
+            document.getElementById('editSlug').value = btn.getAttribute('data-slug');
+            document.getElementById('editCategory').value = btn.getAttribute('data-category') || 'None';
+            document.getElementById('editMetaTitle').value = btn.getAttribute('data-metatitle') || '';
+            document.getElementById('editMetaDescription').value = btn.getAttribute('data-metadescription') || '';
+            document.getElementById('editShortDesc').value = btn.getAttribute('data-short');
+            
+            // Handle content text area
+            const contentField = document.getElementById('editContent');
+            if (contentField) {
+                contentField.value = btn.getAttribute('data-content');
+            }
+            
+            const publishedField = document.getElementById('editPublished');
+            if (publishedField) {
+                publishedField.checked = (btn.getAttribute('data-published') === 'true');
+            }
+            
+            document.getElementById('editForm').action = "/admin/blogs/edit/" + id;
+            
+            document.getElementById('editModal').style.display = 'flex';
+        }
+
+        function openDeleteModal(btn) {
+            closeAllModals();
+            const id = btn.getAttribute('data-id');
+            const title = btn.getAttribute('data-title');
+            
+            document.getElementById('deleteName').innerText = "'" + title + "'";
+            document.getElementById('deleteForm').action = "/admin/blogs/delete/" + id;
+            
+            document.getElementById('deleteModal').style.display = 'flex';
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('blog-modal')) {
+                closeAllModals();
+            }
+        }
+    </script>
+{% endblock %}

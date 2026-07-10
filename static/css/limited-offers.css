@@ -32,7 +32,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  background-color: #906e49;
+  background-color: #842e13;
   color: white;
   width: 65px;
   height: 65px;
@@ -40,8 +40,8 @@
   z-index: 10;
 }
 .btn-shop-now {
-  border: 1px solid #d3a48e;
-  color: #906e49;
+  border: 1px solid #842e13;
+  color: #842e13;
   background: transparent;
   padding: 10px 15px;
   font-size: 13px;
@@ -52,9 +52,9 @@
   border-radius: 2px;
 }
 .btn-shop-now:hover {
-  background-color: #906e49;
-  border-color: #906e49;
-  color: white;
+  background-color: #842e13;
+  border-color: #842e13;
+  color: #ffffff;
 }
 
 /* Slick Slider Styles for Limited Time Offers */

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Collection – Utopia Furniture &amp; D&eacute;cor{% endblock %}
+{% block title %}Projects – Utopia Furniture &amp; D&eacute;cor{% endblock %}
 
 {% block styles %}
   <style>
@@ -22,12 +22,12 @@
         class="container position-absolute top-50 start-50 translate-middle text-center"
       >
         <div class="breadcrumb-inner mt-8">
-          <h2 class="grey mb-0">Collection</h2>
+          <h2 class="grey mb-0">Projects</h2>
           <p class="mb-0 text-light">
             <a href="{{ url_for('home') }}" class="text-decoration-none secondary">
               Home
             </a>
-            <span class="mx-2">&rarr;</span> Collection
+            <span class="mx-2">&rarr;</span> Projects
           </p>
         </div>
       </div>
@@ -112,19 +112,13 @@
     </style>
     <section class="explore-categories-section py-5">
       <div class="container-fluid px-2 px-lg-4">
-        <div class="text-center mb-5">
-           <div class="title-ornament mb-3">
-             <i class="fa fa-gem text-gold fs-6" style="color: #cca471;"></i>
-             <h3 class="mb-0 text-uppercase fw-bold" style="letter-spacing: 2px;">Custom Furniture Collection by category</h3>
-             <i class="fa fa-gem text-gold fs-6" style="color: #cca471;"></i>
-           </div>
-        </div>
+      
         <div class="row g-3 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-5">
           
           
           {% for cat in portfolio_categories %}
           <div class="col">
-            <a href="{{ url_for('portfolio', category=cat.slug) }}" class="text-decoration-none">
+            <a href="{{ url_for('projects', category=cat.slug) }}" class="text-decoration-none">
               <div class="explore-card position-relative overflow-hidden">
                  <img src="{{ cat.image_url if cat.image_url and (cat.image_url.startswith('http') or cat.image_url.startswith('/') or cat.image_url.startswith('data:')) else (url_for('static', filename=cat.image_url) if cat.image_url else '') }}" alt="{{ cat.name }}" class="w-100 h-100 object-fit-cover">
                  <div class="explore-card-overlay">
@@ -157,7 +151,7 @@
         <!-- Back Button -->
         <div class="row mb-4">
           <div class="col-12 text-center text-md-start">
-             <a href="{{ url_for('portfolio') }}" class="btn btn-outline-secondary px-4 py-2" style="border-radius: 30px;">
+             <a href="{{ url_for('projects') }}" class="btn btn-outline-secondary px-4 py-2" style="border-radius: 30px;">
                <i class="fa fa-arrow-left me-2"></i> Back to Categories
              </a>
           </div>
@@ -206,6 +200,8 @@
       </div>
       <button class="lightbox-next" aria-label="Next Image"><i class="fa fa-angle-right"></i></button>
     </div>
+
+  
 
     <!-- Appointment Section Starts -->
     <div class="appointment py-5 bg-secondarylight">

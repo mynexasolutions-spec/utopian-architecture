@@ -83,9 +83,10 @@ class PortfolioCategory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     slug = db.Column(db.String(100), nullable=False, unique=True)
-    icon_class = db.Column(db.String(50), default='img/gallery_icons/default_icons.png')
+    icon_class = db.Column(db.String(255), default='img/gallery_icons/default_icons.png')
     image_url = db.Column(db.String(255), nullable=False)
     position = db.Column(db.Integer, default=0)
+    show_on_projects = db.Column(db.Boolean, default=True, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
@@ -131,6 +132,38 @@ class Subcategory(db.Model):
     def __repr__(self):
         return f"<Subcategory {self.name}>"
 
+class BlogCategory(db.Model):
+    __tablename__ = 'blog_categories'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    slug = db.Column(db.String(100), nullable=False, unique=True)
+    icon_url = db.Column(db.String(255), nullable=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return f"<BlogCategory {self.name}>"
+
+class BlogPost(db.Model):
+    __tablename__ = 'blog_posts'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    category_id = db.Column(db.Integer, db.ForeignKey('blog_categories.id', ondelete='SET NULL'), nullable=True)
+    title = db.Column(db.String(255), nullable=False)
+    slug = db.Column(db.String(255), nullable=False, unique=True)
+    short_description = db.Column(db.Text, nullable=True)
+    content = db.Column(db.Text, nullable=True)
+    image_url = db.Column(db.String(255), nullable=True)
+    is_published = db.Column(db.Boolean, default=True, nullable=False)
+    meta_title = db.Column(db.String(255), nullable=True)
+    meta_description = db.Column(db.Text, nullable=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    category = db.relationship('BlogCategory', backref='posts', lazy=True)
+
+    def __repr__(self):
+        return f"<BlogPost {self.title}>"
+
 if os.getenv('FLASK_ENV') != 'production':
     with app.app_context():
         db.create_all()
@@ -154,6 +187,17 @@ if os.getenv('FLASK_ENV') != 'production':
             db.session.rollback()
             try:
                 db.session.execute(db.text("ALTER TABLE subcategories ADD COLUMN position INTEGER DEFAULT 0"))
+                db.session.commit()
+            except Exception as e:
+                db.session.rollback()
+
+        # Ensure show_on_projects column exists in portfolio_categories table
+        try:
+            db.session.execute(db.text("SELECT show_on_projects FROM portfolio_categories LIMIT 1"))
+        except Exception:
+            db.session.rollback()
+            try:
+                db.session.execute(db.text("ALTER TABLE portfolio_categories ADD COLUMN show_on_projects BOOLEAN DEFAULT 1"))
                 db.session.commit()
             except Exception as e:
                 db.session.rollback()
@@ -570,6 +614,37 @@ if os.getenv('FLASK_ENV') != 'production':
                 db.session.add(new_prod)
             db.session.commit()
 
+            db.session.commit()
+
+        if BlogCategory.query.count() == 0:
+            default_blog_cats = [
+                {"name": "Design Trends", "slug": "design-trends", "icon_url": "/static/img/blog_pages/icon-1.png"},
+                {"name": "Tips & Guides", "slug": "tips-guides", "icon_url": "/static/img/blog_pages/icon-2.png"},
+                {"name": "Space Planning", "slug": "space-planning", "icon_url": "/static/img/blog_pages/icon-3.png"},
+                {"name": "Product Guides", "slug": "product-guides", "icon_url": "/static/img/blog_pages/icon-4.png"},
+                {"name": "Styling Ideas", "slug": "styling-ideas", "icon_url": "/static/img/blog_pages/icon-5.png"},
+                {"name": "Sustainable Design", "slug": "sustainable-design", "icon_url": "/static/img/blog_pages/icon-6.png"}
+            ]
+            for cat in default_blog_cats:
+                db.session.add(BlogCategory(**cat))
+            db.session.commit()
+
+        if BlogPost.query.count() == 0:
+            cat_map = {c.slug: c.id for c in BlogCategory.query.all()}
+            default_posts = [
+                {"category_id": cat_map.get("design-trends"), "title": "Top 7 Living Room Trends for 2024", "slug": "top-7-living-room-trends-for-2024", "short_description": "Explore the latest living room trends that combine style, comfort and functionality.", "image_url": "/static/img/blog_pages/blog-1.webp", "created_at": datetime.strptime("2024-05-20", "%Y-%m-%d"), "content": "<p>Content goes here.</p>"},
+                {"category_id": cat_map.get("tips-guides"), "title": "How to Design a Modern Kitchen", "slug": "how-to-design-a-modern-kitchen", "short_description": "A step-by-step guide to designing a modern kitchen that's both beautiful and practical.", "image_url": "/static/img/blog_pages/blog-2.webp", "created_at": datetime.strptime("2024-05-15", "%Y-%m-%d"), "content": "<p>Content goes here.</p>"},
+                {"category_id": cat_map.get("space-planning"), "title": "Balcony Makeover Ideas", "slug": "balcony-makeover-ideas", "short_description": "Small changes that bring big impact to your outdoor spaces.", "image_url": "/static/img/blog_pages/blog-3.jpg", "created_at": datetime.strptime("2024-05-10", "%Y-%m-%d"), "content": "<p>Content goes here.</p>"},
+                {"category_id": cat_map.get("styling-ideas"), "title": "Creating a Relaxing Bedroom Retreat", "slug": "creating-a-relaxing-bedroom-retreat", "short_description": "Design tips to turn your bedroom into a peaceful sanctuary.", "image_url": "/static/img/blog_pages/blog-4.webp", "created_at": datetime.strptime("2024-05-05", "%Y-%m-%d"), "content": "<p>Content goes here.</p>"},
+                {"category_id": cat_map.get("product-guides"), "title": "Choosing the Perfect Custom Sofa", "slug": "choosing-the-perfect-custom-sofa", "short_description": "Everything you need to know about fabric choice, cushion density, and frame construction.", "image_url": "/static/img/blog_pages/blog-5.webp", "created_at": datetime.strptime("2024-04-28", "%Y-%m-%d"), "content": "<p>Content goes here.</p>"},
+                {"category_id": cat_map.get("sustainable-design"), "title": "Eco-Friendly Materials for Home Interiors", "slug": "eco-friendly-materials-for-home-interiors", "short_description": "Discover sustainable woods, non-toxic finishes, and natural textiles for healthier living.", "image_url": "/static/img/blog_pages/blog-6.webp", "created_at": datetime.strptime("2024-04-20", "%Y-%m-%d"), "content": "<p>Content goes here.</p>"},
+                {"category_id": cat_map.get("design-trends"), "title": "The Rise of Biophilic Office Spaces", "slug": "the-rise-of-biophilic-office-spaces", "short_description": "Integrating natural light, greenery, and organic shapes into modern workspace design.", "image_url": "/static/img/blog_pages/blog-7.webp", "created_at": datetime.strptime("2024-04-14", "%Y-%m-%d"), "content": "<p>Content goes here.</p>"},
+                {"category_id": cat_map.get("tips-guides"), "title": "Smart Storage Solutions for Small Homes", "slug": "smart-storage-solutions-for-small-homes", "short_description": "Innovative modular cabinets and hidden storage ideas that maximize every square inch.", "image_url": "/static/img/blog_pages/blog-8.webp", "created_at": datetime.strptime("2024-04-08", "%Y-%m-%d"), "content": "<p>Content goes here.</p>"}
+            ]
+            for post in default_posts:
+                db.session.add(BlogPost(**post))
+            db.session.commit()
+
 # --- USER ROUTES ---
 
 @app.route('/')
@@ -587,7 +662,22 @@ def home():
     home_categories_pagination = Category.query.order_by(Category.created_at.asc()).paginate(page=page, per_page=9, error_out=False)
     home_categories = home_categories_pagination.items
     
-    return render_template('pages/index.html', sliders=sliders, catalog_products=catalog_products, unique_categories=unique_categories, home_categories=home_categories, home_categories_pagination=home_categories_pagination)
+    # Get collection categories and items for Featured Collections on home page
+    db_cats = PortfolioCategory.query.order_by(PortfolioCategory.position).all()
+    if db_cats:
+        portfolio_categories = db_cats
+    else:
+        portfolio_categories = [
+            {"slug": "residential", "name": "RESIDENTIAL<br>INTERIORS", "image_url": "img/gallery/living_room/lr1.webp", "icon_class": "img/gallery_icons/1.png"},
+            {"slug": "commercial", "name": "COMMERCIAL<br>SPACES", "image_url": "img/gallery/office/office1.webp", "icon_class": "img/gallery_icons/2.png"},
+            {"slug": "living-room", "name": "LIVING<br>ROOMS", "image_url": "img/gallery/living_room/lr1.webp", "icon_class": "img/gallery_icons/3.png"},
+            {"slug": "kitchen", "name": "KITCHENS", "image_url": "img/gallery/kitchen/kit1.webp", "icon_class": "img/gallery_icons/4.png"},
+            {"slug": "bedroom", "name": "BEDROOMS", "image_url": "img/gallery/bedroom/bed1.webp", "icon_class": "img/gallery_icons/5.png"},
+            {"slug": "sofaset", "name": "CUSTOM<br>FURNITURE", "image_url": "img/gallery/sofaset/sofa-set.webp", "icon_class": "img/gallery_icons/6.png"},
+        ]
+    collection_items = GalleryImage.query.order_by(GalleryImage.created_at.desc()).limit(8).all()
+    
+    return render_template('pages/index.html', sliders=sliders, catalog_products=catalog_products, unique_categories=unique_categories, home_categories=home_categories, home_categories_pagination=home_categories_pagination, portfolio_categories=portfolio_categories, collection_items=collection_items)
 
 @app.route('/about')
 def about():
@@ -650,7 +740,87 @@ def services():
     """Renders the Services Page."""
     return render_template('pages/services.html')
 
-@app.route('/portfolio')
+@app.route('/blog')
+def blog():
+    """Renders the Blog & Inspiration Page."""
+    categories = BlogCategory.query.order_by(BlogCategory.created_at.asc()).all()
+    
+    # We load all posts so that the frontend can do instant client-side filtering
+    posts = BlogPost.query.filter_by(is_published=True).order_by(BlogPost.created_at.desc()).all()
+        
+    return render_template('pages/blog.html', categories=categories, posts=posts, current_category=None)
+
+@app.route('/blog/<slug>')
+def blog_detail(slug):
+    """Renders the Blog Detail Page."""
+    post = BlogPost.query.filter_by(slug=slug, is_published=True).first_or_404()
+    recent_posts = BlogPost.query.filter(BlogPost.id != post.id, BlogPost.is_published == True).order_by(BlogPost.created_at.desc()).limit(3).all()
+    categories = BlogCategory.query.all()
+    return render_template('pages/blog_detail.html', post=post, recent_posts=recent_posts, categories=categories)
+
+@app.route('/projects')
+def projects():
+    """Renders the Projects Page."""
+    current_category = request.args.get('category')
+    images = GalleryImage.query.order_by(GalleryImage.created_at.desc()).all()
+    
+    gallery_items = []
+    for img in images:
+        cat_name = img.category or "other"
+        f_class = cat_name.lower().replace(" ", "-")
+        # If a category is requested, only include images matching it (or if it's 'all', include all)
+        if current_category and current_category != 'all':
+            # Loose matching to allow 'residential' to match 'living-room' or 'bedroom' if needed,
+            # For strict matching:
+            if f_class != current_category and current_category not in f_class:
+                # Custom mapping for high level categories if needed
+                if current_category == 'residential' and f_class not in ['living-room', 'bedroom', 'kitchen']:
+                    continue
+                elif current_category == 'commercial' and f_class not in ['office', 'restaurant', 'cafe', 'retail']:
+                    continue
+                elif current_category not in ['residential', 'commercial']:
+                    continue
+
+        gallery_items.append({
+            'id': img.id,
+            'image_url': img.image_url,
+            'category': cat_name,
+            'filter_class': f_class,
+            'alt': img.alt_text or "Gallery Image"
+        })
+        
+    db_cats = PortfolioCategory.query.order_by(PortfolioCategory.position).all()
+    if db_cats:
+        # Ensure gallery icons are updated if they are still fa-image or fontawesome
+        if any(c.icon_class == 'fa-image' or not c.icon_class or not ('/' in c.icon_class or '.' in c.icon_class) for c in db_cats):
+            icon_mapping = {
+                'residential': 'img/gallery_icons/1.png',
+                'commercial': 'img/gallery_icons/2.png',
+                'living-room': 'img/gallery_icons/3.png',
+                'kitchen': 'img/gallery_icons/4.png',
+                'bedroom': 'img/gallery_icons/5.png',
+                'sofaset': 'img/gallery_icons/6.png',
+                'other': 'img/gallery_icons/7.png',
+                'cafe': 'img/gallery_icons/8.png',
+                'hotel': 'img/gallery_icons/9.png',
+                'restaurant': 'img/gallery_icons/10.png',
+                'office': 'img/gallery_icons/11.png',
+                'retail': 'img/gallery_icons/12.png',
+            }
+            for c in db_cats:
+                slug_key = c.slug.lower() if c.slug else ''
+                # If there's a specific icon in the mapping, use it, else default
+                c.icon_class = icon_mapping.get(slug_key, 'img/gallery_icons/default_icons.png')
+            try:
+                db.session.commit()
+            except:
+                db.session.rollback()
+
+    portfolio_categories = [c for c in db_cats if getattr(c, 'show_on_projects', True)]
+
+    return render_template('pages/projects.html', portfolio_categories=portfolio_categories, gallery_items=gallery_items, current_category=current_category)
+
+@app.route('/collection')
 def portfolio():
     """Renders the Portfolio Page."""
     current_category = request.args.get('category')
@@ -1474,12 +1644,15 @@ def add_portfolio_category():
         flash('Background image is required.', 'danger')
         return redirect(url_for('admin_portfolio_categories'))
 
+    show_on_projects = ('show_on_projects' in request.form)
+
     cat = PortfolioCategory(
         name=name,
         slug=slug,
         icon_class=icon_class,
         image_url=image_url,
-        position=position
+        position=position,
+        show_on_projects=show_on_projects
     )
     db.session.add(cat)
     db.session.commit()
@@ -1494,6 +1667,7 @@ def edit_portfolio_category(id):
     cat.slug = request.form.get('slug')
     cat.icon_class = request.form.get('icon_class') or cat.icon_class
     cat.position = request.form.get('position', 0, type=int)
+    cat.show_on_projects = ('show_on_projects' in request.form)
     
     file = request.files.get('image')
     if file and file.filename != '':
@@ -1517,6 +1691,130 @@ def delete_portfolio_category(id):
     db.session.commit()
     flash('Portfolio category deleted successfully!', 'success')
     return redirect(url_for('admin_portfolio_categories'))
+
+# ---------------------------------------------------------
+# Admin Blog Routes
+# ---------------------------------------------------------
+
+@app.route('/admin/blog-categories')
+@login_required
+def admin_blog_categories():
+    categories = BlogCategory.query.order_by(BlogCategory.created_at.desc()).all()
+    return render_template('admin/blog_categories.html', categories=categories)
+
+@app.route('/admin/blog-categories/add', methods=['POST'])
+@login_required
+def add_blog_category():
+    name = request.form.get('name')
+    slug = request.form.get('slug')
+    
+    cat = BlogCategory(
+        name=name,
+        slug=slug
+    )
+    db.session.add(cat)
+    db.session.commit()
+    flash('Blog category added successfully!', 'success')
+    return redirect(url_for('admin_blog_categories'))
+
+@app.route('/admin/blog-categories/edit/<int:id>', methods=['POST'])
+@login_required
+def edit_blog_category(id):
+    cat = BlogCategory.query.get_or_404(id)
+    cat.name = request.form.get('name')
+    cat.slug = request.form.get('slug')
+    
+
+
+    db.session.commit()
+    flash('Blog category updated successfully!', 'success')
+    return redirect(url_for('admin_blog_categories'))
+
+@app.route('/admin/blog-categories/delete/<int:id>', methods=['POST'])
+@login_required
+def delete_blog_category(id):
+    cat = BlogCategory.query.get_or_404(id)
+
+    db.session.delete(cat)
+    db.session.commit()
+    flash('Blog category deleted successfully!', 'success')
+    return redirect(url_for('admin_blog_categories'))
+
+@app.route('/admin/blogs')
+@login_required
+def admin_blogs():
+    posts = BlogPost.query.order_by(BlogPost.created_at.desc()).all()
+    categories = BlogCategory.query.all()
+    return render_template('admin/blogs.html', posts=posts, categories=categories)
+
+@app.route('/admin/blogs/add', methods=['POST'])
+@login_required
+def add_blog_post():
+    title = request.form.get('title')
+    slug = request.form.get('slug')
+    category_id = request.form.get('category_id')
+    short_description = request.form.get('short_description')
+    content = request.form.get('content')
+    meta_title = request.form.get('meta_title')
+    meta_description = request.form.get('meta_description')
+    is_published = ('is_published' in request.form)
+    
+    file = request.files.get('image')
+    image_url = None
+    if file and file.filename != '':
+        image_url = upload_image_to_cloudinary(file, folder="blog_posts")
+        
+    post = BlogPost(
+        title=title,
+        slug=slug,
+        category_id=category_id if category_id else None,
+        short_description=short_description,
+        content=content,
+        meta_title=meta_title,
+        meta_description=meta_description,
+        image_url=image_url,
+        is_published=is_published
+    )
+    db.session.add(post)
+    db.session.commit()
+    flash('Blog post added successfully!', 'success')
+    return redirect(url_for('admin_blogs'))
+
+@app.route('/admin/blogs/edit/<int:id>', methods=['POST'])
+@login_required
+def edit_blog_post(id):
+    post = BlogPost.query.get_or_404(id)
+    post.title = request.form.get('title')
+    post.slug = request.form.get('slug')
+    post.category_id = request.form.get('category_id') if request.form.get('category_id') else None
+    post.short_description = request.form.get('short_description')
+    post.content = request.form.get('content')
+    post.meta_title = request.form.get('meta_title')
+    post.meta_description = request.form.get('meta_description')
+    post.is_published = ('is_published' in request.form)
+    
+    file = request.files.get('image')
+    if file and file.filename != '':
+        new_image_url = upload_image_to_cloudinary(file, folder="blog_posts")
+        if new_image_url:
+            if post.image_url and 'res.cloudinary.com' in post.image_url:
+                delete_image_from_cloudinary(post.image_url)
+            post.image_url = new_image_url
+
+    db.session.commit()
+    flash('Blog post updated successfully!', 'success')
+    return redirect(url_for('admin_blogs'))
+
+@app.route('/admin/blogs/delete/<int:id>', methods=['POST'])
+@login_required
+def delete_blog_post(id):
+    post = BlogPost.query.get_or_404(id)
+    if post.image_url and 'res.cloudinary.com' in post.image_url:
+        delete_image_from_cloudinary(post.image_url)
+    db.session.delete(post)
+    db.session.commit()
+    flash('Blog post deleted successfully!', 'success')
+    return redirect(url_for('admin_blogs'))
 
 # --- CUSTOM 404 ERROR HANDLER ---
 

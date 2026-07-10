@@ -1,0 +1,512 @@
+{% extends 'base.html' %}
+
+{% block title %}Blog &amp; Inspiration – Utopia Furniture &amp; D&eacute;cor{% endblock %}
+
+{% block styles %}
+<style>
+  /* Blog Banner Styling */
+  .blog-category-banner {
+    background-image: url("{{ url_for('static', filename='img/blog_pages/blog_pages.jpeg') }}");
+    background-size: cover;
+    background-position: right center;
+    padding: 50px 0;
+    margin-bottom: 40px;
+    background-color: #FAF9F7;  
+    padding-left: 50px;
+  }
+  .blog-category-banner h2 {
+    color: #1a3224;
+    font-family: 'Playfair Display', serif;
+    font-size: 65px;
+    font-weight: 650;
+    margin-bottom: 15px;
+    
+  }
+  .blog-category-divider {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+  .blog-category-divider .line {
+    height: 1px;
+    width: 80px;
+    background-color: #bfa173;
+  }
+  .blog-category-divider .diamonds {
+    display: flex;
+    gap: 5px;
+    margin: 0 15px;
+  }
+  .blog-category-divider .diamonds span {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border: 1px solid #bfa173;
+    transform: rotate(45deg);
+  }
+  .blog-category-divider .diamonds span:nth-child(2) {
+    background-color: #bfa173;
+  }
+  .blog-category-text {
+    color: #222;
+    font-size: 16px;
+    max-width: 480px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+
+  @media (max-width: 991px) {
+    .blog-category-banner {
+      background-position: center center;
+      padding-left: 30px;
+    }
+  }
+  @media (max-width: 767px) {
+    .blog-category-banner {
+      padding: 60px 0;
+      background-position: 65% center;
+    }
+    .blog-category-banner h2 {
+      font-size: 40px;
+      font-weight: 550;
+    }
+    .blog-category-divider {
+      justify-content: center;
+    }
+    .blog-category-text {
+      margin: 0 auto 30px auto;
+      text-align: center;
+    }
+    .blog-category-banner-content {
+      text-align: center !important;
+    }
+  }
+
+  /* Explore Section Styling */
+  .explore-section {
+    background-color: #FFFFFF;
+    border-top: 1px solid #f0ebe4;
+    border-bottom: 1px solid #f0ebe4;
+    padding: 30px 0;
+  }
+  .section-heading {
+    font-size: 25px;
+    font-weight: 700;
+    color: #1a3028;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .explore-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    margin: 0 -10px;
+  }
+  .explore-item {
+    flex: 1 1 16.666%;
+    max-width: 16.666%;
+    padding: 15px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-right: 1px solid #f0ebe4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .explore-item:last-child {
+    border-right: none;
+  }
+  .explore-item:hover {
+    transform: translateY(-4px);
+  }
+  .explore-icon-wrap {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+    transition: transform 0.3s ease;
+  }
+  .explore-item:hover .explore-icon-wrap {
+    transform: scale(1.1);
+  }
+  .explore-icon-wrap img {
+    max-width: 70px;
+    max-height: 70px;
+    object-fit: contain;
+  }
+  .explore-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a3028;
+    margin: 0;
+    transition: color 0.3s ease;
+  }
+  .explore-item.active .explore-label,
+  .explore-item:hover .explore-label {
+    color: #cca471;
+  }
+
+  @media (max-width: 991.98px) {
+    .explore-item {
+      flex: 1 1 33.333%;
+      max-width: 33.333%;
+      border-bottom: 1px solid #f0ebe4;
+      padding: 24px 10px;
+    }
+    .explore-item:nth-child(3n) {
+      border-right: none;
+    }
+  }
+  @media (max-width: 575.98px) {
+    .explore-item {
+      flex: 1 1 50%;
+      max-width: 50%;
+    }
+    .explore-item:nth-child(2n) {
+      border-right: none;
+    }
+    .explore-item:nth-child(3n) {
+      border-right: 1px solid #f0ebe4;
+    }
+  }
+
+  /* Latest Articles Section Styling */
+  .articles-section {
+    background-color: #FAF9F7;
+    padding: 40px 0;
+  }
+  .filter-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 45px;
+  }
+  .filter-tab-btn {
+    background-color: transparent;
+    border: none;
+    color: #555555;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  .filter-tab-btn:hover {
+    color: #1a3028;
+    background-color: rgba(204, 164, 113, 0.15);
+  }
+  .filter-tab-btn.active {
+    background-color: #a37a44;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(163, 122, 68, 0.25);
+  }
+
+  /* Article Card Styling */
+  .article-card {
+    background: #ffffff;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid #f0ebe4;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .article-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 35px rgba(26, 48, 40, 0.12);
+  }
+  .article-img-wrap {
+    height: 220px;
+    overflow: hidden;
+    position: relative;
+  }
+  .article-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  .article-card:hover .article-img-wrap img {
+    transform: scale(1.06);
+  }
+  .article-content {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  .article-date {
+    font-size: 11px;
+    font-weight: 600;
+    color: #a37a44;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .article-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1a3028;
+    line-height: 1.35;
+    margin-bottom: 12px;
+    transition: color 0.3s ease;
+  }
+  .article-card:hover .article-title {
+    color: #a37a44;
+  }
+  .article-desc {
+    font-size: 13.5px;
+    color: #666666;
+    line-height: 1.6;
+    margin-bottom: 22px;
+    flex-grow: 1;
+  }
+  .article-link {
+    font-size: 12px;
+    font-weight: 700;
+    color: #a37a44;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: gap 0.3s ease, color 0.3s ease;
+  }
+  .article-card:hover .article-link {
+    gap: 10px;
+    color: #1a3028;
+  }
+
+  /* View All Button */
+  .view-all-btn-wrap {
+    margin-top: 55px;
+    text-align: center;
+  }
+  .btn-view-all {
+    background-color: #1a3028;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 14px 38px;
+    border-radius: 6px;
+    border: none;
+    box-shadow: 0 6px 20px rgba(26, 48, 40, 0.2);
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-decoration: none;
+  }
+  .btn-view-all:hover {
+    background-color: #cca471;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(204, 164, 113, 0.3);
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- 1. Hero / Header Section -->
+<section class="blog-category-banner position-relative">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-8 blog-category-banner-content text-md-start">
+        <h2 style="font-weight: 500;">Blog &amp;<br>Inspiration</h2>
+        <div class="blog-category-divider justify-content-md-start">
+          <div class="line"></div>
+          <div class="diamonds">
+            <span></span>
+            <span class="diamond-filled"></span>
+            <span></span>
+          </div>
+          <div class="line"></div>
+        </div>
+        <p class="blog-category-text">
+          Ideas, trends and expert tips to inspire beautiful living.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. Explore Ideas & Insights Section -->
+<section class="explore-section">
+  <div class="container">
+    <h3 class="section-heading">EXPLORE IDEAS &amp; INSIGHTS</h3>
+    
+    <div class="explore-grid">
+      <div class="explore-item">
+        <div class="explore-icon-wrap">
+          <img src="{{ url_for('static', filename='img/blog_pages/icon-1.png') }}" alt="Design Trends">
+        </div>
+        <h6 class="explore-label">Design Trends</h6>
+      </div>
+      
+      <div class="explore-item">
+        <div class="explore-icon-wrap">
+          <img src="{{ url_for('static', filename='img/blog_pages/icon-2.png') }}" alt="Tips & Guides">
+        </div>
+        <h6 class="explore-label">Tips &amp; Guides</h6>
+      </div>
+      
+      <div class="explore-item">
+        <div class="explore-icon-wrap">
+          <img src="{{ url_for('static', filename='img/blog_pages/icon-3.png') }}" alt="Space Planning">
+        </div>
+        <h6 class="explore-label">Space Planning</h6>
+      </div>
+      
+      <div class="explore-item">
+        <div class="explore-icon-wrap">
+          <img src="{{ url_for('static', filename='img/blog_pages/icon-4.png') }}" alt="Product Guides">
+        </div>
+        <h6 class="explore-label">Product Guides</h6>
+      </div>
+      
+      <div class="explore-item">
+        <div class="explore-icon-wrap">
+          <img src="{{ url_for('static', filename='img/blog_pages/icon-5.png') }}" alt="Styling Ideas">
+        </div>
+        <h6 class="explore-label">Styling Ideas</h6>
+      </div>
+      
+      <div class="explore-item">
+        <div class="explore-icon-wrap">
+          <img src="{{ url_for('static', filename='img/blog_pages/icon-6.png') }}" alt="Sustainable Design">
+        </div>
+        <h6 class="explore-label">Sustainable Design</h6>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Latest Articles Section -->
+<section class="articles-section" id="latest-articles">
+  <div class="container">
+    <h3 class="section-heading mb-4">LATEST ARTICLES</h3>
+    
+    <!-- Filter Tabs -->
+    <div class="filter-tabs">
+      <button class="filter-tab-btn active" data-filter="all">ALL</button>
+      {% for cat in categories %}
+      <button class="filter-tab-btn" data-filter="{{ cat.slug }}">{{ cat.name | upper }}</button>
+      {% endfor %}
+    </div>
+
+    <!-- Articles Grid -->
+    <div class="row g-4" id="articles-grid">
+      {% if posts %}
+        {% for post in posts %}
+        <div class="col-12 col-md-6 col-lg-3 article-item {% if loop.index > 4 %}extra-article{% endif %}" data-category="{{ post.category.slug if post.category else 'uncategorized' }}" {% if loop.index > 4 %}style="display: none;"{% endif %}>
+          <div class="article-card">
+            <div class="article-img-wrap">
+              <img src="{{ post.image_url if (post.image_url and (post.image_url.startswith('http') or post.image_url.startswith('/'))) else (url_for('static', filename=post.image_url) if post.image_url else url_for('static', filename='img/blog_pages/blog-1.webp')) }}" alt="{{ post.title }}">
+            </div>
+            <div class="article-content">
+              <span class="article-date">{{ post.created_at.strftime('%b %d, %Y') | upper }}</span>
+              <h4 class="article-title">{{ post.title }}</h4>
+              <p class="article-desc">{{ post.short_description | truncate(100) }}</p>
+              <a href="{{ url_for('blog_detail', slug=post.slug) }}" class="article-link">READ MORE &rarr;</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      {% else %}
+        <div class="col-12 text-center" style="padding: 50px 0;">
+          <h4 style="color: #666;">No articles found.</h4>
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- View All Button -->
+    <div class="view-all-btn-wrap" id="view-all-wrap">
+      <button class="btn-view-all" id="btn-view-all">VIEW ALL ARTICLES</button>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const filterTabs = document.querySelectorAll('.filter-tab-btn');
+    const articles = document.querySelectorAll('.article-item');
+    const viewAllBtn = document.getElementById('btn-view-all');
+    let allExpanded = false;
+
+    // Function to filter articles
+    function filterArticles(filterValue) {
+      // Update active state on buttons
+      filterTabs.forEach(tab => {
+        if (tab.getAttribute('data-filter') === filterValue) {
+          tab.classList.add('active');
+        } else {
+          tab.classList.remove('active');
+        }
+      });
+
+      // Show/Hide Articles
+      articles.forEach(article => {
+        const cat = article.getAttribute('data-category');
+        if (filterValue === 'all') {
+          if (article.classList.contains('extra-article') && !allExpanded) {
+            article.style.display = 'none';
+          } else {
+            article.style.display = 'block';
+          }
+        } else {
+          if (cat === filterValue) {
+            article.style.display = 'block';
+          } else {
+            article.style.display = 'none';
+          }
+        }
+      });
+
+      // Hide or show view all button
+      const viewAllWrap = document.getElementById('view-all-wrap');
+      if (filterValue !== 'all' || allExpanded) {
+        if (viewAllWrap) viewAllWrap.style.display = 'none';
+      } else {
+        if (viewAllWrap) viewAllWrap.style.display = 'block';
+      }
+    }
+
+    // Event listeners for filter tabs
+    filterTabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        const filter = this.getAttribute('data-filter');
+        filterArticles(filter);
+        document.getElementById('latest-articles').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Event listener for view all button
+    if (viewAllBtn) {
+      viewAllBtn.addEventListener('click', function() {
+        allExpanded = true;
+        articles.forEach(article => {
+          article.style.display = 'block';
+        });
+        document.getElementById('view-all-wrap').style.display = 'none';
+      });
+    }
+  });
+</script>
+{% endblock %}

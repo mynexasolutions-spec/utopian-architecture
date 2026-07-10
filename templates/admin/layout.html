@@ -49,28 +49,36 @@
                         <i class="fa-solid fa-image"></i> Hero Section
                     </a>
                 </li>
+                <li class="admin-menu-item">
+                    <a href="{{ url_for('admin_categories') }}" class="admin-menu-link {% if request.endpoint == 'admin_categories' %}active{% endif %}">
+                        <i class="fa-solid fa-list"></i> Categories
+                    </a>
+                </li>
                  <li class="admin-menu-item">
                     <a href="{{ url_for('admin_catalog') }}" class="admin-menu-link {% if request.endpoint == 'admin_catalog' %}active{% endif %}">
                         <i class="fa-solid fa-couch"></i> Products
                     </a>
                 </li>
                 <li class="admin-menu-item">
-                    <a href="{{ url_for('admin_categories') }}" class="admin-menu-link {% if request.endpoint == 'admin_categories' %}active{% endif %}">
-                        <i class="fa-solid fa-list"></i> Categories
+                    <a href="{{ url_for('admin_portfolio_categories') }}" class="admin-menu-link {% if request.endpoint == 'admin_portfolio_categories' %}active{% endif %}">
+                        <i class="fa-solid fa-layer-group"></i> Collection Categories
                     </a>
                 </li>
                 <li class="admin-menu-item">
                     <a href="{{ url_for('admin_gallery') }}" class="admin-menu-link {% if request.endpoint == 'admin_gallery' %}active{% endif %}">
-                        <i class="fa-regular fa-images"></i> Gallery
+                        <i class="fa-regular fa-images"></i> Collection
                     </a>
                 </li>
                 <li class="admin-menu-item">
-                    <a href="{{ url_for('admin_portfolio_categories') }}" class="admin-menu-link {% if request.endpoint == 'admin_portfolio_categories' %}active{% endif %}">
-                        <i class="fa-solid fa-layer-group"></i> Gallery Categories
+                    <a href="{{ url_for('admin_blog_categories') }}" class="admin-menu-link {% if request.endpoint == 'admin_blog_categories' %}active{% endif %}">
+                        <i class="fa-solid fa-tags"></i> Blog Categories
                     </a>
                 </li>
-
-               
+                <li class="admin-menu-item">
+                    <a href="{{ url_for('admin_blogs') }}" class="admin-menu-link {% if request.endpoint == 'admin_blogs' %}active{% endif %}">
+                        <i class="fa-solid fa-pen-nib"></i> Blog Posts
+                    </a>
+                </li>
             </ul>
         </aside>
 

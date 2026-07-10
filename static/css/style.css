@@ -968,7 +968,7 @@ header .header-icons ul li i {
     color: #906e49;
   }
   .slicknav_nav {
-    top: 50px;
+    top: 60px;
     left: 0;
     background-color: #f5f5f5;
     position: absolute;
@@ -1104,7 +1104,7 @@ header .header-icons ul li i {
 
 /* Service CSS */
 .service .service-title {
-  background-image: url(../images/office-building-2022-12-15-19-37-04-utc1.jpg);
+  background-image: url(../img/bg/office-bg.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -1381,7 +1381,7 @@ header .header-icons ul li i {
 
 /* Footer */
 footer {
-  background-image: url(../images/office-building-2022-12-15-19-37-04-utc1.jpg);
+  background-image: url(../img/bg/office-bg.jpg);
   background-size: cover;
   background-attachment: fixed;
 }
@@ -1609,7 +1609,7 @@ footer .footer-top-left {
 /*            Testimonial Page CSS          */
 /* ======================================== */
 .testimonial {
-  background-image: url(../images/law-tes.png);
+  background-image: url(../img/bg/bg-1.jpg);
   background-position: center center;
   background-repeat: no-repeat;
   background-size: 100% auto;
@@ -1622,7 +1622,7 @@ footer .footer-top-left {
 /*            Coming Soon Page CSS          */
 /* ======================================== */
 .coming-soon {
-  background-image: url(../images/office-building-2022-12-15-19-37-04-utc1.jpg);
+  background-image: url(../img/bg/office-bg.jpg);
   background-size: cover;
 }
 .coming-soon .overlay {
@@ -1657,7 +1657,7 @@ footer .footer-top-left {
 /*             Error Page Page CSS          */
 /* ======================================== */
 .error {
-  background-image: url(../images/side-bg-1.webp);
+  background-image: url(../img/bg/side-bg.webp);
   background-position: center center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -1772,8 +1772,7 @@ footer .footer-top-left {
   height: 650px;
   background-size: cover;
   background-position: center;
-  margin: 0 50px;
-  border-radius: 50px;
+  margin: 0;
 }
 .home-3 .banner .banner-slide .overlay {
   background-color: transparent;
@@ -1782,7 +1781,7 @@ footer .footer-top-left {
     rgb(0, 0, 0) 0%,
     rgba(0, 0, 0, 0.2) 100%
   );
-  border-radius: 50px;
+ 
 }
 @media (max-width: 1400px) {
   .home-3 .banner .banner-slide {
@@ -1866,7 +1865,7 @@ footer .footer-top-left {
   /* Ad Banner CSS */
 }
 .home-3 .ad-banner .ad-banner-inner {
-  background-image: url(../images/side-bg-1.webp);
+  background-image: url(../img/bg/side-bg.webp);
   background-position: left;
 }
 .home-3 .ad-banner .ad-banner-right {
@@ -2003,14 +2002,32 @@ footer .footer-top-left {
   color: #fff;
 }
 .home-3 .banner .slick-arrow-beautiful.slick-prev {
-  left: 60px;
+  left: 40px;
   z-index: 2;
 }
 .home-3 .banner .slick-arrow-beautiful.slick-next {
-  right: 60px;
+  right: 40px;
   z-index: 2;
 }
+@media (max-width: 1200px) {
+  .home-3 .banner .slick-arrow-beautiful {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+  .home-3 .banner .slick-arrow-beautiful.slick-prev { left: 30px; }
+  .home-3 .banner .slick-arrow-beautiful.slick-next { right: 30px; }
+}
 @media (max-width: 992px) {
+  .home-3 .banner .slick-arrow-beautiful {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+  .home-3 .banner .slick-arrow-beautiful.slick-prev { left: 20px; }
+  .home-3 .banner .slick-arrow-beautiful.slick-next { right: 20px; }
+}
+@media (max-width: 576px) {
   .home-3 .banner .slick-arrow-beautiful {
     display: none !important;
   }
@@ -2359,13 +2376,27 @@ footer .footer-top-left {
   text-decoration: none;
 }
 
+.promo-get .btn-get:hover{
+  background-color: #ffffff !important;
+  color: #842e13 !important;
+}
 .btn-explore-projects:hover {
   background-color: #252525;
   color: #ffffff !important;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
   transform: translateY(-2px);
 }
-
+.btns .btn-explore:hover{
+  background-color: #842e13 !important;
+}
+.btns .btn-shop-all:hover{
+  background-color: transparent !important;
+  color: #842e13 !important;
+}
+.banners-2 .btn-book:hover{
+  background-color: transparent !important;
+  color: #000000 !important;
+}
 /* Project Card */
 .project-grid-card {
   background-color: #f6f2eb; /* Matches .bg-secondarylight */
@@ -2994,10 +3025,253 @@ footer .footer-top-left {
 .service-col img {
   max-width: 70px;
   height: auto;
+  right: 40px;
+}
+
+.lightbox-counter {
+  color: #fff;
+  font-size: 18px;
+  letter-spacing: 2px;
+  margin-top: 15px;
+  font-family: "Teko", sans-serif;
+  text-transform: uppercase;
+  background: rgba(144, 110, 73, 0.25);
+  padding: 4px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(144, 110, 73, 0.4);
+}
+
+@media (max-width: 768px) {
+  .lightbox-prev {
+    left: 20px;
+  }
+  .lightbox-next {
+    right: 20px;
+  }
+  .lightbox-close {
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+  .lightbox-prev,
+  .lightbox-next {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+  .lightbox-img {
+    max-height: 60vh;
+  }
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .gallery-overlay i {
+    font-size: 18px;
+    margin-bottom: 4px !important;
+  }
+  .gallery-overlay .overlay-text h5 {
+    font-size: 14px !important;
+  }
+  .gallery-overlay .overlay-text span.small {
+    font-size: 11px !important;
+  }
+  .lightbox-prev {
+    left: 20px;
+  }
+  .lightbox-next {
+    right: 20px;
+  }
+}
+
+/* ========================================= */
+/*               Loader CSS                  */
+/* ========================================= */
+#loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #252525;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    opacity 0.5s ease-out,
+    visibility 0.5s ease-out;
+}
+
+#loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader-circle {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border: 2px solid rgba(144, 110, 73, 0.2);
+  border-top: 2px solid #906e49;
+  border-radius: 50%;
+  animation: loaderSpin 1.5s linear infinite;
+  z-index: 1;
+}
+
+@keyframes loaderSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loader-line {
+  position: absolute;
+  margin-top: 130px;
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #906e49 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: loaderLine 1.5s linear infinite;
+}
+
+@keyframes loaderLine {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* floating contact buttons */
+.floating-contact-btns {
+  position: fixed;
+  bottom: 30px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 9999;
+}
+
+.floating-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.floating-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  color: #fff;
+}
+
+.floating-call {
+  background-color: #906e49;
+}
+
+.floating-whatsapp {
+  background-color: #25d366;
+}
+
+/* Our Services Section Styles */
+.our-services-section {
+  background-color: #fbfaf8;
+}
+.our-services-section h2 {
+  font-family: 'Playfair Display', serif;
+  color: #1a2f24;
+  letter-spacing: 0.5px;
+}
+.our-services-section p.text-muted {
+  font-size: 16px;
+  max-width: 600px;
+}
+.services-box {
+  background-color: #fdfcfa;
+  border: 1px solid #ede8e1;
+}
+.service-col img {
+  max-width: 70px;
+  height: auto;
 }
 .service-col h6 {
   color: #111;
   font-size: 15px;
   letter-spacing: 1px;
   line-height: 1.4;
+}
+
+/* Make containers full width and responsive with reduced padding */
+.container {
+  max-width: 100% !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+  }
+}
+
+/* Fix Hero Banner Overlap with Arrows */
+.home-3 .banner-slide-inner {
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+@media (max-width: 1200px) {
+  .home-3 .banner-slide-inner {
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+}
+
+@media (max-width: 992px) {
+  .home-3 .banner-slide-inner {
+    padding-left: 70px;
+    padding-right: 70px;
+  }
+}
+
+@media (max-width: 576px) {
+  .home-3 .banner-slide-inner {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }

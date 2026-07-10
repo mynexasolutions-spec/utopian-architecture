@@ -97,25 +97,25 @@ endblock %} {% block content %}
       
       <div class="content-wrapper p-4 p-md-5 w-100 ms-lg-4 text-center text-lg-start" style="position: relative; z-index: 3;">
        
-        <h6 class="text-uppercase mb-2" style="color: #906e49; font-weight: 600; letter-spacing: 1.5px; font-size: 13px;">
+        <h6 class="text-uppercase mb-2" style="color: #842e13; font-weight: 600; letter-spacing: 1.5px; font-size: 15px;">
           Exclusive Offers
         </h6>
         <div class="mx-auto mx-lg-0" style="width: 40px; height: 1px; background-color: #906e49; margin-bottom: 25px;"></div>
         
         <h1 class="display-4 fw-bold mb-3" style="font-family: 'Playfair Display', serif; line-height: 1.2; color: #222;">
           Beautiful Spaces,<br>
-          <span style="color: #906e49;">Better Deals</span>
+          <span style="color: #842e13;">Better Deals</span>
         </h1>
         
         <p class="text-muted mb-4 mx-auto mx-lg-0" style="font-size: 17px; max-width: 400px;">
           Discover limited-time offers on premium furniture and interior solutions.
         </p>
         
-        <div class="d-flex flex-wrap justify-content-center justify-content-lg-start gap-3 mt-4">
-          <a href="{{ url_for('shop') }}" class="btn btn-shop-all text-white text-uppercase d-flex align-items-center justify-content-center" style="background-color: #906e49; padding: 10px 24px; font-weight: 600; font-size: 12px; letter-spacing: 1px; border: 1px solid #906e49; border-radius: 2px; transition: all 0.3s ease;">
+        <div class="d-flex flex-wrap justify-content-center justify-content-lg-start gap-3 mt-4 btns">
+          <a href="{{ url_for('shop') }}" class=" btn-shop-all text-white text-uppercase d-flex align-items-center justify-content-center" style="background-color: #842e13; padding: 10px 24px; font-weight: 600; font-size: 12px; letter-spacing: 1px; border: 1px solid #842e13; border-radius: 2px; transition: all 0.3s ease;">
             Shop All Offers
           </a>
-          <a href="{{ url_for('shop') }}" class="btn btn-explore text-uppercase d-flex align-items-center justify-content-center" style="background-color: transparent; color: #906e49; padding: 10px 24px; font-weight: 600; font-size: 12px; letter-spacing: 1px; border: 1px solid #906e49; border-radius: 2px; transition: all 0.3s ease;">
+          <a href="{{ url_for('shop') }}" class=" btn-explore text-uppercase d-flex align-items-center justify-content-center" style="background-color: transparent; color: #842e13; padding: 10px 24px; font-weight: 600; font-size: 12px; letter-spacing: 1px; border: 1px solid #842e13; border-radius: 2px; transition: all 0.3s ease;">
             Explore Collections
           </a>
         </div>
@@ -123,8 +123,8 @@ endblock %} {% block content %}
     </div>
     
     <!-- Right Image Area -->
-    <div class="col-lg-6 position-relative z-1 exclusive-banner-img">
-      <img src="{{ url_for('static', filename='img/gallery/other/pouffe3.webp') }}" alt="Beautiful Spaces" class="w-100 h-100 position-absolute" style="object-fit: cover; object-position: center; top: 0; left: 0;" />
+    <div class="col-lg-7 position-relative z-1 exclusive-banner-img">
+      <img src="{{ url_for('static', filename='img/bg/bg_01.webp') }}" alt="Beautiful Spaces" class="w-100 h-100 position-absolute" style="object-fit: cover; object-position: center; top: 0; left: 0;" />
     </div>
   </div>
 </section>
@@ -155,75 +155,55 @@ endblock %} {% block content %}
 
 
 <!-- Features Banner Section -->
-<section class="features-banner w-100 mt-0" style="background-color: #906e49; padding: 25px 0; overflow: hidden;">
+<section class="features-banner w-100 mt-0" style="background-color: #906e49; padding: 20px 0;">
   <div class="container-fluid px-3 px-lg-5">
-    <div class="row align-items-center justify-content-around row-gap-4 features-slider-track">
+    <div class="d-flex align-items-center justify-content-between flex-nowrap overflow-x-auto features-slider-track pb-1 pt-1" style="scrollbar-width: none; -ms-overflow-style: none;">
       
       <!-- Feature 1 -->
-      <div class="col-6 col-md-4 col-xl-2 feature-slide">
+      <div class="feature-slide px-2 px-md-3">
         <div class="d-flex align-items-center justify-content-start justify-content-xl-center feature-item">
           <img src="{{ url_for('static', filename='img/Exclusive_Offers/1.png') }}" alt="Best Prices" class="me-2 me-md-3">
-          <div style="color: #ffffff; font-size: 15px; font-weight: 500; line-height: 1.3;">
+          <div style="color: #ffffff; font-size: 15px; font-weight: 500; line-height: 1.3; white-space: nowrap;">
             Best Prices<br>Guaranteed
           </div>
         </div>
       </div>
-      
-      <!-- Divider -->
-      <div class="col-auto d-none d-xl-flex justify-content-center px-0 divider-slide" style="width: 1px;">
-        <div style="width: 1px; height: 40px; background-color: rgba(255,255,255,0.25);"></div>
-      </div>
 
       <!-- Feature 2 -->
-      <div class="col-6 col-md-4 col-xl-2 feature-slide">
+      <div class="feature-slide px-2 px-md-3">
         <div class="d-flex align-items-center justify-content-start justify-content-xl-center feature-item">
           <img src="{{ url_for('static', filename='img/Exclusive_Offers/2.png') }}" alt="Premium Quality" class="me-2 me-md-3">
-          <div style="color: #ffffff; font-size: 15px; font-weight: 500; line-height: 1.3;">
+          <div style="color: #ffffff; font-size: 15px; font-weight: 500; line-height: 1.3; white-space: nowrap;">
             Premium<br>Quality
           </div>
         </div>
       </div>
-      
-      <!-- Divider -->
-      <div class="col-auto d-none d-xl-flex justify-content-center px-0 divider-slide" style="width: 1px;">
-        <div style="width: 1px; height: 40px; background-color: rgba(255,255,255,0.25);"></div>
-      </div>
 
       <!-- Feature 3 -->
-      <div class="col-6 col-md-4 col-xl-2 feature-slide">
+      <div class="feature-slide px-2 px-md-3">
         <div class="d-flex align-items-center justify-content-start justify-content-xl-center feature-item">
           <img src="{{ url_for('static', filename='img/Exclusive_Offers/3.png') }}" alt="Secure Payments" class="me-2 me-md-3">
-          <div style="color: #ffffff; font-size: 15px; font-weight: 500; line-height: 1.3;">
+          <div style="color: #ffffff; font-size: 15px; font-weight: 500; line-height: 1.3; white-space: nowrap;">
             Secure<br>Payments
           </div>
         </div>
       </div>
-      
-      <!-- Divider -->
-      <div class="col-auto d-none d-xl-flex justify-content-center px-0 divider-slide" style="width: 1px;">
-        <div style="width: 1px; height: 40px; background-color: rgba(255,255,255,0.25);"></div>
-      </div>
 
       <!-- Feature 4 -->
-      <div class="col-6 col-md-4 col-xl-2 feature-slide">
+      <div class="feature-slide px-2 px-md-3">
         <div class="d-flex align-items-center justify-content-start justify-content-xl-center feature-item">
           <img src="{{ url_for('static', filename='img/Exclusive_Offers/4.png') }}" alt="Fast Delivery" class="me-2 me-md-3">
-          <div style="color: #ffffff; font-size: 15px; font-weight: 500; line-height: 1.3;">
+          <div style="color: #ffffff; font-size: 15px; font-weight: 500; line-height: 1.3; white-space: nowrap;">
             Fast & Free<br>Delivery
           </div>
         </div>
       </div>
-      
-      <!-- Divider -->
-      <div class="col-auto d-none d-xl-flex justify-content-center px-0 divider-slide" style="width: 1px;">
-        <div style="width: 1px; height: 40px; background-color: rgba(255,255,255,0.25);"></div>
-      </div>
 
       <!-- Feature 5 -->
-      <div class="col-12 col-md-4 col-xl-2 feature-slide">
+      <div class="feature-slide px-2 px-md-3">
         <div class="d-flex align-items-center justify-content-start justify-content-xl-center feature-item">
           <img src="{{ url_for('static', filename='img/Exclusive_Offers/5.png') }}" alt="Dedicated Support" class="me-2 me-md-3">
-          <div style="color: #ffffff; font-size: 15px; font-weight: 500; line-height: 1.3;">
+          <div style="color: #ffffff; font-size: 15px; font-weight: 500; line-height: 1.3; white-space: nowrap;">
             Dedicated<br>Support
           </div>
         </div>
@@ -234,21 +214,24 @@ endblock %} {% block content %}
 </section>
 
 <style>
+  .features-slider-track::-webkit-scrollbar {
+    display: none;
+  }
   .feature-item img {
-    width: 50px;
+    width: 45px;
     height: auto;
     filter: brightness(0) invert(1);
   }
   @media (max-width: 767.98px) {
     .feature-item img {
-      width: 40px;
+      width: 42px;
     }
     .feature-item div {
-      font-size: 13px !important;
+      font-size: 11px !important;
+      line-height: 1.2 !important;
     }
-    /* Hide dividers from slick */
-    .divider-slide {
-      display: none !important;
+    .feature-slide {
+      padding: 0 10px !important;
     }
   }
 </style>
@@ -320,9 +303,8 @@ endblock %} {% block content %}
       align-items: center;
     }
   }
-<!-- Promo Banners Section Ends -->
+</style>
 
-<!-- Best-selling Categories Section Starts -->
 <style>
   .best-selling-categories h2 {
     font-size: 54px;
@@ -330,6 +312,9 @@ endblock %} {% block content %}
   @media (max-width: 768px) {
     .best-selling-categories h2 {
       font-size: 32px;
+    }
+    .shop-category-text{
+      padding: 5px 20px;
     }
   }
   .category-card {
@@ -552,16 +537,127 @@ endblock %} {% block content %}
 .home-3 .slicknav_btn {
   margin-top: 7px !important;
 }
+
+/* Shop Category Banner */
+.shop-category-banner {
+  background-image: url("{{ url_for('static', filename='img/homes/bg_images.png') }}");
+  background-size: cover;
+  background-position: right center;
+  padding: 100px 0;
+  margin-bottom: 40px;
+}
+.shop-category-banner h2 {
+  color: #1a3224;
+  font-family: 'Playfair Display', serif;
+  font-size: 52px;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+.shop-category-divider {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+}
+.shop-category-divider .line {
+  height: 1px;
+  width: 80px;
+  background-color: #bfa173;
+}
+.shop-category-divider .diamonds {
+  display: flex;
+  gap: 5px;
+  margin: 0 15px;
+}
+.shop-category-divider .diamonds span {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border: 1px solid #bfa173;
+  transform: rotate(45deg);
+}
+.shop-category-divider .diamonds span:nth-child(2) {
+  background-color: #bfa173;
+}
+.shop-category-text {
+  color: #222;
+  font-size: 16px;
+  max-width: 480px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+.btn-shop-explore {
+  background-color: #1a3224;
+  color: #ffffff !important;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-radius: 2px;
+  padding: 14px 28px;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+.btn-shop-explore:hover {
+  background-color: #112218;
+}
+@media (max-width: 991px) {
+  .shop-category-banner {
+    background-position: 70% center;
+  }
+}
+@media (max-width: 767px) {
+  .shop-category-banner {
+    padding: 60px 0;
+    background-position: 65% center;
+  }
+  .shop-category-banner h2 {
+    font-size: 36px;
+  }
+  .shop-category-divider {
+    justify-content: center;
+  }
+  .shop-category-text {
+    margin: 0 auto 30px auto;
+    text-align: center;
+  }
+  .shop-category-banner-content {
+    text-align: center !important;
+  }
+}
 </style>
 
-<section class="best-selling-categories py-5 bg-white">
-  <div class="container">
-    <div class="section-title text-center text-md-start mb-5">
-      <h2 class="mb-2">Shop By Categories</h2>
-      <p class="text-muted mb-0">
-        Explore our premium range of luxury furniture and interior collections.
-      </p>
+<section class="best-selling-categories pb-5 bg-white pt-0">
+  <!-- Shop By Category Banner -->
+  <div class="shop-category-banner">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-md-8 shop-category-banner-content text-md-start">
+          <h2 style="font-weight: 500;">Shop By Category</h2>
+          <div class="shop-category-divider justify-content-md-start">
+            <div class="line"></div>
+            <div class="diamonds">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="line"></div>
+          </div>
+          <p class="shop-category-text">
+            Discover our wide range of premium furniture, décor and accessories curated to elevate every space.
+          </p>
+          <a href="{{ url_for('shop') }}" class="btn-shop-explore">
+            Explore All Products <i class="fa fa-arrow-right ms-2"></i>
+          </a>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <div class="container">
     <div class="best-selling-slider mt-4">
       {% for cat in home_categories %}
       <div class="px-2 pt-3 pb-3 h-100">
@@ -580,7 +676,7 @@ endblock %} {% block content %}
           <!-- Title Block -->
           <div
             class="category-title-block d-flex justify-content-between align-items-center p-3"
-            style="background-color: {{ cat.bg_color or '#b0a483' }};"
+            style="background-color: #842e13 !important;"
           >
             <h4
               class="category-name text-white teko mb-0 h5 fs-4"
@@ -604,11 +700,11 @@ endblock %} {% block content %}
               <span>View All</span>
               <div
                 class="arrow-circle d-flex align-items-center justify-content-center bg-white rounded-circle"
-                style="width: 24px; height: 24px; color: #906e49"
+                style="width: 24px; height: 24px; color: #842e13"
               >
                 <i
                   class="fa fa-long-arrow-right"
-                  style="font-size: 12px; color: {{ cat.bg_color or '#b0a483' }};"
+                  style="font-size: 12px; color: #842e13 !important;"
                   aria-hidden="true"
                 ></i>
               </div>
@@ -649,23 +745,34 @@ endblock %} {% block content %}
 <!-- Best-selling Categories Section Ends -->
 
 <!-- Limited Time Offers Section Starts -->
-<section class="limited-time-offers bg-secondarylight pt-5 pb-3">
-  <div class="container">
-    <div class="offers-inner">
-      <!-- Section Header -->
-      <div class="row justify-content-center text-center mb-5">
-        <div class="col-lg-8 col-md-10 col-12">
-          <h2 class="mb-3" style="font-family: 'Playfair Display', serif; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">TOP DEALS OF THE SEASON</h2>
-          <div class="d-flex align-items-center justify-content-center gap-3">
-            <div style="height: 1px; width: 40px; background-color: #d3d3d3;"></div>
-            <p class="text-muted mb-0" style="font-size: 16px;">
-              Grab these exclusive deals before they're gone.
-            </p>
-            <div style="height: 1px; width: 40px; background-color: #d3d3d3;"></div>
+<section class="limited-time-offers bg-secondarylight pb-5 pt-0">
+  <!-- Banner Header -->
+  <div class="offers-banner position-relative mb-5" style="background-image: url('{{ url_for('static', filename='img/homes/bg_images.png') }}'); background-size: cover; background-position: center center; padding: 100px 0;">
+    <div class="container">
+      <div class="row justify-content-center text-center">
+        <div class="col-lg-8 col-md-10 col-12 d-flex flex-column align-items-center">
+          <h2 class="mb-2 display-6" style="color: #1a3224; font-family: 'Playfair Display', serif; text-transform: uppercase; font-weight: 650;">
+            LIMITED TIME OFFERS
+          </h2>
+          <div class="shop-category-divider justify-content-center my-3 w-100">
+            <div class="line"></div>
+            <div class="diamonds">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="line"></div>
           </div>
+          <p class="shop-category-text text-center m-0" style="max-width: 600px;">
+            Grab these exclusive deals before they're gone.
+          </p>
         </div>
       </div>
+    </div>
+  </div>
 
+  <div class="container">
+    <div class="offers-inner">
       <!-- Products Slider -->
       <div class="limited-time-slider mt-4">
         {% for prod in catalog_products %}
@@ -692,7 +799,7 @@ endblock %} {% block content %}
                 </a>
               </h5>
               <div class="offer-pricing mb-4">
-                <span class="discounted-price me-2" style="color: #906e49; font-size: 22px; font-weight: 700;">₹{{ "{:,.0f}".format(sale_price_val) }}</span>
+                <span class="discounted-price me-2" style="color: #842e13; font-size: 22px; font-weight: 700;">₹{{ "{:,.0f}".format(sale_price_val) }}</span>
                 {% if sale_price_val < mrp_val %}
                 <span class="original-price text-muted text-decoration-line-through" style="font-size: 16px;">₹{{ "{:,.0f}".format(mrp_val) }}</span>
                 {% endif %}
@@ -710,34 +817,450 @@ endblock %} {% block content %}
 </section>
 <!-- Limited Time Offers Section Ends -->
 
+<style>
+/* Featured Projects */
+.project-grid-card {
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease;
+  height: 100%;
+  border: 1px solid #f1f1f1;
+}
+.project-grid-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+.project-card-image {
+  height: 250px;
+  overflow: hidden;
+}
+.project-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.project-grid-card:hover .project-card-image img {
+  transform: scale(1.08);
+}
+.project-card-info {
+  padding: 20px;
+  text-align: center;
+}
+.project-card-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  font-family: 'Playfair Display', serif;
+}
+.project-card-title a {
+  text-decoration: none;
+  color: #1a3224;
+  transition: color 0.3s ease;
+}
+.project-card-title a:hover {
+  color: #bfa173;
+}
+.project-card-location {
+  color: #777;
+  font-size: 13px;
+  margin-bottom: 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.btn-explore-projects {
+  display: inline-block;
+  background-color: transparent;
+  color: #1a3224;
+  border: 2px solid #1a3224;
+  padding: 10px 24px;
+  border-radius: 2px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+.btn-explore-projects:hover {
+  background-color: #1a3224;
+  color: #fff;
+}
+.featured-projects {
+  background-color: #fbfbfb;
+}
+.featured-projects h2 {
+  color: #1a3224;
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+  font-size: 36px;
+}
+
+/* Featured Collections */
+.featured-collections {
+  background-color: #FAF9F7;
+  border-top: 1px solid #eae5de;
+  border-bottom: 1px solid #eae5de;
+}
+.featured-collections h2 {
+  color: #1a3224;
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  font-size: 36px;
+}
+.collection-grid-card {
+  border-radius: 6px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  height: 100%;
+  border: 1px solid #eae5de;
+  display: flex;
+  flex-direction: column;
+}
+.collection-grid-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(132, 46, 19, 0.12);
+  border-color: #cca471;
+}
+.collection-card-image {
+  height: 250px;
+  overflow: hidden;
+  position: relative;
+}
+.collection-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.collection-grid-card:hover .collection-card-image img {
+  transform: scale(1.08);
+}
+.collection-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background-color: rgba(26, 50, 36, 0.9);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 30px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.collection-card-info {
+  padding: 22px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+.collection-card-title {
+  font-size: 19px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  font-family: 'Playfair Display', serif;
+}
+.collection-card-title a {
+  text-decoration: none;
+  color: #1a3224;
+  transition: color 0.3s ease;
+}
+.collection-card-title a:hover {
+  color: #842e13;
+}
+.collection-card-location {
+  color: #842e13;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.btn-collection-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #1a3224;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  margin-top: auto;
+}
+.collection-grid-card:hover .btn-collection-link {
+  color: #842e13;
+}
+.btn-collection-link i {
+  transition: transform 0.3s ease;
+}
+.collection-grid-card:hover .btn-collection-link i {
+  transform: translateX(4px);
+}
+</style>
+
+<!-- Featured Projects Section Starts -->
+<section class="featured-projects py-5">
+      <div class="container">
+        <div class="featured-projects-inner">
+          <!-- Section Header -->
+          <div class="row align-items-center justify-content-between mb-5 gy-3">
+            <div class="col-md-8 text-center text-md-start">
+              <div class="section-title-left">
+                <h2 class="mb-2">Featured Projects</h2>
+                <p class="mb-0 text-muted" style="font-size: 16px;">
+                  Elegant and modern interior projects crafted with precision.
+                </p>
+              </div>
+            </div>
+            <div class="col-md-4 text-center text-md-end">
+              <a href="{{ url_for('projects') }}" class="btn-explore-projects">Explore All Projects</a>
+            </div>
+          </div>
+
+          <!-- Cards Grid -->
+          <div class="row g-4">
+            <!-- Card 1 -->
+            <div class="col-lg-3 col-md-6 col-12">
+              <div class="project-grid-card">
+                <div class="project-card-image">
+                  <img src="/static/img/featured/Modern_Villa_Interior.webp" alt="Modern Villa Interior">
+                </div>
+                <div class="project-card-info">
+                  <h4 class="project-card-title">
+                    <a href="{{ url_for('projects') }}">Modern Villa Interior</a>
+                  </h4>
+                  <p class="project-card-location">Riyadh</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="col-lg-3 col-md-6 col-12">
+              <div class="project-grid-card">
+                <div class="project-card-image">
+                  <img src="/static/img/featured/bed_6.webp" alt="Luxury Living Room">
+                </div>
+                <div class="project-card-info">
+                  <h4 class="project-card-title">
+                    <a href="{{ url_for('projects') }}">Luxury Living Room</a>
+                  </h4>
+                  <p class="project-card-location">Jeddah</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="col-lg-3 col-md-6 col-12">
+              <div class="project-grid-card">
+                <div class="project-card-image">
+                  <img src="/static/img/featured/conference-room.jpeg" alt="Office Design">
+                </div>
+                <div class="project-card-info">
+                  <h4 class="project-card-title">
+                    <a href="{{ url_for('projects') }}">Office Design</a>
+                  </h4>
+                  <p class="project-card-location">KAFD</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="col-lg-3 col-md-6 col-12">
+              <div class="project-grid-card">
+                <div class="project-card-image">
+                  <img src="/static/img/portfolio/project-1.jpg" alt="Minimalist Apartment">
+                </div>
+                <div class="project-card-info">
+                  <h4 class="project-card-title">
+                    <a href="{{ url_for('projects') }}">Minimalist Apartment</a>
+                  </h4>
+                  <p class="project-card-location">Dubai</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+<!-- Featured Projects Section Ends -->
+
+<!-- Featured Collections Section Starts -->
+<section class="featured-collections py-5">
+  <div class="container">
+    <div class="featured-collections-inner">
+      <!-- Section Header -->
+      <div class="row align-items-center justify-content-between mb-5 gy-3">
+        <div class="col-md-8 text-center text-md-start">
+          <div class="section-title-left">
+            <h2 class="mb-2">Featured Collections</h2>
+            <p class="mb-0 text-muted" style="font-size: 16px;">
+              Discover our bespoke interior collections and luxury custom furniture designed to elevate every space.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4 text-center text-md-end">
+          <a href="{{ url_for('portfolio') }}" class="btn-explore-projects">Explore All Collections</a>
+        </div>
+      </div>
+
+      <!-- Cards Grid -->
+      <div class="row g-4">
+        {% if portfolio_categories %}
+          {% for cat in portfolio_categories[:4] %}
+          <div class="col-lg-3 col-md-6 col-12">
+            <div class="collection-grid-card">
+              <div class="collection-card-image">
+                <span class="collection-badge">Collection</span>
+                <a href="{{ url_for('portfolio', category=cat['slug'] if cat is mapping else cat.slug) }}">
+                  <img src="{{ (cat['image_url'] if cat is mapping else cat.image_url) if ((cat['image_url'] if cat is mapping else cat.image_url) and ((cat['image_url'] if cat is mapping else cat.image_url).startswith('http') or (cat['image_url'] if cat is mapping else cat.image_url).startswith('/'))) else url_for('static', filename=(cat['image_url'] if cat is mapping else cat.image_url)) }}" alt="{{ (cat['name'] if cat is mapping else cat.name)|striptags }}">
+                </a>
+              </div>
+              <div class="collection-card-info">
+                <div>
+                  <p class="collection-card-location">Curated Interiors</p>
+                  <h4 class="collection-card-title">
+                    <a href="{{ url_for('portfolio', category=cat['slug'] if cat is mapping else cat.slug) }}">{{ (cat['name'] if cat is mapping else cat.name)|striptags|title }}</a>
+                  </h4>
+                </div>
+                <a href="{{ url_for('portfolio', category=cat['slug'] if cat is mapping else cat.slug) }}" class="btn-collection-link mt-3">
+                  Explore Collection <i class="fa fa-arrow-right"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        {% else %}
+          <!-- Fallback Cards if no categories defined -->
+          <div class="col-lg-3 col-md-6 col-12">
+            <div class="collection-grid-card">
+              <div class="collection-card-image">
+                <span class="collection-badge">Collection</span>
+                <a href="{{ url_for('portfolio', category='residential') }}">
+                  <img src="/static/img/gallery/living_room/lr1.webp" alt="Residential Interiors">
+                </a>
+              </div>
+              <div class="collection-card-info">
+                <div>
+                  <p class="collection-card-location">Curated Interiors</p>
+                  <h4 class="collection-card-title">
+                    <a href="{{ url_for('portfolio', category='residential') }}">Residential Interiors</a>
+                  </h4>
+                </div>
+                <a href="{{ url_for('portfolio', category='residential') }}" class="btn-collection-link mt-3">
+                  Explore Collection <i class="fa fa-arrow-right"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-12">
+            <div class="collection-grid-card">
+              <div class="collection-card-image">
+                <span class="collection-badge">Collection</span>
+                <a href="{{ url_for('portfolio', category='commercial') }}">
+                  <img src="/static/img/gallery/office/office1.webp" alt="Commercial Spaces">
+                </a>
+              </div>
+              <div class="collection-card-info">
+                <div>
+                  <p class="collection-card-location">Executive Spaces</p>
+                  <h4 class="collection-card-title">
+                    <a href="{{ url_for('portfolio', category='commercial') }}">Commercial Spaces</a>
+                  </h4>
+                </div>
+                <a href="{{ url_for('portfolio', category='commercial') }}" class="btn-collection-link mt-3">
+                  Explore Collection <i class="fa fa-arrow-right"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-12">
+            <div class="collection-grid-card">
+              <div class="collection-card-image">
+                <span class="collection-badge">Collection</span>
+                <a href="{{ url_for('portfolio', category='living-room') }}">
+                  <img src="/static/img/gallery/living_room/lr1.webp" alt="Living Rooms">
+                </a>
+              </div>
+              <div class="collection-card-info">
+                <div>
+                  <p class="collection-card-location">Luxury Lounge</p>
+                  <h4 class="collection-card-title">
+                    <a href="{{ url_for('portfolio', category='living-room') }}">Living Rooms</a>
+                  </h4>
+                </div>
+                <a href="{{ url_for('portfolio', category='living-room') }}" class="btn-collection-link mt-3">
+                  Explore Collection <i class="fa fa-arrow-right"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-12">
+            <div class="collection-grid-card">
+              <div class="collection-card-image">
+                <span class="collection-badge">Collection</span>
+                <a href="{{ url_for('portfolio', category='sofaset') }}">
+                  <img src="/static/img/gallery/sofaset/sofa-set.webp" alt="Custom Furniture">
+                </a>
+              </div>
+              <div class="collection-card-info">
+                <div>
+                  <p class="collection-card-location">Bespoke Pieces</p>
+                  <h4 class="collection-card-title">
+                    <a href="{{ url_for('portfolio', category='sofaset') }}">Custom Furniture</a>
+                  </h4>
+                </div>
+                <a href="{{ url_for('portfolio', category='sofaset') }}" class="btn-collection-link mt-3">
+                  Explore Collection <i class="fa fa-arrow-right"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Featured Collections Section Ends -->
+
 <!-- Promo Banners Section Starts -->
 <section class="promo-banners-section py-5">
   <div class="container">
     <div class="row g-4">
       <!-- Banner 1 -->
       <div class="col-lg-6">
-        <div class="promo-banner-1 position-relative rounded-4 overflow-hidden h-100" style="min-height: 250px;">
+        <div class="promo-banner-1 position-relative rounded-4 overflow-hidden h-100 promo-get" style="min-height: 250px;">
           <!-- Background Image -->
           <img src="{{ url_for('static', filename='img/hero/banner-1.jpg') }}" alt="Extra Savings" class="position-absolute w-100 h-100" style="object-fit: cover; top: 0; left: 0; z-index: 1;">
           
           <!-- Slanted Overlay -->
-          <div class="promo-overlay position-absolute h-100" style="background-color: #906e49; top: 0; left: 0; z-index: 2;"></div>
+          <div class="promo-overlay position-absolute h-100" style="background-color: #842e13; top: 0; left: 0; z-index: 2;"></div>
           
           <!-- Content -->
           <div class="position-relative z-3 p-4 p-md-5 d-flex flex-column justify-content-center h-100 text-white promo-content-wrap">
-            <h6 class="text-uppercase mb-2" style="font-size: 12px; letter-spacing: 2px;">Extra Savings</h6>
+            <h6 class="text-uppercase mb-2" style="font-size: 15px; letter-spacing: 2px; color: #ffffff;">Extra Savings</h6>
             <h2 class="display-5 mb-1" style="font-family: 'Playfair Display', serif; line-height: 1.1;font-weight: 650;color: #ffffff;">Flat 10% Off</h2>
             <p class="fs-5 mb-4">On Bulk Orders</p>
             <div>
-              <a href="{{ url_for('shop') }}" class="btn text-white text-uppercase promo-btn-1" style="border: 1px solid rgba(255,255,255,0.5); font-size: 12px; letter-spacing: 1px; padding: 10px 20px; border-radius: 2px; transition: all 0.3s ease;">Get Extra Discount</a>
+              <a href="{{ url_for('shop') }}" class="btn-get text-white text-uppercase promo-btn-1" style="border: 1px solid rgba(255,255,255,0.5); font-size: 13px; letter-spacing: 1px; padding: 10px 20px; border-radius: 2px; transition: all 0.3s ease;font-weight: 550;">Get Extra Discount</a>
             </div>
           </div>
         </div>
       </div>
       
       <!-- Banner 2 -->
-      <div class="col-lg-6">
-        <div class="promo-banner-2 rounded-4 h-100 p-4 p-md-5 d-flex" style="background-color: #F3ECE4; min-height: 250px;border: 1px solid #906e49;">
+      <div class="col-lg-6 banners-2">
+        <div class="promo-banner-2 rounded-4 h-100 p-4 p-md-5 d-flex" style="background-color: #F3ECE4; min-height: 250px;border: 1px solid #842e13;">
           <div class="row align-items-start w-100 g-4">
             <div class="col-sm-4 text-center">
               <div class="icon-wrapper rounded-circle mx-auto d-flex align-items-center justify-content-center" style="width: 120px; height: 120px; background-color: #ede2d3;">
@@ -747,7 +1270,7 @@ endblock %} {% block content %}
             <div class="col-sm-8 text-center text-sm-start">
               <h2 class="mb-3" style="font-family: 'Playfair Display', serif; color: #1a2f24; font-size: 32px; line-height: 1.2;">Not Sure What<br>You Need?</h2>
               <p class="text-muted mb-4" style="font-size: 15px;">Get personalized recommendations from our design experts.</p>
-              <a href="{{ url_for('contact') }}" class="btn text-uppercase fw-bold promo-btn-2" style="color: #ffffff; border: 1px solid #906e49; font-size: 12px; letter-spacing: 1px; padding: 10px 20px; border-radius: 2px; transition: all 0.3s ease; background-color: #906e49;">Book A Free Consultation</a>
+              <a href="{{ url_for('contact') }}" class="btn-book text-uppercase fw-bold promo-btn-2" style="color: #ffffff; border: 1px solid #906e49; font-size: 12px; letter-spacing: 1px; padding: 10px 20px; border-radius: 2px; transition: all 0.3s ease; background-color: #842e13;">Book A Free Consultation</a>
             </div>
           </div>
         </div>
@@ -890,8 +1413,8 @@ endblock %} {% block content %}
     <div
       class="ad-banner-inner p-md-5 p-4 rounded-5 bg-white position-relative overflow-hidden"
     >
-      <div class="row align-items-center gy-5">
-        <div class="col-lg-5">
+      <div class="row align-items-center  justify-content-between py-3 gy-5">
+        <div class="col-lg-6">
           <div class="ad-banner-left text-center text-lg-start">
             <span class="teko h6 mb-0 secondary">Limited Time Offer</span>
             <h2 class="text-uppercase h1 primary mb-3">
@@ -902,30 +1425,10 @@ endblock %} {% block content %}
               or office project. Transform your space with premium quality
               interiors at competitive prices.
             </p>
-            <ul
-              class="d-flex align-items-center justify-content-center justify-content-lg-start my-4"
-            >
-              <li class="me-3 pe-3 border-end border-2 border-grey">
-                <img
-                  src="{{ url_for('static', filename='img/icons/sale-tag.png') }}"
-                  alt="chat"
-                  style="height: 44px; width: 44px"
-                />
-              </li>
-              <li class="teko">
-                <span class="h5 primary mb-0">Sale</span>
-                <span class="d-block h3 secondary mb-0">10% Off Now</span>
-              </li>
-            </ul>
-            <a href="{{ url_for('contact') }}" class="btn1"
-              >Book Free Consultation<i
-                class="fa fa-long-arrow-right"
-                aria-hidden="true"
-              ></i
-            ></a>
+
           </div>
         </div>
-        <div class="col-lg-7">
+        <div class="col-lg-6">
           <div class="ad-banner-right">
             <img
               src="{{ url_for('static', filename='img/images_sub/gallery-1.jpg') }}"

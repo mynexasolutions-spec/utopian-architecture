@@ -1,65 +1,91 @@
-<div class="header-nav header-nav-menu" id="header-nav-menu">
-  <div class="container">
-    <div class="header-nav-inner {% if request.endpoint == 'home' %}bg-primary mt-xl-2 px-3 py-1 rounded-5{% else %}py-3{% endif %}">
-      <div class="row gx-xl-5 align-items-center justify-content-between">
-        <div class="col-xl-2 col-md-3 col-6 order-1">
-          <div class="header-logo {% if request.endpoint == 'home' %}ms-2{% endif %}">
+<!-- Include Header Specific CSS -->
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/header.css') }}"
+/>
+
+<div class="header-nav header-nav-menu w-100" id="header-nav-menu">
+  <div class="container-fluid px-4 px-xl-5">
+    <div class="header-nav-inner py-3">
+      <div class="row align-items-center justify-content-between">
+        <!-- Logo -->
+        <div class="col-6 col-xl-2 order-1">
+          <div class="header-logo">
             <a href="{{ url_for('home') }}">
               <img
                 src="{{ url_for('static', filename='img/logo/logo.png') }}"
                 alt="logo"
-                class="rounded-3"
-                style="max-width: 140px; width: 100%"
+                class="img-fluid header-logo-img"
               />
             </a>
           </div>
         </div>
-        <div class="col-xl-7 col-0 order-3 order-xl-2">
+
+        <!-- Navigation -->
+        <div class="col-0 col-xl-8 order-3 order-xl-2 d-none d-xl-block">
           <div class="header-nav">
-            <div class="navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div
+              class="navbar-collapse justify-content-center"
+              id="bs-example-navbar-collapse-1"
+            >
               <ul
-                class="navbar-nav flex-row align-items-center justify-content-center"
+                class="navbar-nav flex-row align-items-center justify-content-center m-0 p-0"
                 id="responsive-menu"
-                style="gap: 25px"
               >
                 <li class="nav-item">
                   <a
-                    class="nav-link text fw-medium text-uppercase {% if request.endpoint == 'home' %}active{% endif %}"
+                    class="nav-link fw-medium text-uppercase {% if request.endpoint == 'home' %}active{% endif %}"
                     href="{{ url_for('home') }}"
                     >Home</a
                   >
                 </li>
                 <li class="nav-item">
                   <a
-                    class="nav-link text fw-medium text-uppercase {% if request.endpoint == 'services' %}active{% endif %}"
-                    href="{{ url_for('services') }}"
-                    >Services</a
-                  >
-                </li>
                 <li class="nav-item">
                   <a
-                    class="nav-link text fw-medium text-uppercase {% if request.endpoint and ('shop' in request.endpoint or 'product' in request.endpoint) %}active{% endif %}"
+                    class="nav-link fw-medium text-uppercase {% if request.endpoint and ('shop' in request.endpoint or 'product' in request.endpoint) %}active{% endif %}"
                     href="{{ url_for('shop') }}"
                     >Shop</a
                   >
                 </li>
                 <li class="nav-item">
                   <a
-                    class="nav-link text fw-medium text-uppercase {% if request.endpoint == 'portfolio' %}active{% endif %}"
-                    href="{{ url_for('portfolio') }}"
-                    >Portfolio</a
+                    class="nav-link fw-medium text-uppercase {% if request.endpoint == 'services' %}active{% endif %}"
+                    href="{{ url_for('services') }}"
+                    >Services</a
                   >
                 </li>
                 <li class="nav-item">
                   <a
-                    class="nav-link text fw-medium text-uppercase {% if request.endpoint == 'about' %}active{% endif %}"
+                    class="nav-link fw-medium text-uppercase {% if request.endpoint == 'portfolio' %}active{% endif %}"
+                    href="{{ url_for('portfolio') }}"
+                    >Collection</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link fw-medium text-uppercase {% if request.endpoint == 'about' %}active{% endif %}"
                     href="{{ url_for('about') }}"
                     >About</a
                   >
                 </li>
                 <li class="nav-item">
                   <a
-                    class="nav-link text fw-medium text-uppercase {% if request.endpoint == 'contact' %}active{% endif %}"
+                    class="nav-link fw-medium text-uppercase {% if request.endpoint == 'projects' %}active{% endif %}"
+                    href="{{ url_for('projects') }}"
+                    >Projects</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link fw-medium text-uppercase {% if request.endpoint == 'blog' %}active{% endif %}"
+                    href="{{ url_for('blog') }}"
+                    >Blog</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link fw-medium text-uppercase {% if request.endpoint == 'contact' %}active{% endif %}"
                     href="{{ url_for('contact') }}"
                     >Contact</a
                   >
@@ -68,21 +94,23 @@
             </div>
           </div>
         </div>
-        <div class="col-xl-3 col-md-4 col-0 order-2 order-xl-3">
-          <div class="header-icons d-none d-xl-block text-end">
+
+        <!-- Button & Mobile Menu -->
+        <div
+          class="col-6 col-xl-2 order-2 order-xl-3 text-end d-flex align-items-center justify-content-end gap-3"
+        >
+          <div class="header-icons d-none d-xl-block">
             <a
               href="https://wa.me/917351949490?text=Hello!%20I%20am%20interested%20in%20your%20services%20and%20would%20like%20to%20know%20more.%20Please%20share%20details."
               target="_blank"
-              class="btn1 text-nowrap w-100 text-center"
-              >WhatsApp Us<i
-                class="fa fa-long-arrow-right d-none d-xxl-inline-block"
-                aria-hidden="true"
-              ></i
+              class="btn text-uppercase header-btn d-flex align-items-center justify-content-center gap-2"
+              >WhatsApp Us
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
             ></a>
           </div>
+          <div id="slicknav-mobile"></div>
         </div>
       </div>
-      <div id="slicknav-mobile"></div>
     </div>
   </div>
 </div>

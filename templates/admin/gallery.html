@@ -1,6 +1,6 @@
 {% extends 'admin/layout.html' %}
 
-{% block title %}Gallery – UtopiaAdmin{% endblock %}
+{% block title %}Collection – UtopiaAdmin{% endblock %}
 
 {% block content %}
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -15,8 +15,8 @@
 
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 5px;">
         <div>
-            <h1 class="admin-page-title" style="margin-bottom: 2px;">Gallery Management</h1>
-            <p class="admin-page-subtitle" style="margin-bottom: 0;">Manage gallery images and categories.</p>
+            <h1 class="admin-page-title" style="margin-bottom: 2px;">Collection Management</h1>
+            <p class="admin-page-subtitle" style="margin-bottom: 0;">Manage collection images and categories.</p>
         </div>
         <div>
             <button class="admin-btn admin-btn-accent" onclick="openAddModal()">

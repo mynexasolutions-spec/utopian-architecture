@@ -37,7 +37,7 @@
         spaceBetween: 20,
         breakpoints: {
           992: {
-            slidesPerView: 2,
+            slidesPerView: 3,
           }
         },
         pagination: {
