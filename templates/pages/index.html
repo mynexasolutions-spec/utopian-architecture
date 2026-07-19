@@ -962,13 +962,22 @@ endblock %} {% block content %}
   .process-title-left h2,
   .why-us-left h2,
   .about-left h2,
-  .testimonial-title-left h2 {
+  .testimonial-title-left h2,
+  .ad-banner-left h2 {
     color: #1a3224 !important;
     font-family: 'Playfair Display', serif !important;
     font-weight: 600 !important;
     font-size: 36px !important;
     text-transform: none !important;
     letter-spacing: normal !important;
+  }
+
+  .ad-banner-left h2 {
+    font-size: 42px !important;
+  }
+
+  .ad-banner-slider .swiper-pagination-bullet-active {
+    background-color: #842e13 !important;
   }
 
   .collection-grid-card {
@@ -1473,7 +1482,66 @@ endblock %} {% block content %}
 </section>
 <!-- Process Section Ends -->
 
-
+<!-- Ad Banner Section Starts -->
+<section class="ad-banner p-0 my-5">
+  <div class="container">
+    <div
+      class="ad-banner-inner p-md-5 p-4 rounded-5 bg-white position-relative overflow-hidden"
+      style="border: 1px solid #eae5de;"
+    >
+      <div class="row align-items-center justify-content-between py-3 gy-5">
+        <div class="col-lg-6">
+          <div class="ad-banner-left text-center text-lg-start">
+            <h6 class="secondary mb-2">Limited Time Offer</h6>
+            <h2 class="mb-3">
+              Redefine the Luxury of Living
+            </h2>
+            <p class="teko h6 fw-normal">
+              Get a FREE design consultation and 3D visualization for your home
+              or office project. Transform your space with premium quality
+              interiors at competitive prices.
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="ad-banner-right position-relative z-2">
+            <!-- Swiper Slider -->
+            <div class="swiper ad-banner-slider rounded-4 overflow-hidden shadow" style="border: 5px solid #ffffff; height: 350px;">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                  <img
+                    src="{{ url_for('static', filename='img/images_sub/gallery-1.jpg') }}"
+                    alt="luxury bedroom"
+                    class="w-100 h-100"
+                    style="object-fit: cover;"
+                  />
+                </div>
+                <div class="swiper-slide">
+                  <img
+                    src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80"
+                    alt="luxury living room"
+                    class="w-100 h-100"
+                    style="object-fit: cover;"
+                  />
+                </div>
+                <div class="swiper-slide">
+                  <img
+                    src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=800&q=80"
+                    alt="luxury kitchen"
+                    class="w-100 h-100"
+                    style="object-fit: cover;"
+                  />
+                </div>
+              </div>
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Ad Banner Section Ends -->
 
 <!-- Why Us section Starts -->
 <section class="why-us">
@@ -1995,6 +2063,23 @@ Please share more details.`;
       // Open WhatsApp
       window.open(whatsappUrl, "_blank");
     });
+  });
+
+  // Initialize Ad Banner Swiper
+  new Swiper('.ad-banner-slider', {
+    loop: true,
+    autoplay: {
+      delay: 3500,
+      disableOnInteraction: false,
+    },
+    effect: 'fade',
+    fadeEffect: {
+      crossFade: true
+    },
+    pagination: {
+      el: '.ad-banner-slider .swiper-pagination',
+      clickable: true,
+    },
   });
 </script>
 {% endblock %}
