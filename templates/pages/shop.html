@@ -25,110 +25,80 @@
     padding: 80px 0;
     background-color: #f6f2eb; /* bg-secondarylight matching home page */
   }
-  
-  /* Sidebar styles */
-  .shop-sidebar {
+
+  /* Horizontal filter bar (replaces the old fixed-width sidebar so products can use the full row) */
+  .shop-filter-bar {
     background: #ffffff;
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0px 10px 30px rgba(144, 110, 73, 0.04);
-    border: 1px solid rgba(144, 110, 73, 0.08);
+    border-radius: 16px;
+    padding: 20px 25px;
+    box-shadow: 0px 8px 24px rgba(144, 110, 73, 0.03);
+    border: 1px solid rgba(144, 110, 73, 0.06);
   }
-  
-  .sidebar-title {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 20px;
-    color: #252525;
-    margin-bottom: 25px;
-    padding-bottom: 15px;
-    border-bottom: 2px solid #906e49;
-    letter-spacing: -0.3px;
-  }
-  
-  .category-nav-list {
+
+  .filter-pills-list {
     list-style: none;
-    padding-left: 0;
-    margin-bottom: 0;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 10px;
+    padding: 2px 0 4px 0;
+    margin: 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
-  
-  .category-nav-item {
-    margin-bottom: 12px;
+
+  .filter-pills-list::-webkit-scrollbar {
+    display: none;
   }
-  
-  .category-nav-link {
+
+  @media (min-width: 992px) {
+    .filter-pills-list {
+      flex-wrap: wrap;
+      overflow-x: visible;
+    }
+  }
+
+  .filter-pill {
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 14px;
+    white-space: nowrap;
     color: #252525;
     text-decoration: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 15px;
-    border-radius: 10px;
+    display: inline-block;
+    padding: 9px 18px;
+    border-radius: 30px;
     background-color: #faf8f5;
+    border: 1px solid transparent;
     transition: all 0.3s ease;
   }
-  
-  .category-nav-link:hover,
-  .category-nav-link.active {
+
+  .filter-pill:hover,
+  .filter-pill.active {
     background-color: #906e49;
     color: #ffffff !important;
   }
-  
-  .category-nav-link i {
-    transition: transform 0.3s ease;
-  }
-  
-  .category-nav-item:hover .category-nav-link i,
-  .category-nav-item.is-active .category-nav-link i {
-    transform: rotate(90deg);
+
+  .subcategory-pills {
+    border-top: 1px dashed rgba(144, 110, 73, 0.25);
+    margin-top: 14px !important;
+    padding-top: 14px;
   }
 
-  .subcategory-nav-list {
-    list-style: none;
-    padding-left: 20px;
-    border-left: 1px dashed rgba(144, 110, 73, 0.3);
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-    margin-top: 0;
-    margin-bottom: 0;
-    /* transition out */
-    transition: max-height 0.4s cubic-bezier(0, 1, 0, 1), opacity 0.3s ease, margin 0.3s ease;
-  }
-
-  .category-nav-item:hover .subcategory-nav-list,
-  .category-nav-item.is-active .subcategory-nav-list {
-    max-height: 400px;
-    opacity: 1;
-    margin-top: 8px;
-    margin-bottom: 10px;
-    /* transition in */
-    transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out, margin 0.3s ease;
-  }
-  
-  .subcategory-nav-item {
-    margin-bottom: 8px;
-  }
-  
-  .subcategory-nav-link {
-    font-family: 'Poppins', sans-serif;
-    font-size: 14.5px;
-    color: #666666;
-    text-decoration: none;
-    display: block;
-    padding: 4px 12px;
-    border-radius: 6px;
-    transition: all 0.2s ease;
-  }
-  
-  .subcategory-nav-link:hover,
-  .subcategory-nav-link.active {
-    color: #906e49 !important;
-    background-color: rgba(144, 110, 73, 0.05);
+  .filter-pill-sub {
+    font-size: 13px;
     font-weight: 500;
+    padding: 7px 15px;
+    background-color: #ffffff;
+    border: 1px solid rgba(144, 110, 73, 0.25);
+    color: #666666;
+  }
+
+  .filter-pill-sub:hover,
+  .filter-pill-sub.active {
+    background-color: #842e13;
+    border-color: #842e13;
+    color: #ffffff !important;
   }
 
   /* Grid styles */
@@ -149,34 +119,6 @@
     margin-bottom: 5px;
   }
 
-  /* Mobile sidebar toggle button */
-  .mobile-sidebar-toggle {
-    display: none;
-    width: 100%;
-    background-color: #252525;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 12px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    margin-bottom: 20px;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
-
-  @media (max-width: 991px) {
-    .mobile-sidebar-toggle {
-      display: inline-flex;
-    }
-    .shop-sidebar-wrapper {
-      display: none;
-    }
-    .shop-sidebar-wrapper.show {
-      display: block;
-    }
-  }
 </style>
 {% endblock %}
 
@@ -206,151 +148,130 @@
 <section class="shop-section">
   <div class="container">
     
-    <!-- Mobile Filter Toggle Button -->
-    <button class="mobile-sidebar-toggle" onclick="toggleMobileSidebar()">
-      <i class="fa fa-filter"></i> Browse Categories
-    </button>
-    
-    <div class="row g-4">
-      
-      <!-- Left Column: Categories Sidebar -->
-      <div class="col-lg-3 col-12">
-        <div class="shop-sidebar-wrapper" id="shopSidebar">
-          <div class="shop-sidebar">
-            <h3 class="sidebar-title">Categories</h3>
-            <ul class="category-nav-list">
-              <li class="category-nav-item">
-                <a href="{{ url_for('shop') }}" class="category-nav-link {% if not selected_category %}active{% endif %}">
-                  <span>All Products</span>
-                  <i class="fa fa-angle-right"></i>
-                </a>
-              </li>
-              
-              {% for cat in categories %}
-              {% set is_active_cat = (selected_category and selected_category.id == cat.id) or (selected_subcategory and selected_subcategory.category_id == cat.id) %}
-              <li class="category-nav-item {% if is_active_cat %}is-active{% endif %}">
-                <a href="{{ url_for('shop_category', category_id=cat.id) }}" class="category-nav-link {% if selected_category and selected_category.id == cat.id and not selected_subcategory %}active{% endif %}">
-                  <span>{{ cat.name }}</span>
-                  <i class="fa fa-angle-right"></i>
-                </a>
-                
-                <!-- Subcategories nested lists -->
-                {% if cat.subcategories %}
-                <ul class="subcategory-nav-list">
-                  {% for sub in cat.subcategories %}
-                  <li class="subcategory-nav-item">
-                    <a href="{{ url_for('shop_subcategory', subcategory_id=sub.id) }}" class="subcategory-nav-link {% if selected_subcategory and selected_subcategory.id == sub.id %}active{% endif %}">
-                      {{ sub.name }}
-                    </a>
-                  </li>
-                  {% endfor %}
-                </ul>
-                {% endif %}
-              </li>
-              {% endfor %}
-            </ul>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Right Column: Products Display Grid -->
-      <div class="col-lg-9 col-12">
-        <div class="shop-grid-header d-flex flex-wrap justify-content-between align-items-center gap-3">
-          <div>
-            <h1 class="shop-page-title">
-              {% if selected_subcategory %}
-                {{ selected_subcategory.name }}
-              {% elif selected_category %}
-                {{ selected_category.name }}
-              {% else %}
-                All Collections
-              {% endif %}
-            </h1>
-            <p class="text-muted mb-0" style="font-size: 14.5px;">
-              Showing {{ products | length }} luxury items
-            </p>
-          </div>
-          
-          {% if selected_category or selected_subcategory %}
-          <a href="{{ url_for('shop') }}" class="btn-explore-projects py-2 px-4" style="font-size: 13px; border-radius: 20px;">
-            Clear Filters <i class="fa fa-times ms-1"></i>
+    <!-- Category Filter Bar -->
+    <div class="shop-filter-bar mb-4">
+      <ul class="filter-pills-list">
+        <li>
+          <a href="{{ url_for('shop') }}" class="filter-pill {% if not selected_category %}active{% endif %}">
+            All Products
           </a>
+        </li>
+        {% for cat in categories %}
+        <li>
+          <a href="{{ url_for('shop_category', category_id=cat.id) }}" class="filter-pill {% if selected_category and selected_category.id == cat.id and not selected_subcategory %}active{% endif %}">
+            {{ cat.name }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+
+      {% if selected_category and selected_category.subcategories %}
+      <ul class="filter-pills-list subcategory-pills">
+        {% for sub in selected_category.subcategories %}
+        <li>
+          <a href="{{ url_for('shop_subcategory', subcategory_id=sub.id) }}" class="filter-pill filter-pill-sub {% if selected_subcategory and selected_subcategory.id == sub.id %}active{% endif %}">
+            {{ sub.name }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+
+    <!-- Products Display Grid (full width) -->
+    <div class="shop-grid-header d-flex flex-wrap justify-content-between align-items-center gap-3">
+      <div>
+        <h1 class="shop-page-title">
+          {% if selected_subcategory %}
+            {{ selected_subcategory.name }}
+          {% elif selected_category %}
+            {{ selected_category.name }}
+          {% else %}
+            All Collections
           {% endif %}
-        </div>
-        
-        {% if products %}
-        <div class="row g-4">
-          {% for prod in products %}
-          {% set mrp_val = prod.mrp | replace('$', '') | replace(',', '') | float if prod.mrp else 0 %}
-          {% set sale_price_val = prod.sale_price | replace('$', '') | replace(',', '') | float if prod.sale_price else mrp_val %}
-          <div class="col-lg-4 col-md-6 col-sm-6 col-12 decor-product-item">
-            <div class="decor-product-card">
-              <a href="{{ url_for('product_detail', product_id=prod.id) }}">
-                <div class="product-img-container position-relative">
-                  {% if mrp_val > 0 and sale_price_val < mrp_val %}
-                  {% set discount_pct = ((mrp_val - sale_price_val) / mrp_val * 100) | round | int %}
-                  <div class="discount-badge d-flex flex-column justify-content-center align-items-center" style="position: absolute; top: 0; left: 0; background-color: #842e13; color: white; width: 55px; height: 55px; border-bottom-right-radius: 12px; z-index: 10;">
-                    <span class="fs-6 fw-bold lh-1">{{ discount_pct }}%</span>
-                    <span class="lh-1 mt-1" style="font-size: 10px !important;">OFF</span>
-                  </div>
-                  {% endif %}
-                  <img src="{{ prod.image_url }}" alt="{{ prod.name }}" loading="lazy" />
-                </div>
-              </a>
-              <div class="product-details">
-                <span class="product-badge">
-                  {% if prod.subcategory_rel %}
-                    {{ prod.subcategory_rel.name }}
-                  {% else %}
-                    {{ prod.category | replace('-', ' ') | title }}
-                  {% endif %}
-                </span>
-                
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                  <h4 class="product-title mb-0" style="font-size: 16px;">
-                    <a href="{{ url_for('product_detail', product_id=prod.id) }}" style="color: inherit; text-decoration: none;">
-                      {{ prod.name }}
-                    </a>
-                  </h4>
-                  <div class="product-pricing text-end">
-                    <span class="product-price fw-bold" style="font-size: 18px; color: #842e13;">₹{{ "{:,.0f}".format(sale_price_val) }}</span>
-                    {% if sale_price_val < mrp_val %}
-                    <br><span class="original-price text-muted text-decoration-line-through" style="font-size: 13px;">₹{{ "{:,.0f}".format(mrp_val) }}</span>
-                    {% endif %}
-                  </div>
-                </div>
-                
-                {% if prod.in_stock %}
-                <button class="btn-add-cart w-100">Get Quote</button>
-                {% else %}
-                <button class="btn-add-cart w-100" disabled style="background-color: #cccccc !important; color: #666666 !important; border: none !important; cursor: not-allowed; pointer-events: none;">Out of Stock</button>
+        </h1>
+        <p class="text-muted mb-0" style="font-size: 14.5px;">
+          Showing {{ products | length }} luxury items
+        </p>
+      </div>
+
+      {% if selected_category or selected_subcategory %}
+      <a href="{{ url_for('shop') }}" class="btn-explore-projects py-2 px-4" style="font-size: 13px; border-radius: 20px;">
+        Clear Filters <i class="fa fa-times ms-1"></i>
+      </a>
+      {% endif %}
+    </div>
+
+    {% if products %}
+    <div class="row g-4">
+      {% for prod in products %}
+      {% set mrp_val = prod.mrp | replace('$', '') | replace(',', '') | float if prod.mrp else 0 %}
+      {% set sale_price_val = prod.sale_price | replace('$', '') | replace(',', '') | float if prod.sale_price else mrp_val %}
+      <div class="col-lg-3 col-md-6 col-sm-6 col-12 decor-product-item">
+        <div class="decor-product-card">
+          <a href="{{ url_for('product_detail', product_id=prod.id) }}">
+            <div class="product-img-container position-relative">
+              {% if mrp_val > 0 and sale_price_val < mrp_val %}
+              {% set discount_pct = ((mrp_val - sale_price_val) / mrp_val * 100) | round | int %}
+              <div class="discount-badge d-flex flex-column justify-content-center align-items-center" style="position: absolute; top: 0; left: 0; background-color: #842e13; color: white; width: 55px; height: 55px; border-bottom-right-radius: 12px; z-index: 10;">
+                <span class="fs-6 fw-bold lh-1">{{ discount_pct }}%</span>
+                <span class="lh-1 mt-1" style="font-size: 10px !important;">OFF</span>
+              </div>
+              {% endif %}
+              <img src="{{ prod.image_url }}" alt="{{ prod.name }}" loading="lazy" />
+            </div>
+          </a>
+          <div class="product-details">
+            <span class="product-badge">
+              {% if prod.subcategory_rel %}
+                {{ prod.subcategory_rel.name }}
+              {% else %}
+                {{ prod.category | replace('-', ' ') | title }}
+              {% endif %}
+            </span>
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h4 class="product-title mb-0" style="font-size: 16px;">
+                <a href="{{ url_for('product_detail', product_id=prod.id) }}" style="color: inherit; text-decoration: none;">
+                  {{ prod.name }}
+                </a>
+              </h4>
+              <div class="product-pricing text-end">
+                <span class="product-price fw-bold" style="font-size: 18px; color: #842e13;">₹{{ "{:,.0f}".format(sale_price_val) }}</span>
+                {% if sale_price_val < mrp_val %}
+                <br><span class="original-price text-muted text-decoration-line-through" style="font-size: 13px;">₹{{ "{:,.0f}".format(mrp_val) }}</span>
                 {% endif %}
               </div>
             </div>
-          </div>
-          {% endfor %}
-        </div>
-        
-        <!-- Pagination -->
-        {% if selected_subcategory %}
-          {{ render_pagination(products_pagination, 'shop_subcategory', {'subcategory_id': selected_subcategory.id}) }}
-        {% elif selected_category %}
-          {{ render_pagination(products_pagination, 'shop_category', {'category_id': selected_category.id}) }}
-        {% else %}
-          {{ render_pagination(products_pagination, 'shop', {}) }}
-        {% endif %}
 
-        {% else %}
-        <div class="text-center py-5 bg-white rounded-4 border" style="border-color: rgba(144, 110, 73, 0.1) !important;">
-          <i class="fa fa-couch text-muted mb-3" style="font-size: 48px; color: #b0a483 !important;"></i>
-          <h3>No Products Found</h3>
-          <p class="text-muted px-3">We don't have any items registered in this category yet. Check back soon!</p>
-          <a href="{{ url_for('shop') }}" class="btn1 btn-sm mt-2" style="display: inline-block;margin-top: 20px !important;">Browse All Products</a>
+            {% if prod.in_stock %}
+            <button class="btn-add-cart w-100">Get Quote</button>
+            {% else %}
+            <button class="btn-add-cart w-100" disabled style="background-color: #cccccc !important; color: #666666 !important; border: none !important; cursor: not-allowed; pointer-events: none;">Out of Stock</button>
+            {% endif %}
+          </div>
         </div>
-        {% endif %}
       </div>
-      
+      {% endfor %}
     </div>
+
+    <!-- Pagination -->
+    {% if selected_subcategory %}
+      {{ render_pagination(products_pagination, 'shop_subcategory', {'subcategory_id': selected_subcategory.id}) }}
+    {% elif selected_category %}
+      {{ render_pagination(products_pagination, 'shop_category', {'category_id': selected_category.id}) }}
+    {% else %}
+      {{ render_pagination(products_pagination, 'shop', {}) }}
+    {% endif %}
+
+    {% else %}
+    <div class="text-center py-5 bg-white rounded-4 border" style="border-color: rgba(144, 110, 73, 0.1) !important;">
+      <i class="fa fa-couch text-muted mb-3" style="font-size: 48px; color: #b0a483 !important;"></i>
+      <h3>No Products Found</h3>
+      <p class="text-muted px-3">We don't have any items registered in this category yet. Check back soon!</p>
+      <a href="{{ url_for('shop') }}" class="btn1 btn-sm mt-2" style="display: inline-block;margin-top: 20px !important;">Browse All Products</a>
+    </div>
+    {% endif %}
   </div>
 </section>
 <!-- Shop Section Ends -->
@@ -359,11 +280,6 @@
 
 {% block scripts %}
 <script>
-  function toggleMobileSidebar() {
-    const sidebar = document.getElementById('shopSidebar');
-    sidebar.classList.toggle('show');
-  }
-
   document.addEventListener('DOMContentLoaded', () => {
     // WhatsApp Quote Button Action
     document.querySelectorAll(".btn-add-cart").forEach((button) => {

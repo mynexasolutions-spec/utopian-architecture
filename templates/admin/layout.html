@@ -79,6 +79,11 @@
                         <i class="fa-solid fa-pen-nib"></i> Blog Posts
                     </a>
                 </li>
+                <li class="admin-menu-item">
+                    <a href="{{ url_for('admin_catalogue') }}" class="admin-menu-link {% if request.endpoint == 'admin_catalogue' %}active{% endif %}">
+                        <i class="fa-solid fa-file-pdf"></i> Catalogue
+                    </a>
+                </li>
             </ul>
         </aside>
 

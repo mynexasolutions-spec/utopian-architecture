@@ -10,33 +10,38 @@
     background-size: cover;
     background-position: right center;
     padding: 50px 0;
-    margin-bottom: 40px;
-    background-color: #FAF9F7;  
+    margin-bottom: 0;
+    background-color: #FAF9F7;
     padding-left: 50px;
   }
+
   .blog-category-banner h2 {
     color: #1a3224;
     font-family: 'Playfair Display', serif;
     font-size: 65px;
     font-weight: 650;
     margin-bottom: 15px;
-    
+
   }
+
   .blog-category-divider {
     display: flex;
     align-items: center;
     margin-bottom: 25px;
   }
+
   .blog-category-divider .line {
     height: 1px;
     width: 80px;
     background-color: #bfa173;
   }
+
   .blog-category-divider .diamonds {
     display: flex;
     gap: 5px;
     margin: 0 15px;
   }
+
   .blog-category-divider .diamonds span {
     display: inline-block;
     width: 6px;
@@ -44,9 +49,11 @@
     border: 1px solid #bfa173;
     transform: rotate(45deg);
   }
+
   .blog-category-divider .diamonds span:nth-child(2) {
     background-color: #bfa173;
   }
+
   .blog-category-text {
     color: #222;
     font-size: 16px;
@@ -61,22 +68,27 @@
       padding-left: 30px;
     }
   }
+
   @media (max-width: 767px) {
     .blog-category-banner {
       padding: 60px 0;
       background-position: 65% center;
     }
+
     .blog-category-banner h2 {
       font-size: 40px;
       font-weight: 550;
     }
+
     .blog-category-divider {
       justify-content: center;
     }
+
     .blog-category-text {
       margin: 0 auto 30px auto;
       text-align: center;
     }
+
     .blog-category-banner-content {
       text-align: center !important;
     }
@@ -89,6 +101,7 @@
     border-bottom: 1px solid #f0ebe4;
     padding: 30px 0;
   }
+
   .section-heading {
     font-size: 25px;
     font-weight: 700;
@@ -98,6 +111,7 @@
     text-align: center;
     margin-bottom: 20px;
   }
+
   .explore-grid {
     display: flex;
     flex-wrap: wrap;
@@ -105,6 +119,7 @@
     align-items: stretch;
     margin: 0 -10px;
   }
+
   .explore-item {
     flex: 1 1 16.666%;
     max-width: 16.666%;
@@ -118,12 +133,15 @@
     align-items: center;
     justify-content: center;
   }
+
   .explore-item:last-child {
     border-right: none;
   }
+
   .explore-item:hover {
     transform: translateY(-4px);
   }
+
   .explore-icon-wrap {
     width: 70px;
     height: 70px;
@@ -133,14 +151,17 @@
     margin-bottom: 14px;
     transition: transform 0.3s ease;
   }
+
   .explore-item:hover .explore-icon-wrap {
     transform: scale(1.1);
   }
+
   .explore-icon-wrap img {
     max-width: 70px;
     max-height: 70px;
     object-fit: contain;
   }
+
   .explore-label {
     font-size: 15px;
     font-weight: 600;
@@ -148,6 +169,7 @@
     margin: 0;
     transition: color 0.3s ease;
   }
+
   .explore-item.active .explore-label,
   .explore-item:hover .explore-label {
     color: #cca471;
@@ -160,18 +182,22 @@
       border-bottom: 1px solid #f0ebe4;
       padding: 24px 10px;
     }
+
     .explore-item:nth-child(3n) {
       border-right: none;
     }
   }
+
   @media (max-width: 575.98px) {
     .explore-item {
       flex: 1 1 50%;
       max-width: 50%;
     }
+
     .explore-item:nth-child(2n) {
       border-right: none;
     }
+
     .explore-item:nth-child(3n) {
       border-right: 1px solid #f0ebe4;
     }
@@ -182,6 +208,7 @@
     background-color: #FAF9F7;
     padding: 40px 0;
   }
+
   .filter-tabs {
     display: flex;
     flex-wrap: wrap;
@@ -189,6 +216,7 @@
     gap: 10px;
     margin-bottom: 45px;
   }
+
   .filter-tab-btn {
     background-color: transparent;
     border: none;
@@ -202,10 +230,12 @@
     transition: all 0.3s ease;
     cursor: pointer;
   }
+
   .filter-tab-btn:hover {
     color: #1a3028;
     background-color: rgba(204, 164, 113, 0.15);
   }
+
   .filter-tab-btn.active {
     background-color: #a37a44;
     color: #ffffff;
@@ -224,30 +254,36 @@
     display: flex;
     flex-direction: column;
   }
+
   .article-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 16px 35px rgba(26, 48, 40, 0.12);
   }
+
   .article-img-wrap {
     height: 220px;
     overflow: hidden;
     position: relative;
   }
+
   .article-img-wrap img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.6s ease;
   }
+
   .article-card:hover .article-img-wrap img {
     transform: scale(1.06);
   }
+
   .article-content {
     padding: 24px;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
   }
+
   .article-date {
     font-size: 11px;
     font-weight: 600;
@@ -256,6 +292,7 @@
     text-transform: uppercase;
     margin-bottom: 8px;
   }
+
   .article-title {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 1.2rem;
@@ -265,9 +302,11 @@
     margin-bottom: 12px;
     transition: color 0.3s ease;
   }
+
   .article-card:hover .article-title {
     color: #a37a44;
   }
+
   .article-desc {
     font-size: 13.5px;
     color: #666666;
@@ -275,6 +314,7 @@
     margin-bottom: 22px;
     flex-grow: 1;
   }
+
   .article-link {
     font-size: 12px;
     font-weight: 700;
@@ -287,6 +327,7 @@
     gap: 6px;
     transition: gap 0.3s ease, color 0.3s ease;
   }
+
   .article-card:hover .article-link {
     gap: 10px;
     color: #1a3028;
@@ -297,6 +338,7 @@
     margin-top: 55px;
     text-align: center;
   }
+
   .btn-view-all {
     background-color: #1a3028;
     color: #ffffff;
@@ -312,11 +354,176 @@
     display: inline-block;
     text-decoration: none;
   }
+
   .btn-view-all:hover {
     background-color: #cca471;
     color: #ffffff;
     transform: translateY(-2px);
     box-shadow: 0 10px 25px rgba(204, 164, 113, 0.3);
+  }
+
+  .btn-download-highlight {
+    background: linear-gradient(135deg, #cca471 0%, #a37a44 100%);
+    color: #ffffff !important;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 14px 32px;
+    border-radius: 50px;
+    border: none;
+    box-shadow: 0 8px 24px rgba(163, 122, 68, 0.45);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .btn-download-highlight:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 30px rgba(163, 122, 68, 0.6);
+    background: linear-gradient(135deg, #a37a44 0%, #cca471 100%);
+  }
+
+  .btn-download-highlight .download-icon-svg {
+    transition: transform 0.3s ease;
+  }
+
+  .btn-download-highlight:hover .download-icon-svg {
+    transform: translateY(3px);
+  }
+
+  @media (max-width: 576px) {
+    .btn-download-highlight {
+      font-size: 11px;
+      padding: 10px 18px;
+      gap: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-download-highlight .download-icon-svg {
+      width: 15px;
+      height: 15px;
+    }
+  }
+
+  /* Catalogues Section Styling */
+  .catalogues-section {
+    padding: 80px 0;
+    background-color: #faf9f6;
+    border-bottom: 1px solid #f0ebe4;
+  }
+  .catalogues-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    color: #1a3224;
+    font-weight: 650;
+    margin-bottom: 30px;
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
+  .catalogue-row {
+    background: transparent;
+    border-bottom: 1px solid #eae5db;
+    padding: 24px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+  }
+  .catalogue-row:hover {
+    border-bottom-color: #cca471;
+    transform: translateX(5px);
+  }
+  .catalogue-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .catalogue-icon {
+    font-size: 28px;
+    color: #cca471;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+  }
+  .catalogue-row:hover .catalogue-icon {
+    transform: scale(1.1);
+    color: #1a3224;
+  }
+  .catalogue-details h5 {
+    font-family: 'Playfair Display', serif;
+    color: #1a3224;
+    font-size: 22px;
+    margin: 0 0 4px 0;
+    font-weight: 650;
+    transition: color 0.3s ease;
+  }
+  .catalogue-row:hover .catalogue-details h5 {
+    color: #cca471;
+  }
+  .catalogue-meta {
+    display: flex;
+    gap: 15px;
+  }
+  .catalogue-meta span {
+    font-size: 13px;
+    color: #8a817c;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn-download-row {
+    color: #cca471 !important;
+    background: transparent;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 8px 0;
+    border-bottom: 2px solid #cca471;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+  }
+  .btn-download-row:hover {
+    color: #1a3224 !important;
+    border-bottom-color: #1a3224;
+  }
+  .btn-download-row svg {
+    transition: transform 0.3s ease;
+  }
+  .btn-download-row:hover svg {
+    transform: translateY(2px);
+  }
+
+  @media (max-width: 768px) {
+    .catalogue-row {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 15px;
+      padding: 25px 15px;
+    }
+    .catalogue-row:hover {
+      transform: none;
+    }
+    .catalogue-info {
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+    }
+    .catalogue-meta {
+      justify-content: center;
+    }
+    .btn-download-row {
+      margin-top: 8px;
+      width: auto;
+    }
   }
 </style>
 {% endblock %}
@@ -345,11 +552,65 @@
   </div>
 </section>
 
+<!-- Catalogues List Section -->
+{% if catalogues %}
+<section class="catalogues-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h3 class="catalogues-title">PRODUCT CATALOGUES</h3>
+        <div class="blog-category-divider justify-content-center" style="margin-top: -15px; margin-bottom: 35px;">
+          <div class="line"></div>
+          <div class="diamonds">
+            <span></span>
+            <span class="diamond-filled"></span>
+            <span></span>
+          </div>
+          <div class="line"></div>
+        </div>
+        
+        <div style="max-width: 900px; margin: 0 auto;">
+          {% for cat in catalogues %}
+          <div class="catalogue-row">
+            <div class="catalogue-info">
+              <div class="catalogue-icon">
+                <i class="fa-solid fa-file-pdf"></i>
+              </div>
+              <div class="catalogue-details">
+                <h5>{{ cat.title }}</h5>
+                <div class="catalogue-meta">
+                  <span>
+                    <i class="fa-solid fa-calendar-days"></i>
+                    Date: {{ cat.created_at.strftime('%B %d, %Y') }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <a href="{{ url_for('download_catalogue', catalogue_id=cat.id) }}" class="btn-download-row" target="_blank" download>
+                Download
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+              </a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
 <!-- 2. Explore Ideas & Insights Section -->
 <section class="explore-section">
   <div class="container">
     <h3 class="section-heading">EXPLORE IDEAS &amp; INSIGHTS</h3>
-    
+
     <div class="explore-grid">
       <div class="explore-item">
         <div class="explore-icon-wrap">
@@ -357,35 +618,35 @@
         </div>
         <h6 class="explore-label">Design Trends</h6>
       </div>
-      
+
       <div class="explore-item">
         <div class="explore-icon-wrap">
           <img src="{{ url_for('static', filename='img/blog_pages/icon-2.png') }}" alt="Tips & Guides">
         </div>
         <h6 class="explore-label">Tips &amp; Guides</h6>
       </div>
-      
+
       <div class="explore-item">
         <div class="explore-icon-wrap">
           <img src="{{ url_for('static', filename='img/blog_pages/icon-3.png') }}" alt="Space Planning">
         </div>
         <h6 class="explore-label">Space Planning</h6>
       </div>
-      
+
       <div class="explore-item">
         <div class="explore-icon-wrap">
           <img src="{{ url_for('static', filename='img/blog_pages/icon-4.png') }}" alt="Product Guides">
         </div>
         <h6 class="explore-label">Product Guides</h6>
       </div>
-      
+
       <div class="explore-item">
         <div class="explore-icon-wrap">
           <img src="{{ url_for('static', filename='img/blog_pages/icon-5.png') }}" alt="Styling Ideas">
         </div>
         <h6 class="explore-label">Styling Ideas</h6>
       </div>
-      
+
       <div class="explore-item">
         <div class="explore-icon-wrap">
           <img src="{{ url_for('static', filename='img/blog_pages/icon-6.png') }}" alt="Sustainable Design">
@@ -400,7 +661,7 @@
 <section class="articles-section" id="latest-articles">
   <div class="container">
     <h3 class="section-heading mb-4">LATEST ARTICLES</h3>
-    
+
     <!-- Filter Tabs -->
     <div class="filter-tabs">
       <button class="filter-tab-btn active" data-filter="all">ALL</button>
@@ -412,25 +673,29 @@
     <!-- Articles Grid -->
     <div class="row g-4" id="articles-grid">
       {% if posts %}
-        {% for post in posts %}
-        <div class="col-12 col-md-6 col-lg-3 article-item {% if loop.index > 4 %}extra-article{% endif %}" data-category="{{ post.category.slug if post.category else 'uncategorized' }}" {% if loop.index > 4 %}style="display: none;"{% endif %}>
-          <div class="article-card">
-            <div class="article-img-wrap">
-              <img src="{{ post.image_url if (post.image_url and (post.image_url.startswith('http') or post.image_url.startswith('/'))) else (url_for('static', filename=post.image_url) if post.image_url else url_for('static', filename='img/blog_pages/blog-1.webp')) }}" alt="{{ post.title }}">
-            </div>
-            <div class="article-content">
-              <span class="article-date">{{ post.created_at.strftime('%b %d, %Y') | upper }}</span>
-              <h4 class="article-title">{{ post.title }}</h4>
-              <p class="article-desc">{{ post.short_description | truncate(100) }}</p>
-              <a href="{{ url_for('blog_detail', slug=post.slug) }}" class="article-link">READ MORE &rarr;</a>
-            </div>
+      {% for post in posts %}
+      <div class="col-12 col-md-6 col-lg-3 article-item {% if loop.index > 4 %}extra-article{% endif %}"
+        data-category="{{ post.category.slug if post.category else 'uncategorized' }}" {% if loop.index> 4
+        %}style="display: none;"{% endif %}>
+        <div class="article-card">
+          <div class="article-img-wrap">
+            <img
+              src="{{ post.image_url if (post.image_url and (post.image_url.startswith('http') or post.image_url.startswith('/'))) else (url_for('static', filename=post.image_url) if post.image_url else url_for('static', filename='img/blog_pages/blog-1.webp')) }}"
+              alt="{{ post.title }}">
+          </div>
+          <div class="article-content">
+            <span class="article-date">{{ post.created_at.strftime('%b %d, %Y') | upper }}</span>
+            <h4 class="article-title">{{ post.title }}</h4>
+            <p class="article-desc">{{ post.short_description | truncate(100) }}</p>
+            <a href="{{ url_for('blog_detail', slug=post.slug) }}" class="article-link">READ MORE &rarr;</a>
           </div>
         </div>
-        {% endfor %}
+      </div>
+      {% endfor %}
       {% else %}
-        <div class="col-12 text-center" style="padding: 50px 0;">
-          <h4 style="color: #666;">No articles found.</h4>
-        </div>
+      <div class="col-12 text-center" style="padding: 50px 0;">
+        <h4 style="color: #666;">No articles found.</h4>
+      </div>
       {% endif %}
     </div>
 
@@ -444,7 +709,7 @@
 
 {% block scripts %}
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     const filterTabs = document.querySelectorAll('.filter-tab-btn');
     const articles = document.querySelectorAll('.article-item');
     const viewAllBtn = document.getElementById('btn-view-all');
@@ -490,7 +755,7 @@
 
     // Event listeners for filter tabs
     filterTabs.forEach(tab => {
-      tab.addEventListener('click', function() {
+      tab.addEventListener('click', function () {
         const filter = this.getAttribute('data-filter');
         filterArticles(filter);
         document.getElementById('latest-articles').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -499,7 +764,7 @@
 
     // Event listener for view all button
     if (viewAllBtn) {
-      viewAllBtn.addEventListener('click', function() {
+      viewAllBtn.addEventListener('click', function () {
         allExpanded = true;
         articles.forEach(article => {
           article.style.display = 'block';

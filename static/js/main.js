@@ -263,14 +263,19 @@
       } else {
         $galleryItems.each(function() {
           var category = $(this).attr('data-category');
-          if (category === filterValue) {
+          var categories = category ? category.split(' ') : [];
+          if (categories.indexOf(filterValue) !== -1) {
             $(this).fadeIn(300);
           } else {
             $(this).fadeOut(200);
           }
         });
         // Update active items list to exclude hidden ones
-        $activeItems = $galleryItems.filter('[data-category="' + filterValue + '"]');
+        $activeItems = $galleryItems.filter(function() {
+          var category = $(this).attr('data-category');
+          var categories = category ? category.split(' ') : [];
+          return categories.indexOf(filterValue) !== -1;
+        });
       }
     });
 
@@ -373,6 +378,16 @@
         closeLightbox();
       }
     });
+
+    // Auto-activate filter from URL parameter on load
+    var urlParams = new URLSearchParams(window.location.search);
+    var urlCategory = urlParams.get('category');
+    if (urlCategory) {
+      var $targetBtn = $filterBtns.filter('[data-filter="' + urlCategory + '"]');
+      if ($targetBtn.length) {
+        $targetBtn.trigger('click');
+      }
+    }
   });
 
 })(jQuery);

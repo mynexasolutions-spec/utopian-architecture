@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-from flask import Flask, render_template, request, redirect, url_for, flash, abort, session
+from flask import Flask, render_template, request, redirect, url_for, flash, abort, session, Response, send_file
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 from jinja2 import TemplateNotFound
@@ -10,7 +10,7 @@ from werkzeug.utils import secure_filename
 
 # Import custom configuration and helpers
 from config import Config
-from helpers import upload_image_to_cloudinary, delete_image_from_cloudinary, allowed_file, format_product_description
+from helpers import upload_image_to_cloudinary, delete_image_from_cloudinary, allowed_file, format_product_description, upload_pdf_to_cloudinary
 
 # Load environment variables from .env
 load_dotenv()
@@ -104,6 +104,18 @@ class GalleryImage(db.Model):
     def __repr__(self):
         return f"<GalleryImage {self.id} - {self.category}>"
 
+class Catalogue(db.Model):
+    __tablename__ = 'catalogues'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    pdf_url = db.Column(db.String(255), nullable=False)
+    title = db.Column(db.String(100), default='Product Catalogue')
+    uploaded_by = db.Column(db.String(100), nullable=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return f"<Catalogue {self.title}>"
+
 class Category(db.Model):
     __tablename__ = 'categories'
     
@@ -164,9 +176,46 @@ class BlogPost(db.Model):
     def __repr__(self):
         return f"<BlogPost {self.title}>"
 
+class User(db.Model):
+    __tablename__ = 'users'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100), unique=True, nullable=False)
+    password_hash = db.Column(db.String(255), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def set_password(self, password):
+        from werkzeug.security import generate_password_hash
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        from werkzeug.security import check_password_hash
+        return check_password_hash(self.password_hash, password)
+
+    def __repr__(self):
+        return f"<User {self.username}>"
+
 if os.getenv('FLASK_ENV') != 'production':
     with app.app_context():
         db.create_all()
+
+        # Seed/Update admin user in database (loaded from environment variables)
+        try:
+            admin_username = os.getenv('ADMIN_USERNAME', 'contact@utopiandecors.com')
+            admin_password = os.getenv('ADMIN_PASSWORD', 'Hireberth@0302')
+            
+            admin_user = User.query.filter_by(username=admin_username).first()
+            if not admin_user:
+                admin_user = User(username=admin_username)
+                admin_user.set_password(admin_password)
+                db.session.add(admin_user)
+                db.session.commit()
+            else:
+                admin_user.set_password(admin_password)
+                db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            app.logger.error(f"Error seeding admin user: {e}")
 
         # Ensure dynamic columns exist in SQLite table
         for col_name, col_type in [("gallery_images", "TEXT"), ("category_id", "INTEGER"), ("subcategory_id", "INTEGER")]:
@@ -198,6 +247,17 @@ if os.getenv('FLASK_ENV') != 'production':
             db.session.rollback()
             try:
                 db.session.execute(db.text("ALTER TABLE portfolio_categories ADD COLUMN show_on_projects BOOLEAN DEFAULT 1"))
+                db.session.commit()
+            except Exception as e:
+                db.session.rollback()
+
+        # Ensure uploaded_by column exists in catalogues table
+        try:
+            db.session.execute(db.text("SELECT uploaded_by FROM catalogues LIMIT 1"))
+        except Exception:
+            db.session.rollback()
+            try:
+                db.session.execute(db.text("ALTER TABLE catalogues ADD COLUMN uploaded_by TEXT"))
                 db.session.commit()
             except Exception as e:
                 db.session.rollback()
@@ -747,8 +807,61 @@ def blog():
     
     # We load all posts so that the frontend can do instant client-side filtering
     posts = BlogPost.query.filter_by(is_published=True).order_by(BlogPost.created_at.desc()).all()
+    
+    catalogues = Catalogue.query.order_by(Catalogue.created_at.desc()).all()
         
-    return render_template('pages/blog.html', categories=categories, posts=posts, current_category=None)
+    return render_template('pages/blog.html', categories=categories, posts=posts, current_category=None, catalogues=catalogues)
+
+@app.route('/download-catalogue')
+@app.route('/download-catalogue/<int:catalogue_id>')
+def download_catalogue(catalogue_id=None):
+    """Streams the active catalogue PDF to the client with the correct title and .pdf extension."""
+    if catalogue_id:
+        catalogue = Catalogue.query.get_or_404(catalogue_id)
+    else:
+        catalogue = Catalogue.query.order_by(Catalogue.created_at.desc()).first()
+
+    if not catalogue:
+        import os
+        basedir = os.path.abspath(os.path.dirname(__file__))
+        default_path = os.path.join(basedir, 'static', 'uploads', 'catalogue', 'default_catalogue.pdf')
+        if os.path.exists(default_path):
+            return send_file(default_path, as_attachment=True, download_name="Utopia_Catalogue.pdf")
+        return abort(404)
+        
+    url = catalogue.pdf_url
+    
+    import re
+    safe_title = re.sub(r'[^a-zA-Z0-9_\- ]', '', catalogue.title).strip().replace(' ', '_')
+    filename = f"{safe_title}.pdf" if safe_title else "Utopia_Catalogue.pdf"
+    
+    if url.startswith('/static/'):
+        import os
+        basedir = os.path.abspath(os.path.dirname(__file__))
+        local_path = os.path.join(basedir, url.lstrip('/'))
+        if os.path.exists(local_path):
+            return send_file(local_path, as_attachment=True, download_name=filename)
+            
+    import urllib.request
+    try:
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        res = urllib.request.urlopen(req)
+        
+        def generate():
+            while True:
+                chunk = res.read(8192)
+                if not chunk:
+                    break
+                yield chunk
+                
+        headers = {
+            'Content-Type': 'application/pdf',
+            'Content-Disposition': f'attachment; filename="{filename}"'
+        }
+        return Response(generate(), headers=headers)
+    except Exception as e:
+        app.logger.error(f"Error streaming catalogue: {e}")
+        return redirect(url)
 
 @app.route('/blog/<slug>')
 def blog_detail(slug):
@@ -768,24 +881,21 @@ def projects():
     for img in images:
         cat_name = img.category or "other"
         f_class = cat_name.lower().replace(" ", "-")
-        # If a category is requested, only include images matching it (or if it's 'all', include all)
-        if current_category and current_category != 'all':
-            # Loose matching to allow 'residential' to match 'living-room' or 'bedroom' if needed,
-            # For strict matching:
-            if f_class != current_category and current_category not in f_class:
-                # Custom mapping for high level categories if needed
-                if current_category == 'residential' and f_class not in ['living-room', 'bedroom', 'kitchen']:
-                    continue
-                elif current_category == 'commercial' and f_class not in ['office', 'restaurant', 'cafe', 'retail']:
-                    continue
-                elif current_category not in ['residential', 'commercial']:
-                    continue
+        
+        # Build filter classes list (e.g. for client side filtering)
+        filter_classes = [f_class]
+        if f_class in ['living-room', 'bedroom', 'kitchen']:
+            filter_classes.append('residential')
+        elif f_class in ['office', 'restaurant', 'cafe', 'retail', 'commercial']:
+            filter_classes.append('commercial')
+            
+        filter_class_str = " ".join(filter_classes)
 
         gallery_items.append({
             'id': img.id,
             'image_url': img.image_url,
             'category': cat_name,
-            'filter_class': f_class,
+            'filter_class': filter_class_str,
             'alt': img.alt_text or "Gallery Image"
         })
         
@@ -830,24 +940,21 @@ def portfolio():
     for img in images:
         cat_name = img.category or "other"
         f_class = cat_name.lower().replace(" ", "-")
-        # If a category is requested, only include images matching it (or if it's 'all', include all)
-        if current_category and current_category != 'all':
-            # Loose matching to allow 'residential' to match 'living-room' or 'bedroom' if needed,
-            # For strict matching:
-            if f_class != current_category and current_category not in f_class:
-                # Custom mapping for high level categories if needed
-                if current_category == 'residential' and f_class not in ['living-room', 'bedroom', 'kitchen']:
-                    continue
-                elif current_category == 'commercial' and f_class not in ['office', 'restaurant', 'cafe', 'retail']:
-                    continue
-                elif current_category not in ['residential', 'commercial']:
-                    continue
+        
+        # Build filter classes list (e.g. for client side filtering)
+        filter_classes = [f_class]
+        if f_class in ['living-room', 'bedroom', 'kitchen']:
+            filter_classes.append('residential')
+        elif f_class in ['office', 'restaurant', 'cafe', 'retail', 'commercial']:
+            filter_classes.append('commercial')
+            
+        filter_class_str = " ".join(filter_classes)
 
         gallery_items.append({
             'id': img.id,
             'image_url': img.image_url,
             'category': cat_name,
-            'filter_class': f_class,
+            'filter_class': filter_class_str,
             'alt': img.alt_text or "Gallery Image"
         })
         
@@ -998,11 +1105,10 @@ def admin_login():
         username = request.form.get('username')
         password = request.form.get('password')
         
-        admin_user = os.getenv('ADMIN_USERNAME', 'admin')
-        admin_pass = os.getenv('ADMIN_PASSWORD', 'admin123')
-        
-        if username == admin_user and password == admin_pass:
+        user = User.query.filter_by(username=username).first()
+        if user and user.check_password(password):
             session['admin_logged_in'] = True
+            session['admin_username'] = user.username
             flash("Logged in successfully.", "success")
             next_url = request.args.get('next')
             return redirect(next_url or url_for('admin_dashboard'))
@@ -1815,6 +1921,64 @@ def delete_blog_post(id):
     db.session.commit()
     flash('Blog post deleted successfully!', 'success')
     return redirect(url_for('admin_blogs'))
+
+# ---------------------------------------------------------
+# Admin Catalogue Routes
+# ---------------------------------------------------------
+
+@app.route('/admin/catalogue')
+@login_required
+def admin_catalogue():
+    """Displays the admin catalogue management dashboard."""
+    catalogues = Catalogue.query.order_by(Catalogue.created_at.desc()).all()
+    return render_template('admin/catalogue.html', catalogues=catalogues)
+
+@app.route('/admin/catalogue/add', methods=['POST'])
+@login_required
+def admin_add_catalogue():
+    """Adds a new PDF catalogue."""
+    title = request.form.get('title', 'Product Catalogue')
+    file = request.files.get('pdf_file')
+    
+    if not file or file.filename == '':
+        flash("Please upload a PDF file to create the catalogue.", "danger")
+        return redirect(url_for('admin_catalogue'))
+        
+    pdf_url = upload_pdf_to_cloudinary(file, folder_name="catalogue")
+    if not pdf_url:
+        flash("Invalid file format or upload failed. Please upload a valid PDF.", "danger")
+        return redirect(url_for('admin_catalogue'))
+            
+    try:
+        uploaded_by = session.get('admin_username', 'Admin')
+        catalogue = Catalogue(title=title, pdf_url=pdf_url, uploaded_by=uploaded_by)
+        db.session.add(catalogue)
+        db.session.commit()
+        flash("Catalogue uploaded successfully.", "success")
+    except Exception as e:
+        db.session.rollback()
+        app.logger.error(f"Error adding catalogue: {e}")
+        flash("Failed to upload the catalogue.", "danger")
+        
+    return redirect(url_for('admin_catalogue'))
+
+@app.route('/admin/catalogue/delete/<int:catalogue_id>', methods=['POST'])
+@login_required
+def admin_delete_catalogue(catalogue_id):
+    """Deletes a specific catalogue."""
+    catalogue = Catalogue.query.get_or_404(catalogue_id)
+    try:
+        if catalogue.pdf_url:
+            delete_image_from_cloudinary(catalogue.pdf_url)
+        db.session.delete(catalogue)
+        db.session.commit()
+        flash("Catalogue deleted successfully.", "success")
+    except Exception as e:
+        db.session.rollback()
+        app.logger.error(f"Error deleting catalogue: {e}")
+        flash("Failed to delete the catalogue.", "danger")
+        
+    return redirect(url_for('admin_catalogue'))
 
 # --- CUSTOM 404 ERROR HANDLER ---
 

@@ -242,3 +242,35 @@ def format_product_description(raw_text, category_name, subcategory_name, mrp):
 </div>"""
 
     return html
+
+def upload_pdf_to_cloudinary(file, folder_name="catalogue"):
+    """
+    Saves the PDF file locally to avoid Cloudinary raw delivery security blocks.
+    """
+    if not file or file.filename == '':
+        return None
+        
+    if not file.filename.lower().endswith('.pdf'):
+        return None
+        
+    try:
+        import time
+        filename = secure_filename(file.filename)
+        if '.' in filename:
+            name_parts = filename.rsplit('.', 1)
+            timestamped_filename = f"{name_parts[0]}_{int(time.time())}.pdf"
+        else:
+            timestamped_filename = f"{filename}_{int(time.time())}.pdf"
+        
+        basedir = os.path.abspath(os.path.dirname(__file__))
+        upload_folder = os.path.join(basedir, 'static', 'uploads', folder_name)
+        os.makedirs(upload_folder, exist_ok=True)
+        
+        filepath = os.path.join(upload_folder, timestamped_filename)
+        file.seek(0)
+        file.save(filepath)
+        
+        return f"/static/uploads/{folder_name}/{timestamped_filename}"
+    except Exception as e:
+        print(f"Local PDF upload error: {e}")
+        return None

@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% from 'components/_pagination.html' import
 render_pagination %} {% block title %}Home – Utopia Furniture &amp;
-D&eacute;cor{% endblock %} 
+D&eacute;cor{% endblock %}
 {% block styles %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/limited-offers.css') }}" />
 {% endblock %}
@@ -10,33 +10,26 @@ endblock %} {% block content %}
 <section class="banner position-relative overflow-hidden p-0">
   <div class="banner-slider1">
     {% for slide in sliders %}
-    <div
-      class="banner-slide position-relative"
-      style="background-image: url('{{ slide.image_url }}');"
-    >
+    <div class="banner-slide position-relative" style="background-image: url('{{ slide.image_url }}');">
       <div class="overlay"></div>
       <div class="container h-100">
         <div
-          class="banner-slide-inner h-100 py-5 d-flex align-items-center position-relative text-center text-lg-start"
-        >
+          class="banner-slide-inner h-100 py-5 d-flex align-items-center position-relative text-center text-lg-start">
           <div class="row align-items-center gy-4 w-100">
             <div class="col-lg-7">
-              <h2
-                class="text-uppercase position-relative mb-0 white"
-                style="font-size: 55px; font-weight: 800; line-height: 1"
-              >
+              <h2 class="text-uppercase position-relative mb-0 white"
+                style="font-size: 55px; font-weight: 800; line-height: 1; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.75);">
                 {{ slide.heading | safe }}
               </h2>
             </div>
             <div class="col-lg-5">
               <div class="banner-info ps-lg-4">
-                <p class="white mb-4" style="line-height: 1.6; font-size: 16px">
+                <p class="white mb-4"
+                  style="line-height: 1.6; font-size: 16px; text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.75);">
                   {{ slide.sub_text }}
                 </p>
-                <a href="{{ url_for('contact') }}" class="btn1 text-uppercase"
-                  >Book a consultation
-                  <i class="fa fa-long-arrow-right ms-2" aria-hidden="true"></i
-                ></a>
+                <a href="{{ url_for('contact') }}" class="btn1 text-uppercase">Book a consultation
+                  <i class="fa fa-long-arrow-right ms-2" aria-hidden="true"></i></a>
               </div>
             </div>
           </div>
@@ -52,15 +45,17 @@ endblock %} {% block content %}
 <section class="our-services-section py-5">
   <div class="container py-2">
     <div class="text-center mb-3">
-      <h2 class="display-6 fw-bold mb-3">OUR SERVICES</h2>
-      <p class="text-muted mx-auto" style="font-size: 15px;">End-to-end interior design solutions tailored to your style and needs.</p>
+      <h2 class="display-6 fw-bold mb-3">Our Services</h2>
+      <p class="text-muted mx-auto" style="font-size: 15px;">End-to-end interior design solutions tailored to your style
+        and needs.</p>
     </div>
-    
+
     <div class="services-box rounded-4">
       <div class="row g-0">
         <!-- Service 1 -->
         <div class="col-6 col-lg-3 text-center p-2 p-lg-3 service-col border-end-lg border-bottom-sm">
-          <img src="{{ url_for('static', filename='img/our_services/1.png') }}" alt="Residential Interiors" class="mb-2">
+          <img src="{{ url_for('static', filename='img/our_services/1.png') }}" alt="Residential Interiors"
+            class="mb-2">
           <h6 class="mb-0 fw-bold">RESIDENTIAL<br>INTERIORS</h6>
         </div>
         <!-- Service 2 -->
@@ -86,66 +81,73 @@ endblock %} {% block content %}
 
 
 <!-- Exclusive Offers Banner Starts -->
-<section class="exclusive-offers position-relative p-0" style="background-color: #ffffff; overflow: hidden;">
-  <div class="row g-0">
-    <!-- Left Content area -->
-    <div class="col-lg-6 position-relative z-2 d-flex align-items-center" style="background-color: #ffffff; min-height: 420px;">
-      <!-- S-Curve SVG Divider -->
-      <svg class="d-none d-lg-block position-absolute h-100" style="top: 0; right: -119px; z-index: 2; width: 120px;" preserveAspectRatio="none" viewBox="0 0 100 100">
-        <path d="M0,0 C60,20 20,80 100,100 L0,100 Z" fill="#ffffff" />
-      </svg>
-      
-      <div class="content-wrapper p-4 p-md-5 w-100 ms-lg-4 text-center text-lg-start" style="position: relative; z-index: 3;">
-       
-        <h6 class="text-uppercase mb-2" style="color: #842e13; font-weight: 600; letter-spacing: 1.5px; font-size: 15px;">
-          Exclusive Offers
-        </h6>
-        <div class="mx-auto mx-lg-0" style="width: 40px; height: 1px; background-color: #906e49; margin-bottom: 25px;"></div>
-        
-        <h1 class="display-4 fw-bold mb-3" style="font-family: 'Playfair Display', serif; line-height: 1.2; color: #222;">
-          Beautiful Spaces,<br>
-          <span style="color: #842e13;">Better Deals</span>
-        </h1>
-        
-        <p class="text-muted mb-4 mx-auto mx-lg-0" style="font-size: 17px; max-width: 400px;">
-          Discover limited-time offers on premium furniture and interior solutions.
-        </p>
-        
-        <div class="d-flex flex-wrap justify-content-center justify-content-lg-start gap-3 mt-4 btns">
-          <a href="{{ url_for('shop') }}" class=" btn-shop-all text-white text-uppercase d-flex align-items-center justify-content-center" style="background-color: #842e13; padding: 10px 24px; font-weight: 600; font-size: 12px; letter-spacing: 1px; border: 1px solid #842e13; border-radius: 2px; transition: all 0.3s ease;">
-            Shop All Offers
-          </a>
-          <a href="{{ url_for('shop') }}" class=" btn-explore text-uppercase d-flex align-items-center justify-content-center" style="background-color: transparent; color: #842e13; padding: 10px 24px; font-weight: 600; font-size: 12px; letter-spacing: 1px; border: 1px solid #842e13; border-radius: 2px; transition: all 0.3s ease;">
-            Explore Collections
-          </a>
+<section class="exclusive-offers position-relative py-lg-0 py-5" style="background-color: #ffffff; overflow: hidden;">
+  <div class="container">
+    <div class="row align-items-center gy-4">
+      <!-- Left Content area -->
+      <div class="col-lg-6 position-relative z-2">
+        <div class="content-wrapper py-lg-5 text-center text-lg-start">
+          <h6 class="text-uppercase mb-2"
+            style="color: #842e13; font-weight: 600; letter-spacing: 1.5px; font-size: 15px;">
+            Exclusive Offers
+          </h6>
+          <div class="mx-auto mx-lg-0"
+            style="width: 40px; height: 1px; background-color: #906e49; margin-bottom: 25px;">
+          </div>
+
+          <h1 class="display-4 fw-bold mb-3"
+            style="font-family: 'Playfair Display', serif; line-height: 1.2; color: #222;">
+            Beautiful Spaces,<br>
+            <span style="color: #842e13;">Better Deals</span>
+          </h1>
+
+          <p class="text-muted mb-4 mx-auto mx-lg-0" style="font-size: 17px; max-width: 450px;">
+            Discover limited-time offers on premium furniture and interior solutions.
+          </p>
+
+          <div class="d-flex flex-wrap justify-content-center justify-content-lg-start gap-3 mt-4 btns">
+            <a href="{{ url_for('shop') }}"
+              class="btn-shop-all text-white text-uppercase d-flex align-items-center justify-content-center"
+              style="background-color: #842e13; padding: 12px 28px; font-weight: 600; font-size: 13px; letter-spacing: 1px; border: 1px solid #842e13; border-radius: 4px; transition: all 0.3s ease;">
+              Shop All Offers
+            </a>
+            <a href="{{ url_for('shop') }}"
+              class="btn-explore text-uppercase d-flex align-items-center justify-content-center"
+              style="background-color: transparent; color: #842e13; padding: 12px 28px; font-weight: 600; font-size: 13px; letter-spacing: 1px; border: 1px solid #842e13; border-radius: 4px; transition: all 0.3s ease;">
+              Explore Collections
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Image Area (Visible only on mobile/tablet) -->
+      <div class="col-lg-6 d-lg-none">
+        <div class="exclusive-banner-img rounded-4 overflow-hidden" style="height: 300px; position: relative;">
+          <img src="{{ url_for('static', filename='img/bg/bg_01.webp') }}" alt="Beautiful Spaces" class="w-100 h-100"
+            style="object-fit: cover; object-position: center;" />
         </div>
       </div>
     </div>
-    
-    <!-- Right Image Area -->
-    <div class="col-lg-7 position-relative z-1 exclusive-banner-img">
-      <img src="{{ url_for('static', filename='img/bg/bg_01.webp') }}" alt="Beautiful Spaces" class="w-100 h-100 position-absolute" style="object-fit: cover; object-position: center; top: 0; left: 0;" />
-    </div>
+  </div>
+
+  <!-- Right Image Area (Full bleed, visible only on desktop) -->
+  <div class="d-none d-lg-block position-absolute h-100 z-1" style="top: 0; right: 0; width: 50%;">
+    <!-- S-Curve SVG Divider -->
+    <svg class="position-absolute h-100" style="top: 0; left: -119px; z-index: 2; width: 120px;"
+      preserveAspectRatio="none" viewBox="0 0 100 100">
+      <path d="M0,0 C60,20 20,80 100,100 L0,100 Z" fill="#ffffff" />
+    </svg>
+    <img src="{{ url_for('static', filename='img/bg/bg_01.webp') }}" alt="Beautiful Spaces" class="w-100 h-100"
+      style="object-fit: cover; object-position: center;" />
   </div>
 </section>
 
 <style>
-  .exclusive-banner-img {
-    min-height: 250px;
-  }
-  @media (min-width: 992px) {
-    .exclusive-banner-img {
-      position: absolute !important;
-      top: 0;
-      right: 0;
-      width: 50%;
-      height: 100%;
-    }
-  }
   .btn-shop-all:hover {
     background-color: #7a5d3e !important;
     border-color: #7a5d3e !important;
   }
+
   .btn-explore:hover {
     background-color: #906e49 !important;
     color: #ffffff !important;
@@ -156,13 +158,16 @@ endblock %} {% block content %}
 
 <!-- Features Banner Section -->
 <section class="features-banner w-100 mt-0" style="background-color: #906e49; padding: 20px 0;">
-  <div class="container-fluid px-3 px-lg-5">
-    <div class="d-flex align-items-center justify-content-between flex-nowrap overflow-x-auto features-slider-track pb-1 pt-1" style="scrollbar-width: none; -ms-overflow-style: none;">
-      
+  <div class="container">
+    <div
+      class="d-flex align-items-center justify-content-between flex-nowrap overflow-x-auto features-slider-track pb-1 pt-1"
+      style="scrollbar-width: none; -ms-overflow-style: none;">
+
       <!-- Feature 1 -->
       <div class="feature-slide px-2 px-md-3">
         <div class="d-flex align-items-center justify-content-start justify-content-xl-center feature-item">
-          <img src="{{ url_for('static', filename='img/Exclusive_Offers/1.png') }}" alt="Best Prices" class="me-2 me-md-3">
+          <img src="{{ url_for('static', filename='img/Exclusive_Offers/1.png') }}" alt="Best Prices"
+            class="me-2 me-md-3">
           <div style="color: #ffffff; font-size: 15px; font-weight: 500; line-height: 1.3; white-space: nowrap;">
             Best Prices<br>Guaranteed
           </div>
@@ -172,7 +177,8 @@ endblock %} {% block content %}
       <!-- Feature 2 -->
       <div class="feature-slide px-2 px-md-3">
         <div class="d-flex align-items-center justify-content-start justify-content-xl-center feature-item">
-          <img src="{{ url_for('static', filename='img/Exclusive_Offers/2.png') }}" alt="Premium Quality" class="me-2 me-md-3">
+          <img src="{{ url_for('static', filename='img/Exclusive_Offers/2.png') }}" alt="Premium Quality"
+            class="me-2 me-md-3">
           <div style="color: #ffffff; font-size: 15px; font-weight: 500; line-height: 1.3; white-space: nowrap;">
             Premium<br>Quality
           </div>
@@ -182,7 +188,8 @@ endblock %} {% block content %}
       <!-- Feature 3 -->
       <div class="feature-slide px-2 px-md-3">
         <div class="d-flex align-items-center justify-content-start justify-content-xl-center feature-item">
-          <img src="{{ url_for('static', filename='img/Exclusive_Offers/3.png') }}" alt="Secure Payments" class="me-2 me-md-3">
+          <img src="{{ url_for('static', filename='img/Exclusive_Offers/3.png') }}" alt="Secure Payments"
+            class="me-2 me-md-3">
           <div style="color: #ffffff; font-size: 15px; font-weight: 500; line-height: 1.3; white-space: nowrap;">
             Secure<br>Payments
           </div>
@@ -192,7 +199,8 @@ endblock %} {% block content %}
       <!-- Feature 4 -->
       <div class="feature-slide px-2 px-md-3">
         <div class="d-flex align-items-center justify-content-start justify-content-xl-center feature-item">
-          <img src="{{ url_for('static', filename='img/Exclusive_Offers/4.png') }}" alt="Fast Delivery" class="me-2 me-md-3">
+          <img src="{{ url_for('static', filename='img/Exclusive_Offers/4.png') }}" alt="Fast Delivery"
+            class="me-2 me-md-3">
           <div style="color: #ffffff; font-size: 15px; font-weight: 500; line-height: 1.3; white-space: nowrap;">
             Fast & Free<br>Delivery
           </div>
@@ -202,7 +210,8 @@ endblock %} {% block content %}
       <!-- Feature 5 -->
       <div class="feature-slide px-2 px-md-3">
         <div class="d-flex align-items-center justify-content-start justify-content-xl-center feature-item">
-          <img src="{{ url_for('static', filename='img/Exclusive_Offers/5.png') }}" alt="Dedicated Support" class="me-2 me-md-3">
+          <img src="{{ url_for('static', filename='img/Exclusive_Offers/5.png') }}" alt="Dedicated Support"
+            class="me-2 me-md-3">
           <div style="color: #ffffff; font-size: 15px; font-weight: 500; line-height: 1.3; white-space: nowrap;">
             Dedicated<br>Support
           </div>
@@ -217,26 +226,30 @@ endblock %} {% block content %}
   .features-slider-track::-webkit-scrollbar {
     display: none;
   }
+
   .feature-item img {
     width: 45px;
     height: auto;
     filter: brightness(0) invert(1);
   }
+
   @media (max-width: 767.98px) {
     .feature-item img {
       width: 42px;
     }
+
     .feature-item div {
       font-size: 11px !important;
       line-height: 1.2 !important;
     }
+
     .feature-slide {
       padding: 0 10px !important;
     }
   }
 </style>
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
+  document.addEventListener("DOMContentLoaded", function () {
     function initFeaturesSlider() {
       var $slider = $('.features-slider-track');
       if ($(window).width() < 768) {
@@ -262,11 +275,11 @@ endblock %} {% block content %}
         }
       }
     }
-    
+
     // Check if jQuery and Slick are loaded
     if (typeof jQuery !== 'undefined') {
       // Delay initialization slightly to ensure slick is fully parsed
-      setTimeout(function() {
+      setTimeout(function () {
         if ($.fn.slick) {
           initFeaturesSlider();
           $(window).on('resize', initFeaturesSlider);
@@ -281,22 +294,27 @@ endblock %} {% block content %}
     width: 65%;
     clip-path: polygon(0 0, 100% 0, 80% 100%, 0 100%);
   }
+
   .promo-content-wrap {
     width: 90%;
   }
+
   .promo-btn-1:hover {
     background-color: #ffffff;
     color: #906e49 !important;
   }
+
   .promo-btn-2:hover {
     background-color: #ffffff !important;
     color: #906e49 !important;
   }
+
   @media (max-width: 767.98px) {
     .promo-overlay {
       width: 100%;
       clip-path: none;
     }
+
     .promo-content-wrap {
       width: 100%;
       text-align: center;
@@ -309,14 +327,17 @@ endblock %} {% block content %}
   .best-selling-categories h2 {
     font-size: 54px;
   }
+
   @media (max-width: 768px) {
     .best-selling-categories h2 {
       font-size: 32px;
     }
-    .shop-category-text{
+
+    .shop-category-text {
       padding: 5px 20px;
     }
   }
+
   .category-card {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
     transition:
@@ -326,14 +347,17 @@ endblock %} {% block content %}
     overflow: hidden;
     background-color: #ffffff;
   }
+
   .category-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 22px 40px rgba(144, 110, 73, 0.12), 0 8px 16px rgba(0, 0, 0, 0.04);
   }
+
   .category-img-container {
     height: 280px;
     position: relative;
   }
+
   .category-img-container::after {
     content: '';
     position: absolute;
@@ -341,52 +365,64 @@ endblock %} {% block content %}
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(0,0,0,0.3) 100%);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.3) 100%);
     opacity: 0.8;
     transition: opacity 0.4s ease, background 0.4s ease;
     pointer-events: none;
   }
+
   .category-card:hover .category-img-container::after {
     opacity: 1;
-    background: linear-gradient(180deg, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.45) 100%);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 40%, rgba(0, 0, 0, 0.45) 100%);
   }
+
   @media (max-width: 768px) {
     .category-img-container {
       height: 200px;
     }
   }
+
   @media (max-width: 576px) {
     .category-img-container {
       height: 160px;
     }
   }
+
   .category-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
   }
+
   .category-card:hover .category-img {
     transform: scale(1.1);
   }
+
   .category-title-block {
     transition: filter 0.4s ease;
   }
+
   .category-card:hover .category-title-block {
     filter: saturate(1.1) brightness(0.92);
   }
+
   .arrow-circle {
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
+
   .category-card:hover .arrow-circle {
     transform: translateX(6px) scale(1.1);
   }
+
   .subcategory-item {
     transition: border-color 0.3s ease;
   }
+
   .subcategory-item:hover {
     border-color: #e5dfd3 !important;
   }
+
   .subcategory-link {
     display: flex !important;
     align-items: center;
@@ -396,10 +432,12 @@ endblock %} {% block content %}
     transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     color: #6c757d !important;
   }
+
   .subcategory-link span {
     position: relative;
     transition: transform 0.3s ease, color 0.3s ease;
   }
+
   .subcategory-link span::after {
     content: '';
     position: absolute;
@@ -412,17 +450,21 @@ endblock %} {% block content %}
     transform-origin: right;
     transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
+
   .subcategory-link:hover {
     color: #906e49 !important;
     padding-left: 6px;
   }
+
   .subcategory-link:hover span {
     color: #906e49 !important;
   }
+
   .subcategory-link:hover span::after {
     transform: scaleX(1);
     transform-origin: left;
   }
+
   .subcategory-link::after {
     content: '\f105';
     font-family: 'FontAwesome';
@@ -432,202 +474,208 @@ endblock %} {% block content %}
     transform: translateX(-8px);
     transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
+
   .subcategory-link:hover::after {
     opacity: 1;
     transform: translateX(0);
   }
 
-/* Slick Slider Equal Heights */
-.best-selling-slider .slick-track {
-  display: flex !important;
-}
-.best-selling-slider .slick-slide {
-  height: auto;
-  display: flex;
-}
-.best-selling-slider .slick-slide > div {
-  width: 100%;
-}
-
-/* Slick Slider Custom Styles & Overlays */
-.best-selling-categories {
-  overflow-x: hidden; /* Prevent page horizontal scroll when slick-list overflows */
-}
-
-/* Custom Arrows for Best-selling Categories Slider */
-.best-selling-slider {
-  position: relative;
-}
-
-.best-selling-slider .slick-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%) scale(1);
-  z-index: 99;
-  width: 45px;
-  height: 45px;
-  background-color: #ffffff !important;
-  border: 1px solid #eaeaea !important;
-  border-radius: 50% !important;
-  color: #252525 !important;
-  font-size: 18px !important;
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
-  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
-}
-
-.best-selling-slider .slick-arrow:hover {
-  background-color: #906e49 !important;
-  color: #ffffff !important;
-  border-color: #906e49 !important;
-  transform: translateY(-50%) scale(1.1);
-  box-shadow: 0 6px 18px rgba(144, 110, 73, 0.3) !important;
-}
-
-.best-selling-slider .slick-prev {
-  left: -22px;
-}
-
-.best-selling-slider .slick-next {
-  right: -22px;
-}
-
-/* Disabled state */
-.best-selling-slider .slick-arrow.slick-disabled {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-@media (max-width: 576px) {
-  /* Break out of container layout on mobile */
-  .best-selling-categories .container {
-    max-width: 100% !important;
-    padding-right: 0 !important;
-    padding-left: 0 !important;
+  /* Slick Slider Equal Heights */
+  .best-selling-slider .slick-track {
+    display: flex !important;
+    align-items: stretch !important;
   }
-  
-  /* Give the section title standard container padding */
-  .best-selling-categories .section-title {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-  
-  /* Make the slider list have padding-left so 1st slide aligns with title, but overflows on the right */
-  .best-selling-slider .slick-list {
-    padding-left: 15px !important;
-    padding-right: 0 !important;
-    overflow: visible !important;
-  }
-  
-  /* Adjust arrows position on mobile so they are inside the screen and overlap slides nicely */
-  .best-selling-slider .slick-prev {
-    left: 10px;
-  }
-  
-  .best-selling-slider .slick-next {
-    right: 10px;
-  }
-}
 
-/* Home Page specific SlickNav adjustment */
-.home-3 .slicknav_btn {
-  margin-top: 7px !important;
-}
+  .best-selling-slider .slick-slide {
+    height: auto;
+    display: flex;
+  }
 
-/* Shop Category Banner */
-.shop-category-banner {
-  background-image: url("{{ url_for('static', filename='img/homes/bg_images.png') }}");
-  background-size: cover;
-  background-position: right center;
-  padding: 100px 0;
-  margin-bottom: 40px;
-}
-.shop-category-banner h2 {
-  color: #1a3224;
-  font-family: 'Playfair Display', serif;
-  font-size: 52px;
-  text-transform: uppercase;
-  font-weight: 500;
-  margin-bottom: 15px;
-}
-.shop-category-divider {
-  display: flex;
-  align-items: center;
-  margin-bottom: 25px;
-}
-.shop-category-divider .line {
-  height: 1px;
-  width: 80px;
-  background-color: #bfa173;
-}
-.shop-category-divider .diamonds {
-  display: flex;
-  gap: 5px;
-  margin: 0 15px;
-}
-.shop-category-divider .diamonds span {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border: 1px solid #bfa173;
-  transform: rotate(45deg);
-}
-.shop-category-divider .diamonds span:nth-child(2) {
-  background-color: #bfa173;
-}
-.shop-category-text {
-  color: #222;
-  font-size: 16px;
-  max-width: 480px;
-  line-height: 1.6;
-  margin-bottom: 30px;
-}
-.btn-shop-explore {
-  background-color: #1a3224;
-  color: #ffffff !important;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  border-radius: 2px;
-  padding: 14px 28px;
-  border: none;
-  display: inline-flex;
-  align-items: center;
-  transition: all 0.3s ease;
-  text-decoration: none;
-}
-.btn-shop-explore:hover {
-  background-color: #112218;
-}
-@media (max-width: 991px) {
-  .shop-category-banner {
-    background-position: 70% center;
+  .best-selling-slider .slick-slide>div {
+    width: 100%;
+    height: 100%;
   }
-}
-@media (max-width: 767px) {
-  .shop-category-banner {
-    padding: 60px 0;
-    background-position: 65% center;
+
+  /* Slick Slider Custom Styles & Overlays */
+  .best-selling-categories {
+    overflow-x: hidden;
+    /* Prevent page horizontal scroll when slick-list overflows */
   }
-  .shop-category-banner h2 {
-    font-size: 36px;
+
+  /* Custom Arrows for Best-selling Categories Slider */
+  .best-selling-slider {
+    position: relative;
   }
-  .shop-category-divider {
+
+  .best-selling-slider .slick-arrow {
+    position: absolute;
+    top: 50%;
+    /* Cancel out plugin.css's legacy ".slick-prev, .slick-next { margin-top: -20px }"
+       centering hack (meant for its default 40px arrows) - we center via transform instead */
+    margin-top: 0 !important;
+    transform: translateY(-50%) scale(1);
+    z-index: 99;
+    width: 46px;
+    height: 46px;
+    background-color: rgba(255, 255, 255, 0.97) !important;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: none !important;
+    border-radius: 50% !important;
+    color: #842e13 !important;
+    font-size: 17px !important;
+    display: flex !important;
+    align-items: center;
     justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12) !important;
+    transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
   }
+
+  .best-selling-slider .slick-arrow:hover {
+    background-color: #842e13 !important;
+    color: #ffffff !important;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 8px 22px rgba(132, 46, 19, 0.35) !important;
+  }
+
+  .best-selling-slider .slick-prev {
+    left: -22px;
+  }
+
+  .best-selling-slider .slick-next {
+    right: -22px;
+  }
+
+  /* Disabled state */
+  .best-selling-slider .slick-arrow.slick-disabled {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  @media (max-width: 576px) {
+    /* Adjust arrows position on mobile so they are inside the screen and overlap slides nicely */
+    .best-selling-slider .slick-prev {
+      left: 10px;
+    }
+
+    .best-selling-slider .slick-next {
+      right: 10px;
+    }
+  }
+
+  /* Home Page specific SlickNav adjustment */
+  .home-3 .slicknav_btn {
+    margin-top: 7px !important;
+  }
+
+  /* Shop Category Banner */
+  .shop-category-banner {
+    background-image: url("{{ url_for('static', filename='img/homes/bg_images.png') }}");
+    background-size: cover;
+    background-position: right center;
+    padding: 100px 0;
+    margin-bottom: 40px;
+  }
+
+  .shop-category-banner h2 {
+    color: #1a3224;
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    text-transform: none;
+    font-weight: 700;
+    margin-bottom: 15px;
+    letter-spacing: -0.5px;
+  }
+
+  .shop-category-divider {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+
+  .shop-category-divider .line {
+    height: 1px;
+    width: 80px;
+    background-color: #bfa173;
+  }
+
+  .shop-category-divider .diamonds {
+    display: flex;
+    gap: 5px;
+    margin: 0 15px;
+  }
+
+  .shop-category-divider .diamonds span {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border: 1px solid #bfa173;
+    transform: rotate(45deg);
+  }
+
+  .shop-category-divider .diamonds span:nth-child(2) {
+    background-color: #bfa173;
+  }
+
   .shop-category-text {
-    margin: 0 auto 30px auto;
-    text-align: center;
+    color: #222;
+    font-size: 16px;
+    max-width: 480px;
+    line-height: 1.6;
+    margin-bottom: 30px;
   }
-  .shop-category-banner-content {
-    text-align: center !important;
+
+  .btn-shop-explore {
+    background-color: #1a3224;
+    color: #ffffff !important;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 2px;
+    padding: 14px 28px;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    text-decoration: none;
   }
-}
+
+  .btn-shop-explore:hover {
+    background-color: #112218;
+  }
+
+  @media (max-width: 991px) {
+    .shop-category-banner {
+      background-position: 70% center;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .shop-category-banner {
+      padding: 60px 0;
+      background-position: 65% center;
+    }
+
+    .shop-category-banner h2 {
+      font-size: 36px;
+    }
+
+    .shop-category-divider {
+      justify-content: center;
+    }
+
+    .shop-category-text {
+      margin: 0 auto 30px auto;
+      text-align: center;
+    }
+
+    .shop-category-banner-content {
+      text-align: center !important;
+    }
+  }
 </style>
 
 <section class="best-selling-categories pb-5 bg-white pt-0">
@@ -636,7 +684,7 @@ endblock %} {% block content %}
     <div class="container">
       <div class="row">
         <div class="col-lg-6 col-md-8 shop-category-banner-content text-md-start">
-          <h2 style="font-weight: 500;">Shop By Category</h2>
+          <h2>Shop By Category</h2>
           <div class="shop-category-divider justify-content-md-start">
             <div class="line"></div>
             <div class="diamonds">
@@ -657,7 +705,7 @@ endblock %} {% block content %}
     </div>
   </div>
 
-  <div class="container">
+  <div class="container best-selling-slider-container">
     <div class="best-selling-slider mt-4">
       {% for cat in home_categories %}
       <div class="px-2 pt-3 pb-3 h-100">
@@ -665,71 +713,44 @@ endblock %} {% block content %}
           <!-- Featured Image Container -->
           <div class="category-img-container position-relative overflow-hidden">
             <a href="{{ url_for('shop_category', category_id=cat.id) }}">
-              <img
-                src="{{ cat.image_url }}"
-                alt="{{ cat.name }}"
-                class="img-fluid category-img"
-              />
+              <img src="{{ cat.image_url }}" alt="{{ cat.name }}" class="img-fluid category-img" />
             </a>
           </div>
 
           <!-- Title Block -->
-          <div
-            class="category-title-block d-flex justify-content-between align-items-center p-3"
-            style="background-color: #842e13 !important;"
-          >
-            <h4
-              class="category-name text-white teko mb-0 h5 fs-4"
-              style="letter-spacing: 0.5px; text-transform: uppercase"
-            >
-              <a
-                href="{{ url_for('shop_category', category_id=cat.id) }}"
-                class="text-white text-decoration-none"
-                >{{ cat.name }}</a
-              >
+          <div class="category-title-block d-flex justify-content-between align-items-center p-3"
+            style="background-color: #842e13 !important;">
+            <h4 class="category-name text-white teko mb-0 h5 fs-4"
+              style="letter-spacing: 0.5px; text-transform: uppercase">
+              <a href="{{ url_for('shop_category', category_id=cat.id) }}" class="text-white text-decoration-none">{{
+                cat.name }}</a>
             </h4>
-            <a
-              href="{{ url_for('shop_category', category_id=cat.id) }}"
-              class="category-view-all text-white d-flex align-items-center gap-2"
-              style="
+            <a href="{{ url_for('shop_category', category_id=cat.id) }}"
+              class="category-view-all text-white d-flex align-items-center gap-2" style="
                 font-size: 13px;
                 font-weight: 500;
                 font-family: &quot;Poppins&quot;, sans-serif;
-              "
-            >
+              ">
               <span>View All</span>
-              <div
-                class="arrow-circle d-flex align-items-center justify-content-center bg-white rounded-circle"
-                style="width: 24px; height: 24px; color: #842e13"
-              >
-                <i
-                  class="fa fa-long-arrow-right"
-                  style="font-size: 12px; color: #842e13 !important;"
-                  aria-hidden="true"
-                ></i>
+              <div class="arrow-circle d-flex align-items-center justify-content-center bg-white rounded-circle"
+                style="width: 24px; height: 24px; color: #842e13">
+                <i class="fa fa-long-arrow-right" style="font-size: 12px; color: #842e13 !important;"
+                  aria-hidden="true"></i>
               </div>
             </a>
           </div>
 
           <!-- Subcategories List -->
-          <div
-            class="category-subcategories p-3 border border-top-0 flex-grow-1 bg-white"
-            style="
+          <div class="category-subcategories p-3 border border-top-0 flex-grow-1 bg-white" style="
               border-color: #eee !important;
               border-bottom-left-radius: 12px;
               border-bottom-right-radius: 12px;
-            "
-          >
+            ">
             <ul class="list-unstyled mb-0 d-flex flex-column gap-2">
               {% for sub in cat.subcategories %}
-              <li
-                class="subcategory-item border-bottom pb-2"
-                style="border-color: #f1f1f1 !important; font-size: 14px"
-              >
-                <a
-                  href="{{ url_for('shop_subcategory', subcategory_id=sub.id) }}"
-                  class="text-muted subcategory-link d-flex justify-content-between align-items-center"
-                >
+              <li class="subcategory-item border-bottom pb-2" style="border-color: #f1f1f1 !important; font-size: 14px">
+                <a href="{{ url_for('shop_subcategory', subcategory_id=sub.id) }}"
+                  class="text-muted subcategory-link d-flex justify-content-between align-items-center">
                   <span>{{ sub.name }}</span>
                 </a>
               </li>
@@ -747,11 +768,13 @@ endblock %} {% block content %}
 <!-- Limited Time Offers Section Starts -->
 <section class="limited-time-offers bg-secondarylight pb-5 pt-0">
   <!-- Banner Header -->
-  <div class="offers-banner position-relative mb-5" style="background-image: url('{{ url_for('static', filename='img/homes/bg_images.png') }}'); background-size: cover; background-position: center center; padding: 100px 0;">
+  <div class="offers-banner position-relative mb-5"
+    style="background-image: url('{{ url_for('static', filename='img/homes/bg_images.png') }}'); background-size: cover; background-position: center center; padding: 100px 0;">
     <div class="container">
       <div class="row justify-content-center text-center">
         <div class="col-lg-8 col-md-10 col-12 d-flex flex-column align-items-center">
-          <h2 class="mb-2 display-6" style="color: #1a3224; font-family: 'Playfair Display', serif; text-transform: uppercase; font-weight: 650;">
+          <h2 class="mb-2 display-6"
+            style="color: #1a3224; font-family: 'Playfair Display', serif; text-transform: uppercase; font-weight: 650; text-shadow: 0px 2px 8px rgba(255, 255, 255, 0.9), 0px 0px 4px rgba(255, 255, 255, 0.6);">
             LIMITED TIME OFFERS
           </h2>
           <div class="shop-category-divider justify-content-center my-3 w-100">
@@ -777,322 +800,375 @@ endblock %} {% block content %}
       <div class="limited-time-slider mt-4">
         {% for prod in catalog_products %}
         {% set mrp_val = prod.mrp | replace('$', '') | replace(',', '') | float if prod.mrp else 0 %}
-        {% set sale_price_val = prod.sale_price | replace('$', '') | replace(',', '') | float if prod.sale_price else mrp_val %}
+        {% set sale_price_val = prod.sale_price | replace('$', '') | replace(',', '') | float if prod.sale_price else
+        mrp_val %}
         <div class="px-2 pb-3 h-100 d-flex">
           <div class="offer-card h-100 d-flex flex-column bg-white">
             <div class="offer-img-container position-relative">
-              {% if mrp_val > 0 and sale_price_val < mrp_val %}
-              {% set discount_pct = ((mrp_val - sale_price_val) / mrp_val * 100) | round | int %}
-              <div class="discount-badge d-flex flex-column justify-content-center align-items-center">
+              {% if mrp_val > 0 and sale_price_val < mrp_val %} {% set discount_pct=((mrp_val - sale_price_val) /
+                mrp_val * 100) | round | int %} <div
+                class="discount-badge d-flex flex-column justify-content-center align-items-center">
                 <span class="fs-5 fw-bold lh-1">{{ discount_pct }}%</span>
                 <span class="fs-6 lh-1 mt-1" style="font-size: 11px !important;">OFF</span>
-              </div>
-              {% endif %}
-              <a href="{{ url_for('product_detail', product_id=prod.id) }}">
-                <img src="{{ prod.image_url }}" alt="{{ prod.name }}" class="img-fluid offer-img" />
-              </a>
             </div>
-            <div class="offer-details p-4 text-center d-flex flex-column flex-grow-1">
-              <h5 class="offer-title text-uppercase mb-3" style="font-size: 14px; font-weight: 600; letter-spacing: 0.5px; line-height: 1.4;">
-                <a href="{{ url_for('product_detail', product_id=prod.id) }}" class="text-dark text-decoration-none">
-                  {{ prod.name }}
-                </a>
-              </h5>
-              <div class="offer-pricing mb-4">
-                <span class="discounted-price me-2" style="color: #842e13; font-size: 22px; font-weight: 700;">₹{{ "{:,.0f}".format(sale_price_val) }}</span>
-                {% if sale_price_val < mrp_val %}
-                <span class="original-price text-muted text-decoration-line-through" style="font-size: 16px;">₹{{ "{:,.0f}".format(mrp_val) }}</span>
+            {% endif %}
+            <a href="{{ url_for('product_detail', product_id=prod.id) }}">
+              <img src="{{ prod.image_url }}" alt="{{ prod.name }}" class="img-fluid offer-img" />
+            </a>
+          </div>
+          <div class="offer-details p-4 text-center d-flex flex-column flex-grow-1">
+            <h5 class="offer-title text-uppercase mb-3"
+              style="font-size: 14px; font-weight: 600; letter-spacing: 0.5px; line-height: 1.4;">
+              <a href="{{ url_for('product_detail', product_id=prod.id) }}" class="text-dark text-decoration-none">
+                {{ prod.name }}
+              </a>
+            </h5>
+            <div class="offer-pricing mb-4">
+              <span class="discounted-price me-2" style="color: #842e13; font-size: 22px; font-weight: 700;">₹{{
+                "{:,.0f}".format(sale_price_val) }}</span>
+              {% if sale_price_val < mrp_val %} <span class="original-price text-muted text-decoration-line-through"
+                style="font-size: 16px;">₹{{ "{:,.0f}".format(mrp_val) }}</span>
                 {% endif %}
-              </div>
-              <div class="mt-auto">
-                <a href="{{ url_for('product_detail', product_id=prod.id) }}" class="btn-shop-now w-100 d-inline-block text-uppercase">Shop Now</a>
-              </div>
+            </div>
+            <div class="mt-auto">
+              <a href="{{ url_for('product_detail', product_id=prod.id) }}"
+                class="btn-shop-now w-100 d-inline-block text-uppercase">Shop Now</a>
             </div>
           </div>
         </div>
-        {% endfor %}
       </div>
+      {% endfor %}
     </div>
+  </div>
   </div>
 </section>
 <!-- Limited Time Offers Section Ends -->
 
 <style>
-/* Featured Projects */
-.project-grid-card {
-  border-radius: 4px;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-  transition: transform 0.3s ease;
-  height: 100%;
-  border: 1px solid #f1f1f1;
-}
-.project-grid-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-}
-.project-card-image {
-  height: 250px;
-  overflow: hidden;
-}
-.project-card-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-.project-grid-card:hover .project-card-image img {
-  transform: scale(1.08);
-}
-.project-card-info {
-  padding: 20px;
-  text-align: center;
-}
-.project-card-title {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 5px;
-  font-family: 'Playfair Display', serif;
-}
-.project-card-title a {
-  text-decoration: none;
-  color: #1a3224;
-  transition: color 0.3s ease;
-}
-.project-card-title a:hover {
-  color: #bfa173;
-}
-.project-card-location {
-  color: #777;
-  font-size: 13px;
-  margin-bottom: 0;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-.btn-explore-projects {
-  display: inline-block;
-  background-color: transparent;
-  color: #1a3224;
-  border: 2px solid #1a3224;
-  padding: 10px 24px;
-  border-radius: 2px;
-  text-decoration: none;
-  font-size: 13px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: all 0.3s ease;
-}
-.btn-explore-projects:hover {
-  background-color: #1a3224;
-  color: #fff;
-}
-.featured-projects {
-  background-color: #fbfbfb;
-}
-.featured-projects h2 {
-  color: #1a3224;
-  font-family: 'Playfair Display', serif;
-  font-weight: 500;
-  font-size: 36px;
-}
+  /* Featured Projects */
+  .project-grid-card {
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+    height: 100%;
+    border: 1px solid #f1f1f1;
+  }
 
-/* Featured Collections */
-.featured-collections {
-  background-color: #FAF9F7;
-  border-top: 1px solid #eae5de;
-  border-bottom: 1px solid #eae5de;
-}
-.featured-collections h2 {
-  color: #1a3224;
-  font-family: 'Playfair Display', serif;
-  font-weight: 600;
-  font-size: 36px;
-}
-.collection-grid-card {
-  border-radius: 6px;
-  overflow: hidden;
-  background: #ffffff;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-  height: 100%;
-  border: 1px solid #eae5de;
-  display: flex;
-  flex-direction: column;
-}
-.collection-grid-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 30px rgba(132, 46, 19, 0.12);
-  border-color: #cca471;
-}
-.collection-card-image {
-  height: 250px;
-  overflow: hidden;
-  position: relative;
-}
-.collection-card-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-.collection-grid-card:hover .collection-card-image img {
-  transform: scale(1.08);
-}
-.collection-badge {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  background-color: rgba(26, 50, 36, 0.9);
-  color: #ffffff;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 5px 12px;
-  border-radius: 30px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  z-index: 2;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-}
-.collection-card-info {
-  padding: 22px 20px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  justify-content: space-between;
-}
-.collection-card-title {
-  font-size: 19px;
-  font-weight: 600;
-  margin-bottom: 6px;
-  font-family: 'Playfair Display', serif;
-}
-.collection-card-title a {
-  text-decoration: none;
-  color: #1a3224;
-  transition: color 0.3s ease;
-}
-.collection-card-title a:hover {
-  color: #842e13;
-}
-.collection-card-location {
-  color: #842e13;
-  font-size: 13px;
-  font-weight: 500;
-  margin-bottom: 12px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-.btn-collection-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  color: #1a3224;
-  font-size: 13px;
-  font-weight: 600;
-  text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  transition: all 0.3s ease;
-  margin-top: auto;
-}
-.collection-grid-card:hover .btn-collection-link {
-  color: #842e13;
-}
-.btn-collection-link i {
-  transition: transform 0.3s ease;
-}
-.collection-grid-card:hover .btn-collection-link i {
-  transform: translateX(4px);
-}
+  .project-grid-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  }
+
+  .project-card-image {
+    height: 250px;
+    overflow: hidden;
+  }
+
+  .project-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .project-grid-card:hover .project-card-image img {
+    transform: scale(1.08);
+  }
+
+  .project-card-info {
+    padding: 20px;
+    text-align: center;
+  }
+
+  .project-card-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    font-family: 'Playfair Display', serif;
+  }
+
+  .project-card-title a {
+    text-decoration: none;
+    color: #1a3224;
+    transition: color 0.3s ease;
+  }
+
+  .project-card-title a:hover {
+    color: #bfa173;
+  }
+
+  .project-card-location {
+    color: #777;
+    font-size: 13px;
+    margin-bottom: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .btn-explore-projects {
+    display: inline-block;
+    background-color: transparent;
+    color: #1a3224;
+    border: 2px solid #1a3224;
+    padding: 10px 24px;
+    border-radius: 2px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+  }
+
+  .btn-explore-projects:hover {
+    background-color: #1a3224;
+    color: #fff;
+  }
+
+  .featured-projects {
+    background-color: #fbfbfb;
+  }
+
+  .featured-projects h2,
+  .featured-projects .section-title-left h2 {
+    color: #1a3224 !important;
+    font-family: 'Playfair Display', serif !important;
+    font-weight: 600 !important;
+    font-size: 36px !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+  }
+
+  /* Featured Collections */
+  .featured-collections {
+    background-color: #FAF9F7;
+    border-top: 1px solid #eae5de;
+    border-bottom: 1px solid #eae5de;
+  }
+
+  .featured-collections h2,
+  .featured-collections .section-title-left h2 {
+    color: #1a3224 !important;
+    font-family: 'Playfair Display', serif !important;
+    font-weight: 600 !important;
+    font-size: 36px !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+  }
+
+  /* Match all section headings font style on homepage */
+  .our-services-section h2,
+  .process-title-left h2,
+  .why-us-left h2,
+  .about-left h2,
+  .testimonial-title-left h2 {
+    color: #1a3224 !important;
+    font-family: 'Playfair Display', serif !important;
+    font-weight: 600 !important;
+    font-size: 36px !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+  }
+
+  .collection-grid-card {
+    border-radius: 6px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    height: 100%;
+    border: 1px solid #eae5de;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .collection-grid-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(132, 46, 19, 0.12);
+    border-color: #cca471;
+  }
+
+  .collection-card-image {
+    height: 250px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .collection-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+
+  .collection-grid-card:hover .collection-card-image img {
+    transform: scale(1.08);
+  }
+
+  .collection-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: rgba(26, 50, 36, 0.9);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 30px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .collection-card-info {
+    padding: 22px 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+  }
+
+  .collection-card-title {
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-family: 'Playfair Display', serif;
+  }
+
+  .collection-card-title a {
+    text-decoration: none;
+    color: #1a3224;
+    transition: color 0.3s ease;
+  }
+
+  .collection-card-title a:hover {
+    color: #842e13;
+  }
+
+  .collection-card-location {
+    color: #842e13;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .btn-collection-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: #1a3224;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    margin-top: auto;
+  }
+
+  .collection-grid-card:hover .btn-collection-link {
+    color: #842e13;
+  }
+
+  .btn-collection-link i {
+    transition: transform 0.3s ease;
+  }
+
+  .collection-grid-card:hover .btn-collection-link i {
+    transform: translateX(4px);
+  }
 </style>
 
 <!-- Featured Projects Section Starts -->
 <section class="featured-projects py-5">
-      <div class="container">
-        <div class="featured-projects-inner">
-          <!-- Section Header -->
-          <div class="row align-items-center justify-content-between mb-5 gy-3">
-            <div class="col-md-8 text-center text-md-start">
-              <div class="section-title-left">
-                <h2 class="mb-2">Featured Projects</h2>
-                <p class="mb-0 text-muted" style="font-size: 16px;">
-                  Elegant and modern interior projects crafted with precision.
-                </p>
-              </div>
+  <div class="container">
+    <div class="featured-projects-inner">
+      <!-- Section Header -->
+      <div class="row align-items-center justify-content-between mb-5 gy-3">
+        <div class="col-md-8 text-center text-md-start">
+          <div class="section-title-left">
+            <h2 class="mb-2">Featured Projects</h2>
+            <p class="mb-0 text-muted" style="font-size: 16px;">
+              Elegant and modern interior projects crafted with precision.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4 text-center text-md-end">
+          <a href="{{ url_for('projects') }}" class="btn-explore-projects">Explore All Projects</a>
+        </div>
+      </div>
+
+      <!-- Cards Grid -->
+      <div class="row g-4">
+        <!-- Card 1 -->
+        <div class="col-lg-3 col-md-6 col-12">
+          <div class="project-grid-card">
+            <div class="project-card-image">
+              <img src="/static/img/featured/Modern_Villa_Interior.webp" alt="Modern Villa Interior">
             </div>
-            <div class="col-md-4 text-center text-md-end">
-              <a href="{{ url_for('projects') }}" class="btn-explore-projects">Explore All Projects</a>
+            <div class="project-card-info">
+              <h4 class="project-card-title">
+                <a href="{{ url_for('projects') }}">Modern Villa Interior</a>
+              </h4>
+              <p class="project-card-location">Riyadh</p>
             </div>
           </div>
+        </div>
 
-          <!-- Cards Grid -->
-          <div class="row g-4">
-            <!-- Card 1 -->
-            <div class="col-lg-3 col-md-6 col-12">
-              <div class="project-grid-card">
-                <div class="project-card-image">
-                  <img src="/static/img/featured/Modern_Villa_Interior.webp" alt="Modern Villa Interior">
-                </div>
-                <div class="project-card-info">
-                  <h4 class="project-card-title">
-                    <a href="{{ url_for('projects') }}">Modern Villa Interior</a>
-                  </h4>
-                  <p class="project-card-location">Riyadh</p>
-                </div>
-              </div>
+        <!-- Card 2 -->
+        <div class="col-lg-3 col-md-6 col-12">
+          <div class="project-grid-card">
+            <div class="project-card-image">
+              <img src="/static/img/featured/bed_6.webp" alt="Luxury Living Room">
             </div>
-
-            <!-- Card 2 -->
-            <div class="col-lg-3 col-md-6 col-12">
-              <div class="project-grid-card">
-                <div class="project-card-image">
-                  <img src="/static/img/featured/bed_6.webp" alt="Luxury Living Room">
-                </div>
-                <div class="project-card-info">
-                  <h4 class="project-card-title">
-                    <a href="{{ url_for('projects') }}">Luxury Living Room</a>
-                  </h4>
-                  <p class="project-card-location">Jeddah</p>
-                </div>
-              </div>
+            <div class="project-card-info">
+              <h4 class="project-card-title">
+                <a href="{{ url_for('projects') }}">Luxury Living Room</a>
+              </h4>
+              <p class="project-card-location">Jeddah</p>
             </div>
+          </div>
+        </div>
 
-            <!-- Card 3 -->
-            <div class="col-lg-3 col-md-6 col-12">
-              <div class="project-grid-card">
-                <div class="project-card-image">
-                  <img src="/static/img/featured/conference-room.jpeg" alt="Office Design">
-                </div>
-                <div class="project-card-info">
-                  <h4 class="project-card-title">
-                    <a href="{{ url_for('projects') }}">Office Design</a>
-                  </h4>
-                  <p class="project-card-location">KAFD</p>
-                </div>
-              </div>
+        <!-- Card 3 -->
+        <div class="col-lg-3 col-md-6 col-12">
+          <div class="project-grid-card">
+            <div class="project-card-image">
+              <img src="/static/img/featured/conference-room.jpeg" alt="Office Design">
             </div>
+            <div class="project-card-info">
+              <h4 class="project-card-title">
+                <a href="{{ url_for('projects') }}">Office Design</a>
+              </h4>
+              <p class="project-card-location">KAFD</p>
+            </div>
+          </div>
+        </div>
 
-            <!-- Card 4 -->
-            <div class="col-lg-3 col-md-6 col-12">
-              <div class="project-grid-card">
-                <div class="project-card-image">
-                  <img src="/static/img/portfolio/project-1.jpg" alt="Minimalist Apartment">
-                </div>
-                <div class="project-card-info">
-                  <h4 class="project-card-title">
-                    <a href="{{ url_for('projects') }}">Minimalist Apartment</a>
-                  </h4>
-                  <p class="project-card-location">Dubai</p>
-                </div>
-              </div>
+        <!-- Card 4 -->
+        <div class="col-lg-3 col-md-6 col-12">
+          <div class="project-grid-card">
+            <div class="project-card-image">
+              <img src="/static/img/portfolio/project-1.jpg" alt="Minimalist Apartment">
+            </div>
+            <div class="project-card-info">
+              <h4 class="project-card-title">
+                <a href="{{ url_for('projects') }}">Minimalist Apartment</a>
+              </h4>
+              <p class="project-card-location">Dubai</p>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 <!-- Featured Projects Section Ends -->
 
 <!-- Featured Collections Section Starts -->
@@ -1117,115 +1193,119 @@ endblock %} {% block content %}
       <!-- Cards Grid -->
       <div class="row g-4">
         {% if portfolio_categories %}
-          {% for cat in portfolio_categories[:4] %}
-          <div class="col-lg-3 col-md-6 col-12">
-            <div class="collection-grid-card">
-              <div class="collection-card-image">
-                <span class="collection-badge">Collection</span>
-                <a href="{{ url_for('portfolio', category=cat['slug'] if cat is mapping else cat.slug) }}">
-                  <img src="{{ (cat['image_url'] if cat is mapping else cat.image_url) if ((cat['image_url'] if cat is mapping else cat.image_url) and ((cat['image_url'] if cat is mapping else cat.image_url).startswith('http') or (cat['image_url'] if cat is mapping else cat.image_url).startswith('/'))) else url_for('static', filename=(cat['image_url'] if cat is mapping else cat.image_url)) }}" alt="{{ (cat['name'] if cat is mapping else cat.name)|striptags }}">
-                </a>
+        {% for cat in portfolio_categories[:4] %}
+        <div class="col-lg-3 col-md-6 col-12">
+          <div class="collection-grid-card">
+            <div class="collection-card-image">
+              <span class="collection-badge">Collection</span>
+              <a href="{{ url_for('portfolio', category=cat['slug'] if cat is mapping else cat.slug) }}">
+                <img
+                  src="{{ (cat['image_url'] if cat is mapping else cat.image_url) if ((cat['image_url'] if cat is mapping else cat.image_url) and ((cat['image_url'] if cat is mapping else cat.image_url).startswith('http') or (cat['image_url'] if cat is mapping else cat.image_url).startswith('/'))) else url_for('static', filename=(cat['image_url'] if cat is mapping else cat.image_url)) }}"
+                  alt="{{ (cat['name'] if cat is mapping else cat.name)|striptags }}">
+              </a>
+            </div>
+            <div class="collection-card-info">
+              <div>
+                <p class="collection-card-location">Curated Interiors</p>
+                <h4 class="collection-card-title">
+                  <a href="{{ url_for('portfolio', category=cat['slug'] if cat is mapping else cat.slug) }}">{{
+                    (cat['name'] if cat is mapping else cat.name)|striptags|title }}</a>
+                </h4>
               </div>
-              <div class="collection-card-info">
-                <div>
-                  <p class="collection-card-location">Curated Interiors</p>
-                  <h4 class="collection-card-title">
-                    <a href="{{ url_for('portfolio', category=cat['slug'] if cat is mapping else cat.slug) }}">{{ (cat['name'] if cat is mapping else cat.name)|striptags|title }}</a>
-                  </h4>
-                </div>
-                <a href="{{ url_for('portfolio', category=cat['slug'] if cat is mapping else cat.slug) }}" class="btn-collection-link mt-3">
-                  Explore Collection <i class="fa fa-arrow-right"></i>
-                </a>
-              </div>
+              <a href="{{ url_for('portfolio', category=cat['slug'] if cat is mapping else cat.slug) }}"
+                class="btn-collection-link mt-3">
+                Explore Collection <i class="fa fa-arrow-right"></i>
+              </a>
             </div>
           </div>
-          {% endfor %}
+        </div>
+        {% endfor %}
         {% else %}
-          <!-- Fallback Cards if no categories defined -->
-          <div class="col-lg-3 col-md-6 col-12">
-            <div class="collection-grid-card">
-              <div class="collection-card-image">
-                <span class="collection-badge">Collection</span>
-                <a href="{{ url_for('portfolio', category='residential') }}">
-                  <img src="/static/img/gallery/living_room/lr1.webp" alt="Residential Interiors">
-                </a>
+        <!-- Fallback Cards if no categories defined -->
+        <div class="col-lg-3 col-md-6 col-12">
+          <div class="collection-grid-card">
+            <div class="collection-card-image">
+              <span class="collection-badge">Collection</span>
+              <a href="{{ url_for('portfolio', category='residential') }}">
+                <img src="/static/img/gallery/living_room/lr1.webp" alt="Residential Interiors">
+              </a>
+            </div>
+            <div class="collection-card-info">
+              <div>
+                <p class="collection-card-location">Curated Interiors</p>
+                <h4 class="collection-card-title">
+                  <a href="{{ url_for('portfolio', category='residential') }}">Residential Interiors</a>
+                </h4>
               </div>
-              <div class="collection-card-info">
-                <div>
-                  <p class="collection-card-location">Curated Interiors</p>
-                  <h4 class="collection-card-title">
-                    <a href="{{ url_for('portfolio', category='residential') }}">Residential Interiors</a>
-                  </h4>
-                </div>
-                <a href="{{ url_for('portfolio', category='residential') }}" class="btn-collection-link mt-3">
-                  Explore Collection <i class="fa fa-arrow-right"></i>
-                </a>
-              </div>
+              <a href="{{ url_for('portfolio', category='residential') }}" class="btn-collection-link mt-3">
+                Explore Collection <i class="fa fa-arrow-right"></i>
+              </a>
             </div>
           </div>
-          <div class="col-lg-3 col-md-6 col-12">
-            <div class="collection-grid-card">
-              <div class="collection-card-image">
-                <span class="collection-badge">Collection</span>
-                <a href="{{ url_for('portfolio', category='commercial') }}">
-                  <img src="/static/img/gallery/office/office1.webp" alt="Commercial Spaces">
-                </a>
+        </div>
+        <div class="col-lg-3 col-md-6 col-12">
+          <div class="collection-grid-card">
+            <div class="collection-card-image">
+              <span class="collection-badge">Collection</span>
+              <a href="{{ url_for('portfolio', category='commercial') }}">
+                <img src="/static/img/gallery/office/office1.webp" alt="Commercial Spaces">
+              </a>
+            </div>
+            <div class="collection-card-info">
+              <div>
+                <p class="collection-card-location">Executive Spaces</p>
+                <h4 class="collection-card-title">
+                  <a href="{{ url_for('portfolio', category='commercial') }}">Commercial Spaces</a>
+                </h4>
               </div>
-              <div class="collection-card-info">
-                <div>
-                  <p class="collection-card-location">Executive Spaces</p>
-                  <h4 class="collection-card-title">
-                    <a href="{{ url_for('portfolio', category='commercial') }}">Commercial Spaces</a>
-                  </h4>
-                </div>
-                <a href="{{ url_for('portfolio', category='commercial') }}" class="btn-collection-link mt-3">
-                  Explore Collection <i class="fa fa-arrow-right"></i>
-                </a>
-              </div>
+              <a href="{{ url_for('portfolio', category='commercial') }}" class="btn-collection-link mt-3">
+                Explore Collection <i class="fa fa-arrow-right"></i>
+              </a>
             </div>
           </div>
-          <div class="col-lg-3 col-md-6 col-12">
-            <div class="collection-grid-card">
-              <div class="collection-card-image">
-                <span class="collection-badge">Collection</span>
-                <a href="{{ url_for('portfolio', category='living-room') }}">
-                  <img src="/static/img/gallery/living_room/lr1.webp" alt="Living Rooms">
-                </a>
+        </div>
+        <div class="col-lg-3 col-md-6 col-12">
+          <div class="collection-grid-card">
+            <div class="collection-card-image">
+              <span class="collection-badge">Collection</span>
+              <a href="{{ url_for('portfolio', category='living-room') }}">
+                <img src="/static/img/gallery/living_room/lr1.webp" alt="Living Rooms">
+              </a>
+            </div>
+            <div class="collection-card-info">
+              <div>
+                <p class="collection-card-location">Luxury Lounge</p>
+                <h4 class="collection-card-title">
+                  <a href="{{ url_for('portfolio', category='living-room') }}">Living Rooms</a>
+                </h4>
               </div>
-              <div class="collection-card-info">
-                <div>
-                  <p class="collection-card-location">Luxury Lounge</p>
-                  <h4 class="collection-card-title">
-                    <a href="{{ url_for('portfolio', category='living-room') }}">Living Rooms</a>
-                  </h4>
-                </div>
-                <a href="{{ url_for('portfolio', category='living-room') }}" class="btn-collection-link mt-3">
-                  Explore Collection <i class="fa fa-arrow-right"></i>
-                </a>
-              </div>
+              <a href="{{ url_for('portfolio', category='living-room') }}" class="btn-collection-link mt-3">
+                Explore Collection <i class="fa fa-arrow-right"></i>
+              </a>
             </div>
           </div>
-          <div class="col-lg-3 col-md-6 col-12">
-            <div class="collection-grid-card">
-              <div class="collection-card-image">
-                <span class="collection-badge">Collection</span>
-                <a href="{{ url_for('portfolio', category='sofaset') }}">
-                  <img src="/static/img/gallery/sofaset/sofa-set.webp" alt="Custom Furniture">
-                </a>
+        </div>
+        <div class="col-lg-3 col-md-6 col-12">
+          <div class="collection-grid-card">
+            <div class="collection-card-image">
+              <span class="collection-badge">Collection</span>
+              <a href="{{ url_for('portfolio', category='sofaset') }}">
+                <img src="/static/img/gallery/sofaset/sofa-set.webp" alt="Custom Furniture">
+              </a>
+            </div>
+            <div class="collection-card-info">
+              <div>
+                <p class="collection-card-location">Bespoke Pieces</p>
+                <h4 class="collection-card-title">
+                  <a href="{{ url_for('portfolio', category='sofaset') }}">Custom Furniture</a>
+                </h4>
               </div>
-              <div class="collection-card-info">
-                <div>
-                  <p class="collection-card-location">Bespoke Pieces</p>
-                  <h4 class="collection-card-title">
-                    <a href="{{ url_for('portfolio', category='sofaset') }}">Custom Furniture</a>
-                  </h4>
-                </div>
-                <a href="{{ url_for('portfolio', category='sofaset') }}" class="btn-collection-link mt-3">
-                  Explore Collection <i class="fa fa-arrow-right"></i>
-                </a>
-              </div>
+              <a href="{{ url_for('portfolio', category='sofaset') }}" class="btn-collection-link mt-3">
+                Explore Collection <i class="fa fa-arrow-right"></i>
+              </a>
             </div>
           </div>
+        </div>
         {% endif %}
       </div>
     </div>
@@ -1239,38 +1319,55 @@ endblock %} {% block content %}
     <div class="row g-4">
       <!-- Banner 1 -->
       <div class="col-lg-6">
-        <div class="promo-banner-1 position-relative rounded-4 overflow-hidden h-100 promo-get" style="min-height: 250px;">
+        <div class="promo-banner-1 position-relative rounded-4 overflow-hidden h-100 promo-get"
+          style="min-height: 250px;">
           <!-- Background Image -->
-          <img src="{{ url_for('static', filename='img/hero/banner-1.jpg') }}" alt="Extra Savings" class="position-absolute w-100 h-100" style="object-fit: cover; top: 0; left: 0; z-index: 1;">
-          
+          <img src="{{ url_for('static', filename='img/hero/banner-1.jpg') }}" alt="Extra Savings"
+            class="position-absolute w-100 h-100" style="object-fit: cover; top: 0; left: 0; z-index: 1;">
+
           <!-- Slanted Overlay -->
-          <div class="promo-overlay position-absolute h-100" style="background-color: #842e13; top: 0; left: 0; z-index: 2;"></div>
-          
+          <div class="promo-overlay position-absolute h-100"
+            style="background-color: #842e13; top: 0; left: 0; z-index: 2;"></div>
+
           <!-- Content -->
-          <div class="position-relative z-3 p-4 p-md-5 d-flex flex-column justify-content-center h-100 text-white promo-content-wrap">
-            <h6 class="text-uppercase mb-2" style="font-size: 15px; letter-spacing: 2px; color: #ffffff;">Extra Savings</h6>
-            <h2 class="display-5 mb-1" style="font-family: 'Playfair Display', serif; line-height: 1.1;font-weight: 650;color: #ffffff;">Flat 10% Off</h2>
+          <div
+            class="position-relative z-3 p-4 p-md-5 d-flex flex-column justify-content-center h-100 text-white promo-content-wrap">
+            <h6 class="text-uppercase mb-2" style="font-size: 15px; letter-spacing: 2px; color: #ffffff;">Extra Savings
+            </h6>
+            <h2 class="display-5 mb-1"
+              style="font-family: 'Playfair Display', serif; line-height: 1.1;font-weight: 650;color: #ffffff;">Flat 10%
+              Off</h2>
             <p class="fs-5 mb-4">On Bulk Orders</p>
             <div>
-              <a href="{{ url_for('shop') }}" class="btn-get text-white text-uppercase promo-btn-1" style="border: 1px solid rgba(255,255,255,0.5); font-size: 13px; letter-spacing: 1px; padding: 10px 20px; border-radius: 2px; transition: all 0.3s ease;font-weight: 550;">Get Extra Discount</a>
+              <a href="{{ url_for('shop') }}" class="btn-get text-white text-uppercase promo-btn-1"
+                style="border: 1px solid rgba(255,255,255,0.5); font-size: 13px; letter-spacing: 1px; padding: 10px 20px; border-radius: 2px; transition: all 0.3s ease;font-weight: 550;">Get
+                Extra Discount</a>
             </div>
           </div>
         </div>
       </div>
-      
+
       <!-- Banner 2 -->
       <div class="col-lg-6 banners-2">
-        <div class="promo-banner-2 rounded-4 h-100 p-4 p-md-5 d-flex" style="background-color: #F3ECE4; min-height: 250px;border: 1px solid #842e13;">
+        <div class="promo-banner-2 rounded-4 h-100 p-4 p-md-5 d-flex"
+          style="background-color: #F3ECE4; min-height: 250px;border: 1px solid #842e13;">
           <div class="row align-items-start w-100 g-4">
             <div class="col-sm-4 text-center">
-              <div class="icon-wrapper rounded-circle mx-auto d-flex align-items-center justify-content-center" style="width: 120px; height: 120px; background-color: #ede2d3;">
-                <img src="{{ url_for('static', filename='img/our_services/1.png') }}" alt="Consultation" style="max-width: 65px;">
+              <div class="icon-wrapper rounded-circle mx-auto d-flex align-items-center justify-content-center"
+                style="width: 120px; height: 120px; background-color: #ede2d3;">
+                <img src="{{ url_for('static', filename='img/our_services/1.png') }}" alt="Consultation"
+                  style="max-width: 65px;">
               </div>
             </div>
             <div class="col-sm-8 text-center text-sm-start">
-              <h2 class="mb-3" style="font-family: 'Playfair Display', serif; color: #1a2f24; font-size: 32px; line-height: 1.2;">Not Sure What<br>You Need?</h2>
-              <p class="text-muted mb-4" style="font-size: 15px;">Get personalized recommendations from our design experts.</p>
-              <a href="{{ url_for('contact') }}" class="btn-book text-uppercase fw-bold promo-btn-2" style="color: #ffffff; border: 1px solid #906e49; font-size: 12px; letter-spacing: 1px; padding: 10px 20px; border-radius: 2px; transition: all 0.3s ease; background-color: #842e13;">Book A Free Consultation</a>
+              <h2 class="mb-3"
+                style="font-family: 'Playfair Display', serif; color: #1a2f24; font-size: 32px; line-height: 1.2;">Not
+                Sure What<br>You Need?</h2>
+              <p class="text-muted mb-4" style="font-size: 15px;">Get personalized recommendations from our design
+                experts.</p>
+              <a href="{{ url_for('contact') }}" class="btn-book text-uppercase fw-bold promo-btn-2"
+                style="color: #ffffff; border: 1px solid #906e49; font-size: 12px; letter-spacing: 1px; padding: 10px 20px; border-radius: 2px; transition: all 0.3s ease; background-color: #842e13;">Book
+                A Free Consultation</a>
             </div>
           </div>
         </div>
@@ -1308,18 +1405,10 @@ endblock %} {% block content %}
         <div class="row align-items-center gx-md-5 gy-5 justify-content-center">
           <div class="col-lg-4 col-md-6 order-1">
             <div class="process-left">
-              <div
-                class="process-box p-4 bg-white rounded-4 position-relative mb-4"
-              >
-                <div
-                  class="process-icon position-absolute"
-                  style="top: 20px; right: 20px"
-                >
-                  <img
-                    src="{{ url_for('static', filename='img/icons/search.png') }}"
-                    alt="search icon"
-                    style="height: 40px; width: 40px"
-                  />
+              <div class="process-box p-4 bg-white rounded-4 position-relative mb-4">
+                <div class="process-icon position-absolute" style="top: 20px; right: 20px">
+                  <img src="{{ url_for('static', filename='img/icons/search.png') }}" alt="search icon"
+                    style="height: 40px; width: 40px" />
                 </div>
                 <span class="teko h2 mb-0">01.</span>
                 <h4 class="secondary mb-3">Consultation</h4>
@@ -1329,15 +1418,9 @@ endblock %} {% block content %}
                 </p>
               </div>
               <div class="process-box p-4 bg-white rounded-4 position-relative">
-                <div
-                  class="process-icon position-absolute"
-                  style="top: 20px; right: 20px"
-                >
-                  <img
-                    src="{{ url_for('static', filename='img/icons/vision.png') }}"
-                    alt="search icon"
-                    style="height: 40px; width: 40px"
-                  />
+                <div class="process-icon position-absolute" style="top: 20px; right: 20px">
+                  <img src="{{ url_for('static', filename='img/icons/vision.png') }}" alt="search icon"
+                    style="height: 40px; width: 40px" />
                 </div>
                 <span class="teko h2 mb-0">02.</span>
                 <h4 class="secondary mb-3">Design &amp; Planning</h4>
@@ -1350,27 +1433,16 @@ endblock %} {% block content %}
           </div>
           <div class="col-lg-4 col-md-6 order-3 order-lg-2">
             <div class="process-image">
-              <img
-                src="{{ url_for('static', filename='img/about/about-scandinavian.jpg') }}"
-                alt="interior"
-                class="rounded-4"
-              />
+              <img src="{{ url_for('static', filename='img/about/about-scandinavian.jpg') }}" alt="interior"
+                class="rounded-4" />
             </div>
           </div>
           <div class="col-lg-4 col-md-6 order-2 order-lg-3">
             <div class="process-left">
-              <div
-                class="process-box p-4 bg-white rounded-4 position-relative mb-4"
-              >
-                <div
-                  class="process-icon position-absolute"
-                  style="top: 20px; right: 20px"
-                >
-                  <img
-                    src="{{ url_for('static', filename='img/icons/interior.png') }}"
-                    alt="search icon"
-                    style="height: 40px; width: 40px"
-                  />
+              <div class="process-box p-4 bg-white rounded-4 position-relative mb-4">
+                <div class="process-icon position-absolute" style="top: 20px; right: 20px">
+                  <img src="{{ url_for('static', filename='img/icons/interior.png') }}" alt="search icon"
+                    style="height: 40px; width: 40px" />
                 </div>
                 <span class="teko h2 mb-0">03.</span>
                 <h4 class="secondary mb-3">Manufacturing &amp; Execution</h4>
@@ -1381,15 +1453,9 @@ endblock %} {% block content %}
                 </p>
               </div>
               <div class="process-box p-4 bg-white rounded-4 position-relative">
-                <div
-                  class="process-icon position-absolute"
-                  style="top: 20px; right: 20px"
-                >
-                  <img
-                    src="{{ url_for('static', filename='img/icons/hand-over.png') }}"
-                    alt="search icon"
-                    style="height: 40px; width: 40px"
-                  />
+                <div class="process-icon position-absolute" style="top: 20px; right: 20px">
+                  <img src="{{ url_for('static', filename='img/icons/hand-over.png') }}" alt="search icon"
+                    style="height: 40px; width: 40px" />
                 </div>
                 <span class="teko h2 mb-0">04.</span>
                 <h4 class="secondary mb-3">Handover</h4>
@@ -1407,41 +1473,7 @@ endblock %} {% block content %}
 </section>
 <!-- Process Section Ends -->
 
-<!-- Ad Banner Section Starts -->
-<section class="ad-banner p-0">
-  <div class="container">
-    <div
-      class="ad-banner-inner p-md-5 p-4 rounded-5 bg-white position-relative overflow-hidden"
-    >
-      <div class="row align-items-center  justify-content-between py-3 gy-5">
-        <div class="col-lg-6">
-          <div class="ad-banner-left text-center text-lg-start">
-            <span class="teko h6 mb-0 secondary">Limited Time Offer</span>
-            <h2 class="text-uppercase h1 primary mb-3">
-              Redefine the Luxury of Living
-            </h2>
-            <p class="teko h6 fw-normal">
-              Get a FREE design consultation and 3D visualization for your home
-              or office project. Transform your space with premium quality
-              interiors at competitive prices.
-            </p>
 
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <div class="ad-banner-right">
-            <img
-              src="{{ url_for('static', filename='img/images_sub/gallery-1.jpg') }}"
-              alt="bedroom"
-              class="rounded-4 border-5 border-white position-relative z-2"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- Ad Banner Section Ends -->
 
 <!-- Why Us section Starts -->
 <section class="why-us">
@@ -1457,20 +1489,12 @@ endblock %} {% block content %}
               sets Utopia apart from the rest.
             </p>
             <div class="why-us-image position-relative">
-              <img
-                src="{{ url_for('static', filename='img/about/about-kitchen.jpg') }}"
-                alt="kitchen"
-                class="rounded-4"
-              />
-              <div
-                class="exp-box p-3 text-center rounded-3 bg-secondary position-absolute"
-                style="bottom: 20px; right: 20px"
-              >
+              <img src="{{ url_for('static', filename='img/about/about-kitchen.jpg') }}" alt="kitchen"
+                class="rounded-4" />
+              <div class="exp-box p-3 text-center rounded-3 bg-secondary position-absolute"
+                style="bottom: 20px; right: 20px">
                 <span class="h1 mb-0 white teko lh-1">8+</span>
-                <span
-                  class="d-block primary fw-bold teko h6 text-capitalize mb-0"
-                  >Years of experience</span
-                >
+                <span class="d-block primary fw-bold teko h6 text-capitalize mb-0">Years of experience</span>
               </div>
             </div>
           </div>
@@ -1479,15 +1503,10 @@ endblock %} {% block content %}
           <div class="why-us-right">
             <div class="row gy-4">
               <div class="col-md-6">
-                <div
-                  class="why-us-box p-4 border-2 border border-white rounded-3"
-                >
+                <div class="why-us-box p-4 border-2 border border-white rounded-3">
                   <div class="why-us-icon mb-4">
-                    <img
-                      src="{{ url_for('static', filename='img/icons/interior.png') }}"
-                      alt="interior icon"
-                      style="height: 45px; width: 45px"
-                    />
+                    <img src="{{ url_for('static', filename='img/icons/interior.png') }}" alt="interior icon"
+                      style="height: 45px; width: 45px" />
                   </div>
                   <div class="why-us-info">
                     <h5>Tailored Design Approach</h5>
@@ -1500,15 +1519,10 @@ endblock %} {% block content %}
                 </div>
               </div>
               <div class="col-md-6">
-                <div
-                  class="why-us-box p-4 border-2 border border-white rounded-3"
-                >
+                <div class="why-us-box p-4 border-2 border border-white rounded-3">
                   <div class="why-us-icon mb-4">
-                    <img
-                      src="{{ url_for('static', filename='img/icons/art.png') }}"
-                      alt="interior icon"
-                      style="height: 45px; width: 45px"
-                    />
+                    <img src="{{ url_for('static', filename='img/icons/art.png') }}" alt="interior icon"
+                      style="height: 45px; width: 45px" />
                   </div>
                   <div class="why-us-info">
                     <h5>Experienced Team of Designers</h5>
@@ -1521,15 +1535,10 @@ endblock %} {% block content %}
                 </div>
               </div>
               <div class="col-md-6">
-                <div
-                  class="why-us-box p-4 border-2 border border-white rounded-3"
-                >
+                <div class="why-us-box p-4 border-2 border border-white rounded-3">
                   <div class="why-us-icon mb-4">
-                    <img
-                      src="{{ url_for('static', filename='img/icons/badge.png') }}"
-                      alt="interior icon"
-                      style="height: 45px; width: 45px"
-                    />
+                    <img src="{{ url_for('static', filename='img/icons/badge.png') }}" alt="interior icon"
+                      style="height: 45px; width: 45px" />
                   </div>
                   <div class="why-us-info">
                     <h5>Quality Craftsmanship</h5>
@@ -1544,11 +1553,8 @@ endblock %} {% block content %}
               <div class="col-md-6">
                 <div class="why-us-box p-4 bg-white rounded-3">
                   <div class="why-us-icon mb-4">
-                    <img
-                      src="{{ url_for('static', filename='img/icons/customer-service.png') }}"
-                      alt="interior icon"
-                      style="height: 45px; width: 45px"
-                    />
+                    <img src="{{ url_for('static', filename='img/icons/customer-service.png') }}" alt="interior icon"
+                      style="height: 45px; width: 45px" />
                   </div>
                   <div class="why-us-info">
                     <h5>Transparent Pricing</h5>
@@ -1561,15 +1567,10 @@ endblock %} {% block content %}
                 </div>
               </div>
               <div class="col-md-6">
-                <div
-                  class="why-us-box p-4 border-2 border border-white rounded-3"
-                >
+                <div class="why-us-box p-4 border-2 border border-white rounded-3">
                   <div class="why-us-icon mb-4">
-                    <img
-                      src="{{ url_for('static', filename='img/icons/price-tag.png') }}"
-                      alt="interior icon"
-                      style="height: 45px; width: 45px"
-                    />
+                    <img src="{{ url_for('static', filename='img/icons/price-tag.png') }}" alt="interior icon"
+                      style="height: 45px; width: 45px" />
                   </div>
                   <div class="why-us-info">
                     <h5>Call For Full Details</h5>
@@ -1582,15 +1583,10 @@ endblock %} {% block content %}
                 </div>
               </div>
               <div class="col-md-6">
-                <div
-                  class="why-us-box p-4 border-2 border border-white rounded-3"
-                >
+                <div class="why-us-box p-4 border-2 border border-white rounded-3">
                   <div class="why-us-icon mb-4">
-                    <img
-                      src="{{ url_for('static', filename='img/icons/delivery-truck.png') }}"
-                      alt="interior icon"
-                      style="height: 45px; width: 45px"
-                    />
+                    <img src="{{ url_for('static', filename='img/icons/delivery-truck.png') }}" alt="interior icon"
+                      style="height: 45px; width: 45px" />
                   </div>
                   <div class="why-us-info">
                     <h5>On-Time Delivery</h5>
@@ -1625,11 +1621,8 @@ endblock %} {% block content %}
         </div>
         <div class="col-xl-4 col-md-6">
           <div class="about-center position-relative">
-            <img
-              src="{{ url_for('static', filename='img/about/about-living-room.jpg') }}"
-              alt="about image"
-              class="rounded-3"
-            />
+            <img src="{{ url_for('static', filename='img/about/about-living-room.jpg') }}" alt="about image"
+              class="rounded-3" />
           </div>
         </div>
         <div class="col-xl-5">
@@ -1641,28 +1634,18 @@ endblock %} {% block content %}
               (Architect), we bring international design standards and Gulf
               region experience to every project we undertake.
             </p>
-            <ul
-              class="d-flex rounded-4 justify-content-between flex-wrap gap-1 mb-4"
-            >
+            <ul class="d-flex rounded-4 justify-content-between flex-wrap gap-1 mb-4">
               <li class="">
                 <span class="h2 primary teko mb-0 lh-sm">120+</span>
-                <span class="teko h6 d-block mb-0 secondary"
-                  >Projects Completed</span
-                >
+                <span class="teko h6 d-block mb-0 secondary">Projects Completed</span>
               </li>
               <li class="">
                 <span class="h2 primary teko mb-0 lh-sm">8+</span>
-                <span class="teko h6 d-block mb-0 secondary"
-                  >Years Experience</span
-                >
+                <span class="teko h6 d-block mb-0 secondary">Years Experience</span>
               </li>
             </ul>
-            <a href="{{ url_for('about') }}" class="btn1"
-              >Discover More<i
-                class="fa fa-long-arrow-right"
-                aria-hidden="true"
-              ></i
-            ></a>
+            <a href="{{ url_for('about') }}" class="btn1">Discover More<i class="fa fa-long-arrow-right"
+                aria-hidden="true"></i></a>
           </div>
         </div>
       </div>
@@ -1690,12 +1673,8 @@ endblock %} {% block content %}
                 Dehradun trust Utopia to create beautiful, functional, and
                 dream-worthy spaces.
               </p>
-              <a href="{{ url_for('about') }}" class="btn1 d-inline-block"
-                >View All Reviews<i
-                  class="fa fa-long-arrow-right"
-                  aria-hidden="true"
-                ></i
-              ></a>
+              <a href="{{ url_for('about') }}" class="btn1 d-inline-block">View All Reviews<i
+                  class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
             </div>
           </div>
         </div>
@@ -1703,23 +1682,14 @@ endblock %} {% block content %}
       <div class="row">
         <div class="col-12">
           <div class="testimonial-body w-100 mt-4 position-relative">
-            <div
-              class="swiper testimonial-slider pb-2 position-relative overflow-hidden w-100"
-            >
+            <div class="swiper testimonial-slider pb-2 position-relative overflow-hidden w-100">
               <div class="swiper-wrapper">
                 <!-- Slide 1 -->
                 <div class="swiper-slide h-auto">
                   <div
-                    class="testimonial-box p-4 p-md-5 bg-secondarylight rounded-4 position-relative h-100 d-flex flex-column"
-                  >
-                    <div
-                      class="quote-icon position-absolute"
-                      style="top: 30px; right: 30px; opacity: 0.1"
-                    >
-                      <i
-                        class="fa fa-quote-right"
-                        style="font-size: 60px; color: #906e49"
-                      ></i>
+                    class="testimonial-box p-4 p-md-5 bg-secondarylight rounded-4 position-relative h-100 d-flex flex-column">
+                    <div class="quote-icon position-absolute" style="top: 30px; right: 30px; opacity: 0.1">
+                      <i class="fa fa-quote-right" style="font-size: 60px; color: #906e49"></i>
                     </div>
                     <ul class="rating d-flex mb-3 gap-1 secondary">
                       <li><i class="fa fa-star"></i></li>
@@ -1728,10 +1698,7 @@ endblock %} {% block content %}
                       <li><i class="fa fa-star"></i></li>
                       <li><i class="fa fa-star"></i></li>
                     </ul>
-                    <p
-                      class="mb-4 h5 fw-normal text flex-grow-1"
-                      style="font-style: italic; line-height: 1.6"
-                    >
+                    <p class="mb-4 h5 fw-normal text flex-grow-1" style="font-style: italic; line-height: 1.6">
                       "Amazing experience! Utopia understood our vision
                       perfectly and transformed our living room beautifully
                       beyond expectations."
@@ -1740,16 +1707,13 @@ endblock %} {% block content %}
                       <div class="client-img">
                         <div
                           class="bg-primary rounded-circle d-flex align-items-center justify-content-center white h3 mb-0"
-                          style="width: 60px; height: 60px"
-                        >
+                          style="width: 60px; height: 60px">
                           R
                         </div>
                       </div>
                       <div class="client-details">
                         <h5 class="mb-0">Ritu Sharma</h5>
-                        <span class="secondary teko h6 mb-0"
-                          >Muzaffarnagar</span
-                        >
+                        <span class="secondary teko h6 mb-0">Muzaffarnagar</span>
                       </div>
                     </div>
                   </div>
@@ -1757,16 +1721,9 @@ endblock %} {% block content %}
                 <!-- Slide 2 -->
                 <div class="swiper-slide h-auto">
                   <div
-                    class="testimonial-box p-4 p-md-5 bg-secondarylight rounded-4 position-relative h-100 d-flex flex-column"
-                  >
-                    <div
-                      class="quote-icon position-absolute"
-                      style="top: 30px; right: 30px; opacity: 0.1"
-                    >
-                      <i
-                        class="fa fa-quote-right"
-                        style="font-size: 60px; color: #906e49"
-                      ></i>
+                    class="testimonial-box p-4 p-md-5 bg-secondarylight rounded-4 position-relative h-100 d-flex flex-column">
+                    <div class="quote-icon position-absolute" style="top: 30px; right: 30px; opacity: 0.1">
+                      <i class="fa fa-quote-right" style="font-size: 60px; color: #906e49"></i>
                     </div>
                     <ul class="rating d-flex mb-3 gap-1 secondary">
                       <li><i class="fa fa-star"></i></li>
@@ -1775,10 +1732,7 @@ endblock %} {% block content %}
                       <li><i class="fa fa-star"></i></li>
                       <li><i class="fa fa-star"></i></li>
                     </ul>
-                    <p
-                      class="mb-4 h5 fw-normal text flex-grow-1"
-                      style="font-style: italic; line-height: 1.6"
-                    >
+                    <p class="mb-4 h5 fw-normal text flex-grow-1" style="font-style: italic; line-height: 1.6">
                       "Professional, punctual, and talented team. Our office
                       redesign completely changed the workspace atmosphere."
                     </p>
@@ -1786,8 +1740,7 @@ endblock %} {% block content %}
                       <div class="client-img">
                         <div
                           class="bg-primary rounded-circle d-flex align-items-center justify-content-center white h3 mb-0"
-                          style="width: 60px; height: 60px"
-                        >
+                          style="width: 60px; height: 60px">
                           A
                         </div>
                       </div>
@@ -1801,16 +1754,9 @@ endblock %} {% block content %}
                 <!-- Slide 3 -->
                 <div class="swiper-slide h-auto">
                   <div
-                    class="testimonial-box p-4 p-md-5 bg-secondarylight rounded-4 position-relative h-100 d-flex flex-column"
-                  >
-                    <div
-                      class="quote-icon position-absolute"
-                      style="top: 30px; right: 30px; opacity: 0.1"
-                    >
-                      <i
-                        class="fa fa-quote-right"
-                        style="font-size: 60px; color: #906e49"
-                      ></i>
+                    class="testimonial-box p-4 p-md-5 bg-secondarylight rounded-4 position-relative h-100 d-flex flex-column">
+                    <div class="quote-icon position-absolute" style="top: 30px; right: 30px; opacity: 0.1">
+                      <i class="fa fa-quote-right" style="font-size: 60px; color: #906e49"></i>
                     </div>
                     <ul class="rating d-flex mb-3 gap-1 secondary">
                       <li><i class="fa fa-star"></i></li>
@@ -1819,10 +1765,7 @@ endblock %} {% block content %}
                       <li><i class="fa fa-star"></i></li>
                       <li><i class="fa fa-star"></i></li>
                     </ul>
-                    <p
-                      class="mb-4 h5 fw-normal text flex-grow-1"
-                      style="font-style: italic; line-height: 1.6"
-                    >
+                    <p class="mb-4 h5 fw-normal text flex-grow-1" style="font-style: italic; line-height: 1.6">
                       "Beautiful home transformation within budget and on time.
                       Abdul sir’s design sense is truly exceptional!"
                     </p>
@@ -1830,8 +1773,7 @@ endblock %} {% block content %}
                       <div class="client-img">
                         <div
                           class="bg-primary rounded-circle d-flex align-items-center justify-content-center white h3 mb-0"
-                          style="width: 60px; height: 60px"
-                        >
+                          style="width: 60px; height: 60px">
                           F
                         </div>
                       </div>
@@ -1845,16 +1787,9 @@ endblock %} {% block content %}
                 <!-- Slide 4 -->
                 <div class="swiper-slide h-auto">
                   <div
-                    class="testimonial-box p-4 p-md-5 bg-secondarylight rounded-4 position-relative h-100 d-flex flex-column"
-                  >
-                    <div
-                      class="quote-icon position-absolute"
-                      style="top: 30px; right: 30px; opacity: 0.1"
-                    >
-                      <i
-                        class="fa fa-quote-right"
-                        style="font-size: 60px; color: #906e49"
-                      ></i>
+                    class="testimonial-box p-4 p-md-5 bg-secondarylight rounded-4 position-relative h-100 d-flex flex-column">
+                    <div class="quote-icon position-absolute" style="top: 30px; right: 30px; opacity: 0.1">
+                      <i class="fa fa-quote-right" style="font-size: 60px; color: #906e49"></i>
                     </div>
                     <ul class="rating d-flex mb-3 gap-1 secondary">
                       <li><i class="fa fa-star"></i></li>
@@ -1863,10 +1798,7 @@ endblock %} {% block content %}
                       <li><i class="fa fa-star"></i></li>
                       <li><i class="fa fa-star"></i></li>
                     </ul>
-                    <p
-                      class="mb-4 h5 fw-normal text flex-grow-1"
-                      style="font-style: italic; line-height: 1.6"
-                    >
+                    <p class="mb-4 h5 fw-normal text flex-grow-1" style="font-style: italic; line-height: 1.6">
                       "Utopia delivered exactly what we imagined for our home.
                       Stylish design, smooth execution, and great attention to
                       every detail."
@@ -1875,8 +1807,7 @@ endblock %} {% block content %}
                       <div class="client-img">
                         <div
                           class="bg-primary rounded-circle d-flex align-items-center justify-content-center white h3 mb-0"
-                          style="width: 60px; height: 60px"
-                        >
+                          style="width: 60px; height: 60px">
                           S
                         </div>
                       </div>
@@ -1911,23 +1842,15 @@ endblock %} {% block content %}
       <div class="row align-items-center gy-4">
         <div class="col-lg-3 col-md-4">
           <div class="appointment-left">
-            <ul
-              class="d-flex align-items-center justify-content-center justify-content-lg-start"
-            >
+            <ul class="d-flex align-items-center justify-content-center justify-content-lg-start">
               <li class="me-3 pe-3 border-end border-2 border-white">
-                <img
-                  src="{{ url_for('static', filename='img/icons/chat.png') }}"
-                  alt="chat"
-                  style="height: 44px; width: 44px"
-                />
+                <img src="{{ url_for('static', filename='img/icons/chat.png') }}" alt="chat"
+                  style="height: 44px; width: 44px" />
               </li>
               <li class="teko">
                 <span class="h6 primary mb-0">Consult Our Studio</span>
                 <span class="d-block h3 mb-0 text-dark">
-                  <a
-                    href="tel:+917351949490"
-                    class="text-decoration-none text-dark"
-                  >
+                  <a href="tel:+917351949490" class="text-decoration-none text-dark">
                     +91 7351949490
                   </a>
                 </span>
@@ -1946,11 +1869,8 @@ endblock %} {% block content %}
         </div>
         <div class="col-lg-3">
           <div class="appointment-right text-center text-lg-end">
-            <a
-              href="https://wa.me/917351949490?text=Hello%20Utopia%20Team!%20I%20would%20like%20to%20schedule%20a%20consultation%20for%20interior%20design%20services."
-              target="_blank"
-              class="btn-primary"
-            >
+            <a href="https://wa.me/917351949490?text=Hello%20Utopia%20Team!%20I%20would%20like%20to%20schedule%20a%20consultation%20for%20interior%20design%20services."
+              target="_blank" class="btn-primary">
               Book Consultation
             </a>
           </div>
@@ -1964,7 +1884,7 @@ endblock %} {% block content %}
 
 {% block scripts %}
 <script>
-  $(document).ready(function(){
+  $(document).ready(function () {
     $('.best-selling-slider').slick({
       slidesToShow: 4,
       slidesToScroll: 1,
@@ -1993,7 +1913,7 @@ endblock %} {% block content %}
         {
           breakpoint: 576,
           settings: {
-            slidesToShow: 1.5,
+            slidesToShow: 1,
             slidesToScroll: 1,
             arrows: true
           }
@@ -2029,7 +1949,7 @@ endblock %} {% block content %}
         {
           breakpoint: 576,
           settings: {
-            slidesToShow: 1.5,
+            slidesToShow: 1,
             slidesToScroll: 1,
             arrows: true
           }
